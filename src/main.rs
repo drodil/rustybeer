@@ -1,3 +1,4 @@
+#[macro_use]
 extern crate clap;
 mod calculators;
 
@@ -7,11 +8,11 @@ fn main() {
 
     let mut app = App::new("RustyBeer");
     app = calculators::priming::add_subcommand(app);
+    app = calculators::abv::add_subcommand(app);
     let matches = app.get_matches();
 
-    match matches.subcommand_name() {
-        Some("priming") => println!("'priming' was used"),
-        None        => println!("No subcommand was used"),
-        _           => println!("Some other subcommand was used"),
+    if let Some(ref matches) = matches.subcommand_matches("abv") {
+        calculators::abv::do_matches(matches);
     }
+
 }
