@@ -16,7 +16,7 @@ pub fn add_subcommand<'a, 'b>(app: App<'a, 'b>) -> App<'a, 'b>{
         )
 }
 
-pub fn do_matches<'c>(matches: ArgMatches<'c>){
+pub fn do_matches<'c>(matches: &ArgMatches<'c>){
     if let Some(ref sub_matches) = matches.subcommand_matches("priming") {
         let temprature = value_t!(sub_matches, "temp", i32).unwrap_or_else(|e| e.exit());
         println!("CO2: {}", calculate_co2(temprature));
