@@ -4,11 +4,28 @@ RustyBeer is a CLI tool written in Rust, to calculate values used in the process
 
 ## Installation ##
 
-**TODO**
+If you don't already have the toolset installed, you will first need to install [Rust](https://doc.rust-lang.org/book/ch01-01-installation.html).
+From the root of the repository, run the following command:
+```shell
+cargo build
+```
+You can now run it with:
+```shell
+./target/debug/rustybeer <subcommand>
+```
 
-## Files ##
+## Files and Folders ##
 
-**TODO**
+- **src** - The folder containing all source code
+  - **calculators** - The folder containing subcommands for performing calculations
+    - **abv.rs** - The file containing the subcommand `abv`
+    - **mod.rs** - The file defining the names of the structures used within the folder
+    - **priming.rs** - The file containing the subcommand `priming`
+    - **sg_correction.rs** - The file containing the subcommand `sg_correction`
+  - **main.rs** - The file containing the main function
+- **Cargo.toml** - The file containing build and dependency infomation
+- **LICENSE** - The file containing the terms that this code package is released under
+- **README.md** - The file you are currently reading
 
 ## Functionality ##
 
