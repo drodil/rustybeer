@@ -37,6 +37,7 @@ fn main() {
     let mut commands = ListOfSubCommands::new();
     commands.push(calculators::abv::Abv);
     commands.push(calculators::priming::Priming);
+    commands.push(calculators::sg_correction::SgCorrection);
 
     // Allow subcommands to add their own parameters
     for command in &commands.list {
