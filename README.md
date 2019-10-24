@@ -35,7 +35,7 @@ Implemented                   | Function      | Description                     
 ------------------------------|---------------|------------------------------------------------|-------
 :white_check_mark:            | ABV           | Calculates ABV from original and final gravity | `abv --og <Original gravity> --fg <Final gravity>`
 :negative_squared_cross_mark: | Boil-off      | Calculates the volume needed to be boiled down to for a desired SG | TDB
-:negative_squared_cross_mark: | Dilution      | Calculates the SG after dilution | TBD
+:negative_squared_cross_mark: | Dilution      | Calculates the SG after dilution | `diluting --sg <Current specific gravity> --cv <Current volume> --tv <Target volume>`
 :white_check_mark:            | Priming       | Beer Priming Calculator                        | `priming --temp <Beer temperature> --amount <Beer volume> --co2_volumes <co2_volumes>`
 :white_check_mark:            | SG Correction | Corrects SG reading according to the difference between the measurement temperature and the calibration temperature | `sg_correction --sg <Specific gravity reading> --ct <Calibration temperature> --mt <Measurement temperature>`
 
