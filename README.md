@@ -26,6 +26,7 @@ You can now run it with:
 - **Cargo.toml** - The file containing build and dependency infomation
 - **LICENSE** - The file containing the terms that this code package is released under
 - **README.md** - The file you are currently reading
+- **CONTRIBUTING.md** - Contribution guidelines for this repository
 
 ## Functionality
 
