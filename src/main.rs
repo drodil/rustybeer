@@ -36,6 +36,7 @@ fn main() {
     // Add subcommands here
     let mut commands = ListOfSubCommands::new();
     commands.push(calculators::abv::Abv);
+    commands.push(calculators::diluting::Diluting);
     commands.push(calculators::priming::Priming);
     commands.push(calculators::sg_correction::SgCorrection);
 
