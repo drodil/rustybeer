@@ -19,6 +19,7 @@ You can now run it with:
 - **src** - The folder containing all source code
   - **calculators** - The folder containing subcommands for performing calculations
     - **abv.rs** - The file containing the subcommand `abv`
+    - **boil_off.rs** - The file containing the subcommand `boil_off`
     - **mod.rs** - The file defining the names of the structures used within the folder
     - **priming.rs** - The file containing the subcommand `priming`
     - **sg_correction.rs** - The file containing the subcommand `sg_correction`
@@ -35,7 +36,7 @@ Below is a table of the features currently implemented.
 Implemented                   | Function      | Description                                    | Usage
 ------------------------------|---------------|------------------------------------------------|-------
 :white_check_mark:            | ABV           | Calculates ABV from original and final gravity | `abv --og <Original gravity> --fg <Final gravity>`
-:negative_squared_cross_mark: | Boil-off      | Calculates the volume needed to be boiled down to for a desired SG | TDB
+:hourglass_flowing_sand:      | Boil-off Gravity| Calculates the volume needed to be boiled down to for a desired SG | `boil_off --current_gravity <current_gravity> --wort_volume <wort_volume> <--target_volume <target_volume>|--desired_gravity <desired_gravity>>`
 :white_check_mark:            | Dilution      | Calculates the SG after dilution | `diluting --sg <Current specific gravity> --cv <Current volume> --tv <Target volume>`
 :white_check_mark:            | Priming       | Beer Priming Calculator                        | `priming --temp <Beer temperature> --amount <Beer volume> --co2_volumes <co2_volumes>`
 :white_check_mark:            | SG Correction | Corrects SG reading according to the difference between the measurement temperature and the calibration temperature | `sg_correction --sg <Specific gravity reading> --ct <Calibration temperature> --mt <Measurement temperature>`
