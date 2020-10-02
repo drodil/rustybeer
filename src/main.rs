@@ -3,6 +3,7 @@ extern crate clap;
 use clap::{App, ArgMatches, AppSettings};
 
 mod calculators;
+mod commands;
 
 // Trait that all subcommands must implement
 trait AppSubCommand {
@@ -35,11 +36,11 @@ fn main() {
 
     // Add subcommands here
     let mut commands = ListOfSubCommands::new();
-    commands.push(calculators::abv::Abv);
-    commands.push(calculators::boil_off::BoilOff);
-    commands.push(calculators::diluting::Diluting);
-    commands.push(calculators::priming::Priming);
-    commands.push(calculators::sg_correction::SgCorrection);
+    commands.push(commands::abv::Abv);
+    commands.push(commands::boil_off::BoilOff);
+    commands.push(commands::diluting::Diluting);
+    commands.push(commands::priming::Priming);
+    commands.push(commands::sg_correction::SgCorrection);
 
     // Allow subcommands to add their own parameters
     for command in &commands.list {
