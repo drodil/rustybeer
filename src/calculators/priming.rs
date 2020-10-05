@@ -4,15 +4,11 @@ use futures::{future, Future, stream, Stream};
 pub struct Priming;
 
 impl Priming {
-    pub fn celsius_to_fahrenheit(&self, celsius: f32) -> f32 {
-        (9.0/5.0) * celsius + 32.0
-    }
-
-    pub fn calculate_co2(&self, fahrenheit: f32) -> f32 {
+    pub fn calculate_co2(&self, fahrenheit: f64) -> f64 {
         (3.0378 - 0.050062 * fahrenheit + 0.00026555 * fahrenheit.powf(2.0))
     }
 
-    pub fn calculate_sugars(&self, fahrenheit: f32, amount: f32, co2_volumes: f32) -> Box<dyn Stream<Item=Sugar, Error=Box<dyn Error>>>
+    pub fn calculate_sugars(&self, fahrenheit: f64, amount: f64, co2_volumes: f64) -> Box<dyn Stream<Item=Sugar, Error=Box<dyn Error>>>
     {
         let sugars = vec![
             Sugar{name: String::from("Table Sugar (sucrose)"), ratio: 1.0},
@@ -48,5 +44,5 @@ impl Priming {
 
 pub struct Sugar {
     pub name: String,
-    pub ratio: f32
+    pub ratio: f64
 }
