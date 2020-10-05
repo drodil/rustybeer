@@ -4,6 +4,7 @@ use clap::{App, ArgMatches, AppSettings};
 
 mod calculators;
 mod commands;
+mod utils;
 
 // Trait that all subcommands must implement
 trait AppSubCommand {
@@ -41,6 +42,7 @@ fn main() {
     commands.push(commands::diluting::Diluting);
     commands.push(commands::priming::Priming);
     commands.push(commands::sg_correction::SgCorrection);
+    commands.push(commands::beer_style::BeerStyleFinder);
 
     // Allow subcommands to add their own parameters
     for command in &commands.list {
