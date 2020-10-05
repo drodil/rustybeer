@@ -1,26 +1,10 @@
-pub struct Conversions{ // TODO: replace with a global conversions, defined by a configuration initialised from main
-    temperature_units: char,
-}
-
-impl Conversions {
-    fn temperature_to_fahrenheit(&self, temp: f32) -> f32 {
-        if self.temperature_units == 'F' {
-            return temp;
-        } else if self.temperature_units == 'K' {
-            return (9.0/5.0) * temp - 459.67;
-        } else {
-            return (9.0/5.0) * temp + 32.0;
-        }
-    }
-}
-
 pub struct SgCorrection;
 
 impl SgCorrection {
     pub fn correct_sg(&self, sg: f32, calibration_temperature: f32, measured_temperature: f32) -> f32 {
-        let conversions = Conversions{temperature_units: 'C'}; // TODO: replace with global conversions
-        let ctf = conversions.temperature_to_fahrenheit(calibration_temperature);
-        let mtf = conversions.temperature_to_fahrenheit(measured_temperature);
+        let conversions = Temperature::Celsius; // TODO: replace with global conversions
+        let ctf = conversions.to_farenheight(calibration_temperature);
+        let mtf = conversions.to_farenheight(measured_temperature);
 
         return sg * (  (1.00130346 - 0.000134722124 * mtf + 0.00000204052596 * (mtf * mtf) - 0.00000000232820948 * (mtf * mtf * mtf))
                      / (1.00130346 - 0.000134722124 * ctf + 0.00000204052596 * (ctf * ctf) - 0.00000000232820948 * (ctf * ctf * ctf)));
@@ -29,7 +13,7 @@ impl SgCorrection {
 
 pub enum Temperature {
     Celsius,
-    FarenHeight,
+    Farenheight,
     Kelvin,
 }
 
@@ -42,9 +26,36 @@ impl std::convert::TryFrom<char> for Temperature {
         value.make_ascii_lowercase();
         match value {
             'c' => Ok(Self::Celsius),
-            'f' => Ok(Self::FarenHeight),
+            'f' => Ok(Self::Farenheight),
             'k' => Ok(Self::Kelvin),
             _ => Err(TempParseError),
+        }
+    }
+}
+
+impl Temperature {
+    // The dead code exists incase someone wants to do other conversions
+    #[allow(dead_code)]
+    pub fn to_celsius(&self, temp: f32) -> f32 {
+        match self {
+            Temperature::Celsius => temp,
+            Temperature::Farenheight => (temp - 32.) / 1.8,
+            Temperature::Kelvin => temp - 273.15,
+        }
+    }
+    pub fn to_farenheight(&self, temp: f32) -> f32 {
+        match self {
+            Temperature::Celsius => temp * 1.8 + 32.,
+            Temperature::Farenheight => temp,
+            Temperature::Kelvin => 9. / 5. * (temp - 273.15) + 32.,
+        }
+    }
+    #[allow(dead_code)]
+    pub fn to_kelvin(&self, temp: f32) -> f32 {
+        match self {
+            Temperature::Celsius => temp + 273.15,
+            Temperature::Farenheight => 5. / 9. * (temp - 32.) + 273.15,
+            Temperature::Kelvin => temp,
         }
     }
 }
