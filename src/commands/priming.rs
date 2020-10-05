@@ -1,11 +1,9 @@
-extern crate clap;
-use clap::{App, Arg, SubCommand, ArgMatches};
-use crate::AppSubCommand;
-use futures::{future, Future, stream, Stream};
 pub use crate::calculators::priming::Priming;
+use crate::AppSubCommand;
+use clap::{value_t, App, Arg, ArgMatches, SubCommand};
 
 impl AppSubCommand for Priming {
-    fn add_subcommand<'a, 'b>(&self, app: App<'a, 'b>) -> App<'a, 'b>{
+    fn add_subcommand<'a, 'b>(&self, app: App<'a, 'b>) -> App<'a, 'b> {
         app.subcommand(SubCommand::with_name("priming")
                 .about("Beer Priming Calculator")   // The message displayed in "-h"
                 .arg(Arg::with_name("temp")         // Priming own arguments
@@ -29,11 +27,12 @@ impl AppSubCommand for Priming {
             )
     }
 
-    fn do_matches<'c>(&self, matches: &ArgMatches<'c>){
+    fn do_matches<'c>(&self, matches: &ArgMatches<'c>) {
         if let Some(ref sub_matches) = matches.subcommand_matches("priming") {
             let temprature = value_t!(sub_matches, "temp", i32).unwrap_or_else(|e| e.exit());
             let amount = value_t!(sub_matches, "amount", f32).unwrap_or_else(|e| e.exit());
-            let co2_volumes = value_t!(sub_matches, "co2_volumes", f32).unwrap_or_else(|e| e.exit());
+            let co2_volumes =
+                value_t!(sub_matches, "co2_volumes", f32).unwrap_or_else(|e| e.exit());
 
             let fahrenheit = self.celsius_to_fahrenheit(temprature as f32);
             let co2_beer = self.calculate_co2(fahrenheit);
@@ -44,11 +43,10 @@ impl AppSubCommand for Priming {
             println!("Temprature (C): {}", temprature);
             println!("CO2 in Beer: {} volumes", co2_beer);
             println!("Priming Sugar Options:");
-            sugars.for_each(|sugar| {
+
+            for sugar in sugars.iter() {
                 println!("{:>23}: {:.2} g", sugar.name, sugar.ratio);
-                Ok(())
-            }).wait();
+            }
         }
     }
 }
-

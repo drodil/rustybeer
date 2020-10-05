@@ -1,5 +1,4 @@
-extern crate clap;
-use clap::{App, Arg, ArgMatches, SubCommand};
+use clap::{App, Arg, ArgMatches, SubCommand, value_t};
 use crate::AppSubCommand;
 pub use crate::calculators::sg_correction::SgCorrection;
 
