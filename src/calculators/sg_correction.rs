@@ -26,3 +26,25 @@ impl SgCorrection {
                      / (1.00130346 - 0.000134722124 * ctf + 0.00000204052596 * (ctf * ctf) - 0.00000000232820948 * (ctf * ctf * ctf)));
     }
 }
+
+pub enum Temperature {
+    Celsius,
+    FarenHeight,
+    Kelvin,
+}
+
+pub struct TempParseError;
+
+impl std::convert::TryFrom<char> for Temperature {
+    type Error = TempParseError;
+
+    fn try_from(mut value: char) -> Result<Self, Self::Error> {
+        value.make_ascii_lowercase();
+        match value {
+            'c' => Ok(Self::Celsius),
+            'f' => Ok(Self::FarenHeight),
+            'k' => Ok(Self::Kelvin),
+            _ => Err(TempParseError),
+        }
+    }
+}
