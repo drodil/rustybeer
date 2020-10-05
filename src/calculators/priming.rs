@@ -1,5 +1,3 @@
-use futures::{future, stream, Stream};
-
 pub struct Priming;
 
 impl Priming {
@@ -11,13 +9,8 @@ impl Priming {
         3.0378 - 0.050062 * fahrenheit + 0.00026555 * fahrenheit.powf(2.0)
     }
 
-    pub fn calculate_sugars(
-        &self,
-        fahrenheit: f32,
-        amount: f32,
-        co2_volumes: f32,
-    ) -> impl Stream<Item = Sugar> {
-        let sugars = vec![
+    pub fn calculate_sugars(&self, fahrenheit: f32, amount: f32, co2_volumes: f32) -> Vec<Sugar> {
+        let mut sugars = vec![
             Sugar::new(String::from("Table Sugar (sucrose)"), 1.0),
             Sugar::new(String::from("Corn Sugar (dextrose)"), 1.0 / 0.91),
             Sugar::new(String::from("DME - All Varieties"), 1.0 / 0.68),
@@ -35,39 +28,26 @@ impl Priming {
             Sugar::new(String::from("Invert Sugar Syrup"), 1.0 / 0.91),
             Sugar::new(String::from("Black Treacle"), 1.0 / 0.87),
             Sugar::new(String::from("Rice Solids"), 1.0 / 0.79),
-        ].into_iter();
+        ];
 
         let beer_co2 = self.calculate_co2(fahrenheit);
         let sucrose = ((co2_volumes * 2.0) - (beer_co2 * 2.0)) * 2.0 * amount;
 
-        // println!("{:?}", sugars);
+        for sugar in sugars.iter_mut() {
+            sugar.ratio *= sucrose
+        }
 
-        stream::unfold(sugars, move |mut iter| {
-            println!("nth sugar: {:?}", iter);
-            match iter.next() {
-                Some(sugar_base) => {
-                    println!("Adding sugar {}", sugar_base.name);
-                    future::ready(Some((
-                        Sugar::new(sugar_base.name, sugar_base.ratio * sucrose),
-                        iter,
-                    )))
-                }
-                None => {
-                    println!("None");
-                    future::ready(None)
-                }
-            }
-        })
+        sugars
     }
 }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct Sugar {
     pub name: String,
     pub ratio: f32,
 }
 
 impl Sugar {
-    fn new(name: String, ratio: f32) -> Self {
+    pub fn new(name: String, ratio: f32) -> Self {
         Self { name, ratio }
     }
 }

@@ -1,7 +1,6 @@
 pub use crate::calculators::priming::Priming;
 use crate::AppSubCommand;
 use clap::{value_t, App, Arg, ArgMatches, SubCommand};
-use futures::StreamExt;
 
 impl AppSubCommand for Priming {
     fn add_subcommand<'a, 'b>(&self, app: App<'a, 'b>) -> App<'a, 'b> {
@@ -45,10 +44,9 @@ impl AppSubCommand for Priming {
             println!("CO2 in Beer: {} volumes", co2_beer);
             println!("Priming Sugar Options:");
 
-            sugars.for_each(|sugar| {
+            for sugar in sugars.iter() {
                 println!("{:>23}: {:.2} g", sugar.name, sugar.ratio);
-                futures::future::ready(())
-            });
+            }
         }
     }
 }

@@ -43,12 +43,7 @@ fn diluting() {
 
 #[test]
 fn priming() {
-    // use futures::stream::Stream;
-    use futures::StreamExt;
-
-    use rustybeer::calculators::priming::Priming;
-
-    // use rustybeer::calculators::priming::Sugar;
+    use rustybeer::calculators::priming::{Priming, Sugar};
 
     let priming = Priming;
 
@@ -60,14 +55,27 @@ fn priming() {
 
     assert_eq!(2.455689014, priming.calculate_co2(12.45));
 
-    println!("Assigning stream");
-
     let stream = priming.calculate_sugars(77., 5., 2.);
 
-    println!("Stream assigned");
+    let expected = vec![
+        Sugar::new(String::from("Table Sugar (sucrose)"), 24.850557),
+        Sugar::new(String::from("Corn Sugar (dextrose)"), 27.308304),
+        Sugar::new(String::from("DME - All Varieties"), 36.544937),
+        Sugar::new(String::from("DME - Laaglander"), 49.701115),
+        Sugar::new(String::from("Turbinado"), 24.850557),
+        Sugar::new(String::from("Demarara"), 24.850557),
+        Sugar::new(String::from("Corn Syrup"), 36.0153),
+        Sugar::new(String::from("Brown Sugar"), 27.921974),
+        Sugar::new(String::from("Molasses"), 35.000786),
+        Sugar::new(String::from("Maple Syrup"), 32.27345),
+        Sugar::new(String::from("Sorghum Syrup"), 36.0153),
+        Sugar::new(String::from("Honey"), 33.581837),
+        Sugar::new(String::from("Belgian Candy Syrup"), 39.44533),
+        Sugar::new(String::from("Belgian Candy Sugar"), 33.13408),
+        Sugar::new(String::from("Invert Sugar Syrup"), 27.308304),
+        Sugar::new(String::from("Black Treacle"), 28.563858),
+        Sugar::new(String::from("Rice Solids"), 31.456402),
+    ];
 
-    stream.for_each(move |sugar| {
-        println!("{:>23}: {:.2} g", sugar.name, sugar.ratio);
-        futures::future::ready(())
-    });
+    assert_eq!(expected, stream);
 }
