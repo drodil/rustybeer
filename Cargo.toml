@@ -9,4 +9,4 @@ edition = "2018"
 [dependencies]
 clap = "2.33.0"
 futures = "0.1.29"
-
+measurements = "0.2.1"
