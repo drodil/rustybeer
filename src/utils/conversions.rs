@@ -38,7 +38,7 @@ impl VolumeBuilder {
                 temperature_form = &temperature_form[1..];
                 let len = temperature_form.len();
                 if len == 3 {
-                    return Ok(match temperature_form {
+                    Ok(match temperature_form {
                         "cm3" => Volume::from_cubic_centimeters(temperature.parse::<f64>()?),
                         "ft3" => Volume::from_cubic_feet(temperature.parse::<f64>()?),
                         "yd3" => Volume::from_cubic_yards(temperature.parse::<f64>()?),
@@ -47,22 +47,22 @@ impl VolumeBuilder {
                         "cup" => Volume::from_cups(temperature.parse::<f64>()?),
                         "tsp" => Volume::from_teaspoons(temperature.parse::<f64>()?),
                         _ => Volume::from_cubic_centimeters(temperature.parse::<f64>()?),
-                    });
+                    })
                 } else if len == 2 {
-                    return Ok(match temperature_form {
+                    Ok(match temperature_form {
                         "ml" => Volume::from_milliliters(temperature.parse::<f64>()?),
                         "m3" => Volume::from_cubic_meters(temperature.parse::<f64>()?),
                         "μl" => Volume::from_drops(temperature.parse::<f64>()?),
                         "dr" => Volume::from_drams(temperature.parse::<f64>()?),
                         _ => Volume::from_milliliters(temperature.parse::<f64>()?),
-                    });
+                    })
                 } else {
-                    return Ok(match temperature_form {
+                    Ok(match temperature_form {
                         "l" => Volume::from_litres(temperature.parse::<f64>()?),
                         "p" => Volume::from_pints(temperature.parse::<f64>()?),
                         "ʒ" => Volume::from_pints(temperature.parse::<f64>()?),
                         _ => Volume::from_litres(vol.parse::<f64>()?),
-                    });
+                    })
                 }
             }
             None => panic!("When parsing volumes, a ':' is required between "),

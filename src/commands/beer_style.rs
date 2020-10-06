@@ -67,43 +67,43 @@ impl AppSubCommand for BeerStyleFinder {
 
             let mut resp = BEER_STYLES.to_vec();
 
-            if !og.is_none() {
-                let og_value = og.unwrap().parse::<f32>().unwrap();
+            if let Some(og) = og {
+                let og_value = og.parse::<f32>().unwrap();
                 resp.retain(|&style| {
                     og_value > style.original_gravity_min && og_value < style.original_gravity_max
                 });
             }
 
-            if !fg.is_none() {
-                let fg_value = fg.unwrap().parse::<f32>().unwrap();
+            if let Some(fg) = fg {
+                let fg_value = fg.parse::<f32>().unwrap();
                 resp.retain(|&style| {
                     fg_value > style.final_gravity_min && fg_value < style.final_gravity_max
                 });
             }
 
-            if !abv.is_none() {
-                let abv_value = abv.unwrap().parse::<f32>().unwrap();
+            if let Some(abv) = abv {
+                let abv_value = abv.parse::<f32>().unwrap();
                 resp.retain(|&style| abv_value > style.abv_min && abv_value < style.abv_max);
             }
 
-            if !ibu.is_none() {
-                let ibu_value = ibu.unwrap().parse::<u8>().unwrap();
+            if let Some(ibu_value) = ibu {
+                let ibu_value = ibu_value.parse::<u8>().unwrap();
                 resp.retain(|&style| ibu_value > style.ibu_min && ibu_value < style.ibu_max);
             }
 
-            if !srm.is_none() {
-                let srm_value = srm.unwrap().parse::<f32>().unwrap();
+            if let Some(srm_value) = srm {
+                let srm_value = srm_value.parse::<f32>().unwrap();
                 resp.retain(|&style| {
                     srm_value > style.color_srm_min && srm_value < style.color_srm_max
                 });
             }
 
             if resp.is_empty() {
-                println!("{}", "Could not find any beer styles matching criteria");
+                println!("Could not find any beer styles matching criteria");
                 return;
             }
 
-            println!("{}", "Found the following beer styles with criteria:");
+            println!("Found the following beer styles with criteria:");
             for x in &resp {
                 println!("* {}", x.name);
                 println!(

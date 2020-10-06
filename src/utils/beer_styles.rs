@@ -190,7 +190,7 @@ pub const PRE_PROHIBITION_PORTER: BeerStyle = BeerStyle::new("Pre-Prohibition Po
 pub const ROGGENBIER: BeerStyle = BeerStyle::new("Roggenbier", 1.046, 1.056, 1.010, 1.014, 4.5, 6.0, 10, 20, 14.0, 19.0);
 pub const SAHTI: BeerStyle = BeerStyle::new("Sahti", 1.076, 1.120, 1.016, 1.020, 7.0, 11.0, 7, 15, 4.0, 22.0);
 
-pub static BEER_STYLES: &'static [BeerStyle] = &[
+pub static BEER_STYLES: &[BeerStyle] = &[
     LITE_AMERICAN_LAGER, AMERICAN_LAGER, CREAM_ALE, AMERICAN_WHEAT_BEER,
     INTERNATIONAL_PALE_LAGER, INTERNATIONAL_AMBER_LAGER, INTERNATIONAL_DARK_LAGER,
     CZECH_PALE_LAGER, CZECH_PREMIUM_PALE_LAGER, CZECH_AMBER_LAGER, CZECH_DARK_LAGER,
