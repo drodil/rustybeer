@@ -12,6 +12,7 @@ impl AppSubCommand for Abv {
                  .short("o")
                  .long("og")
                  .value_name("OG")
+                 .help("Original gravity")
                  .required(true)
                  .takes_value(true))
             .arg(Arg::with_name("fg")
