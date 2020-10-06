@@ -1,10 +1,6 @@
 pub struct Priming;
 
 impl Priming {
-    pub fn celsius_to_fahrenheit(&self, celsius: f64) -> f64 {
-        (9.0 / 5.0) * celsius + 32.0
-    }
-
     pub fn calculate_co2(&self, fahrenheit: f64) -> f64 {
         3.0378 - 0.050062 * fahrenheit + 0.00026555 * fahrenheit.powf(2.0)
     }
