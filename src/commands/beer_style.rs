@@ -59,51 +59,45 @@ impl AppSubCommand for BeerStyleFinder {
 
     fn do_matches<'a>(&self, matches: &ArgMatches<'a>) {
         if let Some(ref matches) = matches.subcommand_matches("beer_style") {
-            let fg = matches.value_of("fg");
-            let og = matches.value_of("og");
-            let abv = matches.value_of("abv");
-            let ibu = matches.value_of("ibu");
-            let srm = matches.value_of("color");
-
             let mut resp = BEER_STYLES.to_vec();
 
-            if !og.is_none() {
-                let og_value = og.unwrap().parse::<f32>().unwrap();
+            if let Some(og) = matches.value_of("og") {
+                let og_value = og.parse::<f32>().unwrap();
                 resp.retain(|&style| {
                     og_value > style.original_gravity_min && og_value < style.original_gravity_max
                 });
             }
 
-            if !fg.is_none() {
-                let fg_value = fg.unwrap().parse::<f32>().unwrap();
+            if let Some(fg) = matches.value_of("fg") {
+                let fg_value = fg.parse::<f32>().unwrap();
                 resp.retain(|&style| {
                     fg_value > style.final_gravity_min && fg_value < style.final_gravity_max
                 });
             }
 
-            if !abv.is_none() {
-                let abv_value = abv.unwrap().parse::<f32>().unwrap();
+            if let Some(abv) = matches.value_of("abv") {
+                let abv_value = abv.parse::<f32>().unwrap();
                 resp.retain(|&style| abv_value > style.abv_min && abv_value < style.abv_max);
             }
 
-            if !ibu.is_none() {
-                let ibu_value = ibu.unwrap().parse::<u8>().unwrap();
+            if let Some(ibu) = matches.value_of("ibu") {
+                let ibu_value = ibu.parse::<u8>().unwrap();
                 resp.retain(|&style| ibu_value > style.ibu_min && ibu_value < style.ibu_max);
             }
 
-            if !srm.is_none() {
-                let srm_value = srm.unwrap().parse::<f32>().unwrap();
+            if let Some(srm) = matches.value_of("srm") {
+                let srm_value = srm.parse::<f32>().unwrap();
                 resp.retain(|&style| {
                     srm_value > style.color_srm_min && srm_value < style.color_srm_max
                 });
             }
 
             if resp.is_empty() {
-                println!("{}", "Could not find any beer styles matching criteria");
+                println!("Could not find any beer styles matching criteria");
                 return;
             }
 
-            println!("{}", "Found the following beer styles with criteria:");
+            println!("Found the following beer styles with criteria:");
             for x in &resp {
                 println!("* {}", x.name);
                 println!(
