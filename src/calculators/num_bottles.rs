@@ -23,7 +23,7 @@ impl NumBottles {
     /// Prints out the quantity of bottles needed to store a given volume
     ///
     /// # Arguments
-    /// * 'volume' - A string of the volume to hold, with units appended e.g "10mL", "5.4gal", "3.99L" etc.
+    /// * 'volume' - A string of the volume to hold, with units appended e.g "10:mL", "5.4:gal", "3.99:L" etc.
     ///
     pub fn calculate_num_bottles(&self, volume: String) -> Vec<(String, i32)> {
         let bottle_types = self.bottles();
