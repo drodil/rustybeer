@@ -4,6 +4,7 @@ use clap::{App, ArgMatches, AppSettings};
 
 mod calculators;
 mod commands;
+mod utils;
 
 // Trait that all subcommands must implement
 trait AppSubCommand {
