@@ -1,4 +1,4 @@
-use clap::{App, ArgMatches, AppSettings};
+use clap::{App, AppSettings, ArgMatches};
 
 mod calculators;
 mod commands;
@@ -12,14 +12,12 @@ trait AppSubCommand {
 
 // List containing all subcommands
 struct ListOfSubCommands {
-    pub list: Vec<Box<dyn AppSubCommand>>
+    pub list: Vec<Box<dyn AppSubCommand>>,
 }
 
 impl ListOfSubCommands {
     fn new() -> Self {
-        Self {
-            list: Vec::new()
-        }
+        Self { list: Vec::new() }
     }
     pub fn push<S: AppSubCommand + 'static>(&mut self, item: S) {
         self.list.push(Box::new(item));
@@ -28,8 +26,8 @@ impl ListOfSubCommands {
 
 fn main() {
     let mut app = App::new("RustyBeer")
-                 .version("0.1")
-                 .setting(AppSettings::ArgRequiredElseHelp);
+        .version("0.1")
+        .setting(AppSettings::ArgRequiredElseHelp);
 
     // Add subcommands here
     let mut commands = ListOfSubCommands::new();

@@ -47,10 +47,6 @@ fn priming() {
 
     let priming = Priming;
 
-    assert_eq!(59., priming.celsius_to_fahrenheit(15.));
-
-    assert_eq!(53.877197, priming.celsius_to_fahrenheit(12.154));
-
     assert_eq!(2.34661875, priming.calculate_co2(15.));
 
     assert_eq!(2.455689014, priming.calculate_co2(12.45));

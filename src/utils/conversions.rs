@@ -32,8 +32,19 @@ impl VolumeBuilder {
             return Ok(Volume::from_litres(0.0));
         }
 
+        match vol.find(':') {
+            Some(count) => {
+                let (temperature, temperature_form) = vol.split_at(count);
+                println!("{}", temperature);
+                println!("{}", temperature_form);
+            }
+            None => {}
+        }
+
         if vol.len() > 3 {
             let last3 = &vol[vol.len() - 3..];
+            println!("{}", last3);
+            println!("{}", &vol[..vol.len() - 3]);
             let ret = match last3 {
                 "cm3" => Volume::from_cubic_centimeters(vol[..vol.len() - 3].parse::<f64>()?),
                 "ft3" => Volume::from_cubic_feet(vol[..vol.len() - 3].parse::<f64>()?),
@@ -44,7 +55,6 @@ impl VolumeBuilder {
                 "tsp" => Volume::from_teaspoons(vol[..vol.len() - 3].parse::<f64>()?),
                 _ => Volume::from_cubic_centimeters(vol[..vol.len() - 3].parse::<f64>()?),
             };
-
             Ok(ret)
         } else if vol.len() > 2 {
             let last2 = &vol[vol.len() - 2..];
@@ -55,7 +65,6 @@ impl VolumeBuilder {
                 "dr" => Volume::from_drams(vol[..vol.len() - 2].parse::<f64>()?),
                 _ => Volume::from_milliliters(vol[..vol.len() - 3].parse::<f64>()?),
             };
-
             Ok(ret)
         } else {
             let last = vol.chars().last().unwrap();
@@ -72,9 +81,8 @@ impl VolumeBuilder {
 
 #[cfg(test)]
 mod tests {
-
-    use crate::utils::conversions::TemperatureBuilder;
-    use crate::utils::conversions::VolumeBuilder;
+    use super::TemperatureBuilder;
+    use super::VolumeBuilder;
 
     #[test]
     fn fahrenheit_from_string() {
