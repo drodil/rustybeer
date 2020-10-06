@@ -1,12 +1,10 @@
-extern crate clap;
-use clap::{App, Arg, SubCommand, ArgMatches};
-use crate::AppSubCommand;
-use futures::{future, Future, stream, Stream};
 pub use crate::calculators::priming::Priming;
 use crate::utils::conversions::{TemperatureBuilder, VolumeBuilder};
+use crate::AppSubCommand;
+use clap::{value_t, App, Arg, ArgMatches, SubCommand};
 
 impl AppSubCommand for Priming {
-    fn add_subcommand<'a, 'b>(&self, app: App<'a, 'b>) -> App<'a, 'b>{
+    fn add_subcommand<'a, 'b>(&self, app: App<'a, 'b>) -> App<'a, 'b> {
         app.subcommand(SubCommand::with_name("priming")
                 .about("Beer Priming Calculator")   // The message displayed in "-h"
                 .arg(Arg::with_name("temp")         // Priming own arguments
@@ -31,14 +29,19 @@ impl AppSubCommand for Priming {
             )
     }
 
-    fn do_matches<'c>(&self, matches: &ArgMatches<'c>){
+    fn do_matches<'c>(&self, matches: &ArgMatches<'c>) {
         if let Some(ref sub_matches) = matches.subcommand_matches("priming") {
             let temperature = value_t!(sub_matches, "temp", String).unwrap_or_else(|e| e.exit());
             let amount_str = value_t!(sub_matches, "amount", String).unwrap_or_else(|e| e.exit());
-            let co2_volumes = value_t!(sub_matches, "co2_volumes", f64).unwrap_or_else(|e| e.exit());
+            let co2_volumes =
+                value_t!(sub_matches, "co2_volumes", f64).unwrap_or_else(|e| e.exit());
 
-            let fahrenheit = TemperatureBuilder::from_str(temperature.clone()).as_fahrenheit();
-            let amount = VolumeBuilder::from_str(amount_str.clone()).as_litres();
+            let fahrenheit = TemperatureBuilder::from_str(temperature.clone())
+                .unwrap()
+                .as_fahrenheit();
+            let amount = VolumeBuilder::from_str(amount_str.clone())
+                .unwrap()
+                .as_litres();
             let co2_beer = self.calculate_co2(fahrenheit);
             let sugars = self.calculate_sugars(fahrenheit, amount, co2_volumes);
 
@@ -47,11 +50,10 @@ impl AppSubCommand for Priming {
             println!("Temperature: {}", temperature);
             println!("CO2 in Beer: {:.2} volumes", co2_beer);
             println!("Priming Sugar Options:");
-            sugars.for_each(|sugar| {
+
+            for sugar in sugars.iter() {
                 println!("{:>23}: {:.2} g", sugar.name, sugar.ratio);
-                Ok(())
-            }).wait();
+            }
         }
     }
 }
-

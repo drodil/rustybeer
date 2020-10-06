@@ -1,5 +1,4 @@
 #[macro_use]
-extern crate clap;
 use clap::{App, AppSettings, ArgMatches};
 
 mod calculators;
@@ -14,17 +13,15 @@ trait AppSubCommand {
 
 // List containing all subcommands
 struct ListOfSubCommands {
-    list: Vec<Box<dyn AppSubCommand>>,
+    pub list: Vec<Box<dyn AppSubCommand>>,
 }
 
 impl ListOfSubCommands {
     fn new() -> Self {
         Self { list: Vec::new() }
     }
-
-    fn push<S: AppSubCommand + 'static>(&mut self, command: S) -> &mut Self {
-        self.list.push(Box::new(command));
-        self
+    pub fn push<S: AppSubCommand + 'static>(&mut self, item: S) {
+        self.list.push(Box::new(item));
     }
 }
 
