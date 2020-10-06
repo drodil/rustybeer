@@ -66,6 +66,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://drodil.kapsi.fi"><img src="https://avatars0.githubusercontent.com/u/1178319?v=4" width="100px;" alt=""/><br /><sub><b>drodil</b></sub></a><br /><a href="https://github.com/drodil/rustybeer/commits?author=drodil" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/mlatief"><img src="https://avatars3.githubusercontent.com/u/462098?v=4" width="100px;" alt=""/><br /><sub><b>mlatief</b></sub></a><br /><a href="https://github.com/drodil/rustybeer/commits?author=mlatief" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/ProgrammerJoe93"><img src="https://avatars3.githubusercontent.com/u/56159225?v=4" width="100px;" alt=""/><br /><sub><b>Joseph Russell</b></sub></a><br /><a href="https://github.com/drodil/rustybeer/commits?author=ProgrammerJoe93" title="Code">💻</a></td>
   </tr>
 </table>
