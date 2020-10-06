@@ -1,0 +1,42 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "drodil",
+      "name": "drodil",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1178319?v=4",
+      "profile": "https://drodil.kapsi.fi",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "mlatief",
+      "name": "mlatief",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/462098?v=4",
+      "profile": "https://github.com/mlatief",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ProgrammerJoe93",
+      "name": "Joseph Russell",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/56159225?v=4",
+      "profile": "https://github.com/ProgrammerJoe93",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "rustybeer",
+  "projectOwner": "drodil",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}

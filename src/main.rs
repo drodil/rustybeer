@@ -2,6 +2,7 @@ use clap::{App, ArgMatches, AppSettings};
 
 mod calculators;
 mod commands;
+mod utils;
 
 // Trait that all subcommands must implement
 trait AppSubCommand {
@@ -29,11 +30,12 @@ fn main() {
 
     // Add subcommands here
     let mut commands = ListOfSubCommands::new();
-    commands.list.push(Box::new(commands::abv::Abv));
-    commands.list.push(Box::new(commands::boil_off::BoilOff));
-    commands.list.push(Box::new(commands::diluting::Diluting));
-    commands.list.push(Box::new(commands::priming::Priming));
-    commands.list.push(Box::new(commands::sg_correction::SgCorrection));
+    commands.push(commands::abv::Abv);
+    commands.push(commands::boil_off::BoilOff);
+    commands.push(commands::diluting::Diluting);
+    commands.push(commands::priming::Priming);
+    commands.push(commands::sg_correction::SgCorrection);
+    commands.push(commands::beer_style::BeerStyleFinder);
 
     // Allow subcommands to add their own parameters
     for command in &commands.list {
