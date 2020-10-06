@@ -1,5 +1,10 @@
 # RustyBeer
 
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/drodil/rustybeer/blob/master/LICENSE)
+[![Contributors](https://img.shields.io/github/contributors/drodil/rustybeer.svg?style=flat)]()
+[![Issues](https://img.shields.io/github/issues-raw/drodil/rustybeer.svg?maxAge=25000)](https://github.com/drodil/rustybeer/issues)
+[![PRs](https://img.shields.io/github/issues-pr/drodil/rustybeer.svg?style=flat)](https://github.com/drodil/rustybeer/pulls)
+
 RustyBeer is a CLI tool written in Rust, to calculate values used in the process of brewing beer.
 
 ## Installation
