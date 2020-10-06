@@ -3,7 +3,7 @@ use crate::AppSubCommand;
 use clap::{value_t, App, Arg, ArgMatches, SubCommand};
 
 impl AppSubCommand for Abv {
-   fn add_subcommand<'a, 'b>(&self, app: App<'a, 'b>) -> App<'a, 'b>{
+    fn add_subcommand<'a, 'b>(&self, app: App<'a, 'b>) -> App<'a, 'b> {
         let ret = app.subcommand(SubCommand::with_name("abv")
             .version("0.1")
             .author("Heikki Hellgren (heiccih@gmail.com)")
