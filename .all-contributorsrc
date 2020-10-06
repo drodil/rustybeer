@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "drodil",
+      "name": "drodil",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1178319?v=4",
+      "profile": "https://drodil.kapsi.fi",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "rustybeer",
+  "projectOwner": "drodil",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
