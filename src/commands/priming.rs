@@ -35,8 +35,8 @@ impl AppSubCommand for Priming {
             let amount_str = value_t!(sub_matches, "amount", String).unwrap_or_else(|e| e.exit());
             let co2_volumes = value_t!(sub_matches, "co2_volumes", f64).unwrap_or_else(|e| e.exit());
 
-            let fahrenheit = TemperatureBuilder::from_str(temperature.clone()).as_fahrenheit();
-            let amount = VolumeBuilder::from_str(amount_str.clone()).as_litres();
+            let fahrenheit = TemperatureBuilder::from_str(temperature.clone()).unwrap().as_fahrenheit();
+            let amount = VolumeBuilder::from_str(amount_str.clone()).unwrap().as_litres();
             let co2_beer = self.calculate_co2(fahrenheit);
             let sugars = self.calculate_sugars(fahrenheit, amount, co2_volumes);
 
