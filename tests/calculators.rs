@@ -81,30 +81,17 @@ fn priming() {
 }
 
 #[test]
-fn sg_correction() {}
+fn sg_correction() {
+    use rustybeer::calculators::sg_correction::SgCorrection;
 
-#[test]
-fn temperature() {
-    use rustybeer::calculators::sg_correction::Temperature;
+    let sg_correction = SgCorrection;
 
-    let temp_type = Temperature::Celsius;
-    let temp_in_celsius = 25.;
+    assert_eq!(5.00096332765874, sg_correction.correct_sg(5.0, 2.9, 1.37));
 
-    assert_eq!(25., temp_type.to_celsius(temp_in_celsius));
-    assert_eq!(77., temp_type.to_fahrenheit(temp_in_celsius));
-    assert_eq!(298.15, temp_type.to_kelvin(temp_in_celsius));
+    assert_eq!(7.3023498553759225, sg_correction.correct_sg(7.3, 8.1, 5.12));
 
-    let temp_type = Temperature::Fahrenheit;
-    let temp_in_farenheight = 60.;
-
-    assert_eq!(15.555556, temp_type.to_celsius(temp_in_farenheight));
-    assert_eq!(60., temp_type.to_fahrenheit(temp_in_farenheight));
-    assert_eq!(288.70554, temp_type.to_kelvin(temp_in_farenheight));
-
-    let temp_type = Temperature::Kelvin;
-    let temp_in_kelvin = 400.;
-
-    assert_eq!(126.850006, temp_type.to_celsius(temp_in_kelvin));
-    assert_eq!(260.33002, temp_type.to_fahrenheit(temp_in_kelvin));
-    assert_eq!(400., temp_type.to_kelvin(temp_in_kelvin));
+    assert_eq!(
+        7.417526019059315,
+        sg_correction.correct_sg(7.413, 28.1, 55.1212)
+    );
 }
