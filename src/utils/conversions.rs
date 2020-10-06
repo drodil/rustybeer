@@ -34,47 +34,38 @@ impl VolumeBuilder {
 
         match vol.find(':') {
             Some(count) => {
-                let (temperature, temperature_form) = vol.split_at(count);
-                println!("{}", temperature);
-                println!("{}", temperature_form);
+                let (temperature, mut temperature_form) = vol.split_at(count);
+                temperature_form = &temperature_form[1..];
+                let len = temperature_form.len();
+                if len == 3 {
+                    return Ok(match temperature_form {
+                        "cm3" => Volume::from_cubic_centimeters(temperature.parse::<f64>()?),
+                        "ft3" => Volume::from_cubic_feet(temperature.parse::<f64>()?),
+                        "yd3" => Volume::from_cubic_yards(temperature.parse::<f64>()?),
+                        "in3" => Volume::from_cubic_inches(temperature.parse::<f64>()?),
+                        "gal" => Volume::from_gallons(temperature.parse::<f64>()?),
+                        "cup" => Volume::from_cups(temperature.parse::<f64>()?),
+                        "tsp" => Volume::from_teaspoons(temperature.parse::<f64>()?),
+                        _ => Volume::from_cubic_centimeters(temperature.parse::<f64>()?),
+                    });
+                } else if len == 2 {
+                    return Ok(match temperature_form {
+                        "ml" => Volume::from_milliliters(temperature.parse::<f64>()?),
+                        "m3" => Volume::from_cubic_meters(temperature.parse::<f64>()?),
+                        "μl" => Volume::from_drops(temperature.parse::<f64>()?),
+                        "dr" => Volume::from_drams(temperature.parse::<f64>()?),
+                        _ => Volume::from_milliliters(temperature.parse::<f64>()?),
+                    });
+                } else {
+                    return Ok(match temperature_form {
+                        "l" => Volume::from_litres(temperature.parse::<f64>()?),
+                        "p" => Volume::from_pints(temperature.parse::<f64>()?),
+                        "ʒ" => Volume::from_pints(temperature.parse::<f64>()?),
+                        _ => Volume::from_litres(vol.parse::<f64>()?),
+                    });
+                }
             }
-            None => {}
-        }
-
-        if vol.len() > 3 {
-            let last3 = &vol[vol.len() - 3..];
-            println!("{}", last3);
-            println!("{}", &vol[..vol.len() - 3]);
-            let ret = match last3 {
-                "cm3" => Volume::from_cubic_centimeters(vol[..vol.len() - 3].parse::<f64>()?),
-                "ft3" => Volume::from_cubic_feet(vol[..vol.len() - 3].parse::<f64>()?),
-                "yd3" => Volume::from_cubic_yards(vol[..vol.len() - 3].parse::<f64>()?),
-                "in3" => Volume::from_cubic_inches(vol[..vol.len() - 3].parse::<f64>()?),
-                "gal" => Volume::from_gallons(vol[..vol.len() - 3].parse::<f64>()?),
-                "cup" => Volume::from_cups(vol[..vol.len() - 3].parse::<f64>()?),
-                "tsp" => Volume::from_teaspoons(vol[..vol.len() - 3].parse::<f64>()?),
-                _ => Volume::from_cubic_centimeters(vol[..vol.len() - 3].parse::<f64>()?),
-            };
-            Ok(ret)
-        } else if vol.len() > 2 {
-            let last2 = &vol[vol.len() - 2..];
-            let ret = match last2 {
-                "ml" => Volume::from_milliliters(vol[..vol.len() - 2].parse::<f64>()?),
-                "m3" => Volume::from_cubic_meters(vol[..vol.len() - 2].parse::<f64>()?),
-                "μl" => Volume::from_drops(vol[..vol.len() - 2].parse::<f64>()?),
-                "dr" => Volume::from_drams(vol[..vol.len() - 2].parse::<f64>()?),
-                _ => Volume::from_milliliters(vol[..vol.len() - 3].parse::<f64>()?),
-            };
-            Ok(ret)
-        } else {
-            let last = vol.chars().last().unwrap();
-            let ret = match last {
-                'l' => Volume::from_litres(vol[..vol.len() - 1].parse::<f64>()?),
-                'p' => Volume::from_pints(vol[..vol.len() - 1].parse::<f64>()?),
-                'ʒ' => Volume::from_pints(vol[..vol.len() - 1].parse::<f64>()?),
-                _ => Volume::from_litres(vol.parse::<f64>()?),
-            };
-            Ok(ret)
+            None => panic!("When parsing volumes, a ':' is required between "),
         }
     }
 }
@@ -154,7 +145,7 @@ mod tests {
     fn cubic_centimeters_from_string() {
         assert_eq!(
             123.0,
-            VolumeBuilder::from_str("123cm3")
+            VolumeBuilder::from_str("123:cm3")
                 .unwrap()
                 .as_cubic_centimeters()
                 .round()
@@ -165,7 +156,7 @@ mod tests {
     fn milliliters_from_string() {
         assert_eq!(
             123.0,
-            VolumeBuilder::from_str("123ml")
+            VolumeBuilder::from_str("123:ml")
                 .unwrap()
                 .as_milliliters()
                 .round()
@@ -176,7 +167,7 @@ mod tests {
     fn pints_from_string() {
         assert_eq!(
             123.0,
-            VolumeBuilder::from_str("123p").unwrap().as_pints().round()
+            VolumeBuilder::from_str("123:p").unwrap().as_pints().round()
         );
     }
 }
