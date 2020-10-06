@@ -47,30 +47,30 @@ fn priming() {
 
     let priming = Priming;
 
-    assert_eq!(2.34661875, priming.calculate_co2(15.));
+    assert_eq!(2.3466187499999998, priming.calculate_co2(15.));
 
-    assert_eq!(2.455689014, priming.calculate_co2(12.45));
+    assert_eq!(2.4556890138750003, priming.calculate_co2(12.45));
 
     let stream = priming.calculate_sugars(77., 5., 2.);
 
     let expected = vec![
-        Sugar::new(String::from("Table Sugar (sucrose)"), 24.850557),
-        Sugar::new(String::from("Corn Sugar (dextrose)"), 27.308304),
-        Sugar::new(String::from("DME - All Varieties"), 36.544937),
-        Sugar::new(String::from("DME - Laaglander"), 49.701115),
-        Sugar::new(String::from("Turbinado"), 24.850557),
-        Sugar::new(String::from("Demarara"), 24.850557),
-        Sugar::new(String::from("Corn Syrup"), 36.0153),
-        Sugar::new(String::from("Brown Sugar"), 27.921974),
-        Sugar::new(String::from("Molasses"), 35.000786),
-        Sugar::new(String::from("Maple Syrup"), 32.27345),
-        Sugar::new(String::from("Sorghum Syrup"), 36.0153),
-        Sugar::new(String::from("Honey"), 33.581837),
-        Sugar::new(String::from("Belgian Candy Syrup"), 39.44533),
-        Sugar::new(String::from("Belgian Candy Sugar"), 33.13408),
-        Sugar::new(String::from("Invert Sugar Syrup"), 27.308304),
-        Sugar::new(String::from("Black Treacle"), 28.563858),
-        Sugar::new(String::from("Rice Solids"), 31.456402),
+        Sugar::new(String::from("Table Sugar (sucrose)"), 24.850561000000013),
+        Sugar::new(String::from("Corn Sugar (dextrose)"), 27.308308791208802),
+        Sugar::new(String::from("DME - All Varieties"), 36.54494264705884),
+        Sugar::new(String::from("DME - Laaglander"), 49.701122000000026),
+        Sugar::new(String::from("Turbinado"), 24.850561000000013),
+        Sugar::new(String::from("Demarara"), 24.850561000000013),
+        Sugar::new(String::from("Corn Syrup"), 36.015305797101476),
+        Sugar::new(String::from("Brown Sugar"), 27.92197865168541),
+        Sugar::new(String::from("Molasses"), 35.00079014084509),
+        Sugar::new(String::from("Maple Syrup"), 32.27345584415586),
+        Sugar::new(String::from("Sorghum Syrup"), 36.015305797101476),
+        Sugar::new(String::from("Honey"), 33.5818391891892),
+        Sugar::new(String::from("Belgian Candy Syrup"), 39.44533492063494),
+        Sugar::new(String::from("Belgian Candy Sugar"), 33.13408133333335),
+        Sugar::new(String::from("Invert Sugar Syrup"), 27.308308791208802),
+        Sugar::new(String::from("Black Treacle"), 28.563863218390818),
+        Sugar::new(String::from("Rice Solids"), 31.45640632911394),
     ];
 
     assert_eq!(expected, stream);
