@@ -14,28 +14,39 @@ RustyBeer is a CLI tool written in Rust, to calculate values used in the process
 
 If you don't already have the toolset installed, you will first need to install [Rust](https://doc.rust-lang.org/book/ch01-01-installation.html).
 From the root of the repository, run the following command:
+
 ```shell
 cargo build
 ```
+
 You can now run it with:
 ```shell
-./target/debug/rustybeer <subcommand>
+cargo run <subcommand>
 ```
 
 ## Files and Folders
 
 - **src** - The folder containing all source code
-  - **calculators** - The folder containing subcommands for performing calculations
-    - **abv.rs** - The file containing the subcommand `abv`
-    - **boil_off.rs** - The file containing the subcommand `boil_off`
-    - **mod.rs** - The file defining the names of the structures used within the folder
-    - **priming.rs** - The file containing the subcommand `priming`
-    - **sg_correction.rs** - The file containing the subcommand `sg_correction`
+  - **calculators** - The folder containing calculators to be used in lib or CLI tool
+  - **commands** - The folder containing subcommands for CLI
   - **main.rs** - The file containing the main function
 - **Cargo.toml** - The file containing build and dependency infomation
 - **LICENSE** - The file containing the terms that this code package is released under
 - **README.md** - The file you are currently reading
 - **CONTRIBUTING.md** - Contribution guidelines for this repository
+
+## Acronyms
+
+Beer brewing has a lot of acronyms that have a meaning. This table is to help
+out with figuring out what everything means:
+
+Acronum      | Description
+-------------|---------------------------------
+ABV          | Alcohol By Volume
+OG           | Original Gravity
+FG           | Final Gravity
+SG           | Specific Gravity
+IBU          | International Bittering Units
 
 ## Functionality
 
@@ -43,7 +54,7 @@ Below is a table of the features currently implemented.
 
 Implemented                   | Function      | Description                                    | Usage
 ------------------------------|---------------|------------------------------------------------|-------
-:white_check_mark:            | ABV           | Calculates ABV from original and final gravity | `abv --og <Original gravity> --fg <Final gravity>`
+:white_check_mark:            | ABV           | Calculates ABV from OG and FG or FG from OG and ABV | `abv --og <Original gravity> (--fg <Final gravity>) (--abv <Alcohol by volume>)`
 :hourglass_flowing_sand:      | Boil-off Gravity| Calculates the volume needed to be boiled down to for a desired SG | `boil_off --current_gravity <current_gravity> --wort_volume <wort_volume> <--target_volume <target_volume>|--desired_gravity <desired_gravity>>`
 :white_check_mark:            | Dilution      | Calculates the SG after dilution               | `diluting --sg <Current specific gravity> --cv <Current volume> --tv <Target volume>`
 :white_check_mark:            | Priming       | Beer Priming Calculator                        | `priming --temp <Beer temperature> --amount <Beer volume> --co2_volumes <co2_volumes>`
@@ -54,8 +65,7 @@ This list will expand as ideas and suggestions come in.
 
 ## Other Tasks to Do
 
-- [ ] Beer recipe file support
-- [ ] Unit measurement selection support
+See [Issues](https://github.com/drodil/rustybeer/issues)
 
 ## Contributors ✨
 
@@ -78,3 +88,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+=======
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md)
