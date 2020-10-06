@@ -1,11 +1,11 @@
 pub use crate::calculators::priming::Priming;
 use crate::utils::conversions::{TemperatureBuilder, VolumeBuilder};
 use crate::AppSubCommand;
-use clap::{value_t, App, Arg, ArgMatches, SubCommand};
+use clap::{value_t, App, Arg, ArgMatches};
 
 impl AppSubCommand for Priming {
-    fn add_subcommand<'a, 'b>(&self, app: App<'a, 'b>) -> App<'a, 'b> {
-        app.subcommand(SubCommand::with_name("priming")
+    fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
+        App::new("priming")
                 .about("Beer Priming Calculator")   // The message displayed in "-h"
                 .arg(Arg::with_name("temp")         // Priming own arguments
                         .long("temp")
@@ -26,7 +26,6 @@ impl AppSubCommand for Priming {
                         .help("Volumes of wanted CO2, depends on beer style (e.g. British Style Ales 1.5 to 2.0)")
                         .default_value("2.0")
                         .takes_value(true))
-            )
     }
 
     fn do_matches<'c>(&self, matches: &ArgMatches<'c>) {

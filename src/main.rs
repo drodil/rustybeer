@@ -6,47 +6,20 @@ mod utils;
 
 // Trait that all subcommands must implement
 trait AppSubCommand {
-    fn add_subcommand<'a, 'b>(&self, app: App<'a, 'b>) -> App<'a, 'b>;
+    fn add_subcommand<'a, 'b>() -> App<'a, 'b>;
     fn do_matches<'c>(&self, matches: &ArgMatches<'c>);
 }
 
-// List containing all subcommands
-struct ListOfSubCommands {
-    pub list: Vec<Box<dyn AppSubCommand>>,
-}
-
-impl ListOfSubCommands {
-    fn new() -> Self {
-        Self { list: Vec::new() }
-    }
-    pub fn push<S: AppSubCommand + 'static>(&mut self, item: S) {
-        self.list.push(Box::new(item));
-    }
-}
-
 fn main() {
-    let mut app = App::new("RustyBeer")
+    let app = App::new("RustyBeer")
         .version("0.1")
+        .subcommand(commands::abv::Abv::add_subcommand())
+        .subcommand(commands::boil_off::BoilOff::add_subcommand())
+        .subcommand(commands::diluting::Diluting::add_subcommand())
+        .subcommand(commands::priming::Priming::add_subcommand())
+        .subcommand(commands::sg_correction::SgCorrection::add_subcommand())
+        .subcommand(commands::beer_style::BeerStyleFinder::add_subcommand())
         .setting(AppSettings::ArgRequiredElseHelp);
 
-    // Add subcommands here
-    let mut commands = ListOfSubCommands::new();
-    commands.push(commands::abv::Abv);
-    commands.push(commands::boil_off::BoilOff);
-    commands.push(commands::diluting::Diluting);
-    commands.push(commands::priming::Priming);
-    commands.push(commands::sg_correction::SgCorrection);
-    commands.push(commands::beer_style::BeerStyleFinder);
-
-    // Allow subcommands to add their own parameters
-    for command in &commands.list {
-        app = command.add_subcommand(app);
-    }
-
-    let matches = app.get_matches();
-
-    // Allow subcommands to handle their own parameters
-    for command in &commands.list {
-        command.do_matches(&matches);
-    }
+    app.get_matches();
 }

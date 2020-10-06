@@ -1,10 +1,10 @@
 pub use crate::calculators::boil_off::BoilOff;
 use crate::AppSubCommand;
-use clap::{value_t, App, Arg, ArgGroup, ArgMatches, SubCommand};
+use clap::{value_t, App, Arg, ArgGroup, ArgMatches};
 
 impl AppSubCommand for BoilOff {
-    fn add_subcommand<'a, 'b>(&self, app: App<'a, 'b>) -> App<'a, 'b> {
-        app.subcommand(SubCommand::with_name("boil_off")
+    fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
+        App::new("boil_off")
             .version("0.1")
             .about("Calculates how much you need to dilute or boil down your wort volume to hit a certain gravity")
             .arg(Arg::with_name("wort_volume")
@@ -31,14 +31,16 @@ impl AppSubCommand for BoilOff {
                     .takes_value(true))
             .group(ArgGroup::with_name("desired")
                     .args(&["target_volume", "desired_gravity"])
-                    .required(true))
+                    .required(true)
         )
     }
 
     fn do_matches<'c>(&self, matches: &ArgMatches<'c>) {
         if let Some(ref sub_matches) = matches.subcommand_matches("boil_off") {
-            let wort_volume = value_t!(sub_matches, "wort_volume", f32).unwrap_or_else(|e| e.exit());
-            let current_gravity = value_t!(sub_matches, "current_gravity", f32).unwrap_or_else(|e| e.exit());
+            let wort_volume =
+                value_t!(sub_matches, "wort_volume", f32).unwrap_or_else(|e| e.exit());
+            let current_gravity =
+                value_t!(sub_matches, "current_gravity", f32).unwrap_or_else(|e| e.exit());
 
             println!("Wort Volume: {}", wort_volume);
             println!("Current Gravity: {}", current_gravity);

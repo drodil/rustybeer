@@ -1,11 +1,11 @@
 pub use crate::calculators::sg_correction::SgCorrection;
 use crate::utils::conversions::TemperatureBuilder;
 use crate::AppSubCommand;
-use clap::{value_t, App, Arg, ArgMatches, SubCommand};
+use clap::{value_t, App, Arg, ArgMatches};
 
 impl AppSubCommand for SgCorrection {
-    fn add_subcommand<'a, 'b>(&self, app: App<'a, 'b>) -> App<'a, 'b> {
-        let ret = app.subcommand(SubCommand::with_name("sg_correction")
+    fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
+        let ret = App::new("sg_correction")
             .version("0.1")
             .author("Joseph Russell (josephrussell123@gmail.com)")
             .about("Corrects SG reading according to the difference between the measurement temperature and the calibration temperature")
@@ -29,7 +29,7 @@ impl AppSubCommand for SgCorrection {
                  .value_name("MEASUREMENT TEMPERATURE")
                  .help("Measurement temperature with unit (C, F, K, etc.). Defaults to Celsius.")
                  .required(true)
-                 .takes_value(true)));
+                 .takes_value(true));
 
         ret
     }
