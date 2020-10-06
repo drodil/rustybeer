@@ -3,8 +3,8 @@ pub struct SgCorrection;
 impl SgCorrection {
     pub fn correct_sg(&self, sg: f32, calibration_temperature: f32, measured_temperature: f32) -> f32 {
         let conversions = Temperature::Celsius; // TODO: replace with global conversions
-        let ctf = conversions.to_farenheight(calibration_temperature);
-        let mtf = conversions.to_farenheight(measured_temperature);
+        let ctf = conversions.to_fahrenheit(calibration_temperature);
+        let mtf = conversions.to_fahrenheit(measured_temperature);
 
         return sg * (  (1.00130346 - 0.000134722124 * mtf + 0.00000204052596 * (mtf * mtf) - 0.00000000232820948 * (mtf * mtf * mtf))
                      / (1.00130346 - 0.000134722124 * ctf + 0.00000204052596 * (ctf * ctf) - 0.00000000232820948 * (ctf * ctf * ctf)));
@@ -13,7 +13,7 @@ impl SgCorrection {
 
 pub enum Temperature {
     Celsius,
-    Farenheight,
+    Fahrenheit,
     Kelvin,
 }
 
@@ -26,7 +26,7 @@ impl std::convert::TryFrom<char> for Temperature {
         value.make_ascii_lowercase();
         match value {
             'c' => Ok(Self::Celsius),
-            'f' => Ok(Self::Farenheight),
+            'f' => Ok(Self::Fahrenheit),
             'k' => Ok(Self::Kelvin),
             _ => Err(TempParseError),
         }
@@ -39,14 +39,14 @@ impl Temperature {
     pub fn to_celsius(&self, temp: f32) -> f32 {
         match self {
             Temperature::Celsius => temp,
-            Temperature::Farenheight => (temp - 32.) / 1.8,
+            Temperature::Fahrenheit => (temp - 32.) / 1.8,
             Temperature::Kelvin => temp - 273.15,
         }
     }
-    pub fn to_farenheight(&self, temp: f32) -> f32 {
+    pub fn to_fahrenheit(&self, temp: f32) -> f32 {
         match self {
             Temperature::Celsius => temp * 1.8 + 32.,
-            Temperature::Farenheight => temp,
+            Temperature::Fahrenheit => temp,
             Temperature::Kelvin => 9. / 5. * (temp - 273.15) + 32.,
         }
     }
@@ -54,7 +54,7 @@ impl Temperature {
     pub fn to_kelvin(&self, temp: f32) -> f32 {
         match self {
             Temperature::Celsius => temp + 273.15,
-            Temperature::Farenheight => 5. / 9. * (temp - 32.) + 273.15,
+            Temperature::Fahrenheit => 5. / 9. * (temp - 32.) + 273.15,
             Temperature::Kelvin => temp,
         }
     }
