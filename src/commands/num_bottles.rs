@@ -1,7 +1,7 @@
 extern crate clap;
 pub use crate::calculators::num_bottles::NumBottles;
 use crate::AppSubCommand;
-use clap::{App, Arg, ArgMatches, SubCommand};
+use clap::{value_t, App, Arg, ArgMatches, SubCommand};
 
 impl AppSubCommand for NumBottles {
     fn add_subcommand<'a, 'b>(&self, app: App<'a, 'b>) -> App<'a, 'b> {

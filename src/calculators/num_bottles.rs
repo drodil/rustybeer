@@ -28,7 +28,7 @@ impl NumBottles {
     pub fn calculate_num_bottles(&self, volume: String) -> Vec<(String, i32)> {
         let bottle_types = self.bottles();
         let mut bottle_counter: Vec<(String, i32)> = Vec::with_capacity(bottle_types.len());
-        let volume = VolumeBuilder::from_str(volume).as_milliliters() as f32;
+        let volume = VolumeBuilder::from_str(volume).unwrap().as_milliliters() as f32;
 
         for bottle in bottle_types {
             let num_bottles: i32 = ((volume) / bottle.1).ceil() as i32;
