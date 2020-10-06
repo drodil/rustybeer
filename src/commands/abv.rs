@@ -1,28 +1,33 @@
-extern crate clap;
-use clap::{App, Arg, ArgMatches, SubCommand};
-use crate::AppSubCommand;
 pub use crate::calculators::abv::Abv;
+use crate::AppSubCommand;
+use clap::{value_t, App, Arg, ArgMatches, SubCommand};
 
 impl AppSubCommand for Abv {
-    fn add_subcommand<'a, 'b>(&self, app: App<'a, 'b>) -> App<'a, 'b>{
-        let ret = app.subcommand(SubCommand::with_name("abv")
-            .version("0.1")
-            .author("Heikki Hellgren (heiccih@gmail.com)")
-            .about("Calculates ABV from original and final gravity")
-            .arg(Arg::with_name("og")
-                 .short("o")
-                 .long("og")
-                 .value_name("OG")
-                 .help("Original gravity")
-                 .required(true)
-                 .takes_value(true))
-            .arg(Arg::with_name("fg")
-                 .short("f")
-                 .long("fg")
-                 .value_name("FG")
-                 .help("Final gravity")
-                 .required(true)
-                 .takes_value(true)));
+    fn add_subcommand<'a, 'b>(&self, app: App<'a, 'b>) -> App<'a, 'b> {
+        let ret = app.subcommand(
+            SubCommand::with_name("abv")
+                .version("0.1")
+                .author("Heikki Hellgren (heiccih@gmail.com)")
+                .about("Calculates ABV from original and final gravity")
+                .arg(
+                    Arg::with_name("og")
+                        .short("o")
+                        .long("og")
+                        .value_name("OG")
+                        .help("Original gravity")
+                        .required(true)
+                        .takes_value(true),
+                )
+                .arg(
+                    Arg::with_name("fg")
+                        .short("f")
+                        .long("fg")
+                        .value_name("FG")
+                        .help("Final gravity")
+                        .required(true)
+                        .takes_value(true),
+                ),
+        );
 
         ret
     }
@@ -35,4 +40,3 @@ impl AppSubCommand for Abv {
         }
     }
 }
-
