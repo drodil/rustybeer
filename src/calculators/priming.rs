@@ -1,15 +1,15 @@
 pub struct Priming;
 
 impl Priming {
-    pub fn celsius_to_fahrenheit(&self, celsius: f32) -> f32 {
+    pub fn celsius_to_fahrenheit(&self, celsius: f64) -> f64 {
         (9.0 / 5.0) * celsius + 32.0
     }
 
-    pub fn calculate_co2(&self, fahrenheit: f32) -> f32 {
+    pub fn calculate_co2(&self, fahrenheit: f64) -> f64 {
         3.0378 - 0.050062 * fahrenheit + 0.00026555 * fahrenheit.powf(2.0)
     }
 
-    pub fn calculate_sugars(&self, fahrenheit: f32, amount: f32, co2_volumes: f32) -> Vec<Sugar> {
+    pub fn calculate_sugars(&self, fahrenheit: f64, amount: f64, co2_volumes: f64) -> Vec<Sugar> {
         let mut sugars = vec![
             Sugar::new(String::from("Table Sugar (sucrose)"), 1.0),
             Sugar::new(String::from("Corn Sugar (dextrose)"), 1.0 / 0.91),
@@ -43,11 +43,11 @@ impl Priming {
 #[derive(Debug, PartialEq)]
 pub struct Sugar {
     pub name: String,
-    pub ratio: f32,
+    pub ratio: f64,
 }
 
 impl Sugar {
-    pub fn new(name: String, ratio: f32) -> Self {
+    pub fn new(name: String, ratio: f64) -> Self {
         Self { name, ratio }
     }
 }

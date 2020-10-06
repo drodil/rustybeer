@@ -16,10 +16,13 @@ struct ListOfSubCommands {
 }
 
 impl ListOfSubCommands {
-    fn new () -> Self {
+    fn new() -> Self {
         Self {
             list: Vec::new()
         }
+    }
+    pub fn push<S: AppSubCommand + 'static>(&mut self, item: S) {
+        self.list.push(Box::new(item));
     }
 }
 
