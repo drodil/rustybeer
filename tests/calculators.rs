@@ -36,9 +36,13 @@ fn diluting() {
 
     let diluting = Diluting;
 
-    assert_eq!(14.162499, diluting.calculate_dilution(9.1, 5.2, 3.2));
+    assert_eq!(14.162499, diluting.calculate_new_gravity(9.1, 5.2, 3.2));
 
-    assert_eq!(4.5304832, diluting.calculate_dilution(9.1, 3.16, 7.25));
+    assert_eq!(4.5304832, diluting.calculate_new_gravity(9.1, 3.16, 7.25));
+
+    assert_eq!(17.28, diluting.calculate_new_volume(50., 3.16, 7.25));
+    
+    assert_eq!(1.7638038, diluting.calculate_new_volume(12.5, 2.15, 9.15));
 }
 
 #[test]

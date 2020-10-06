@@ -47,7 +47,7 @@ impl AppSubCommand for Diluting {
             let sg = value_t!(matches, "sg", f32).unwrap_or_else(|e| e.exit());
             let cv = value_t!(matches, "cv", f32).unwrap_or_else(|e| e.exit());
             let tv = value_t!(matches, "tv", f32).unwrap_or_else(|e| e.exit());
-            println!("New SG: {:.3}", self.calculate_dilution(sg, cv, tv));
+            println!("New SG: {:.3}", self.calculate_new_gravity(sg, cv, tv));
         }
     }
 }

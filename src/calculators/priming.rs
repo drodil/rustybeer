@@ -1,10 +1,44 @@
+//! A module to determine how much,
+//! and which, sugars to add at bottling
+//! time for brewed beer
+//! # Example
+//! ```
+//! use rustybeer::priming::{Priming, Sugar};
+//!
+//! // Get a Priming instance
+//! let priming = Priming;
+//!
+//! // Arguments are in Farenheit, liters, and c02 volumes
+//! let sugars = priming.calculate_sugar(77., 5., 2.);
+//!
+//! println!("You can add: ");
+//!
+//! for sugar in sugars.iter() {
+//!     println!("{}g of {}", sugar.ratio, sugar.name);
+//! }
+//! ```
+
+/// A calculator to determine how much
+/// priming sugar should be added at
+/// bottling time for brewed beer,
+/// based off a given temperature
 pub struct Priming;
 
 impl Priming {
+    /// Calculates the residual amount of c02
+    /// present in the beer due to fermentation.
+    /// The temperature should be given in fahrenheit
     pub fn calculate_co2(&self, fahrenheit: f64) -> f64 {
         3.0378 - 0.050062 * fahrenheit + 0.00026555 * fahrenheit.powf(2.0)
     }
 
+    /// Calculates the amount of each sugar that
+    /// should be added at bottling time, based
+    /// off a given temperature (In farenheit),
+    /// amount of beer (In liters), and the
+    /// volume of c02.
+    /// The returned Vec of [Sugars](struct.Sugar.html)
+    /// can be printed or indexed as desired
     pub fn calculate_sugars(&self, fahrenheit: f64, amount: f64, co2_volumes: f64) -> Vec<Sugar> {
         let mut sugars = vec![
             Sugar::new(String::from("Table Sugar (sucrose)"), 1.0),
@@ -36,6 +70,9 @@ impl Priming {
         sugars
     }
 }
+/// A sugar added at bottling time for
+/// brewed beer, with a name and ratio
+/// of beer to be used, in grams
 #[derive(Debug, PartialEq)]
 pub struct Sugar {
     pub name: String,
