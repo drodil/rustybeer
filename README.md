@@ -45,9 +45,10 @@ Implemented                   | Function      | Description                     
 ------------------------------|---------------|------------------------------------------------|-------
 :white_check_mark:            | ABV           | Calculates ABV from original and final gravity | `abv --og <Original gravity> --fg <Final gravity>`
 :hourglass_flowing_sand:      | Boil-off Gravity| Calculates the volume needed to be boiled down to for a desired SG | `boil_off --current_gravity <current_gravity> --wort_volume <wort_volume> <--target_volume <target_volume>|--desired_gravity <desired_gravity>>`
-:white_check_mark:            | Dilution      | Calculates the SG after dilution | `diluting --sg <Current specific gravity> --cv <Current volume> --tv <Target volume>`
+:white_check_mark:            | Dilution      | Calculates the SG after dilution               | `diluting --sg <Current specific gravity> --cv <Current volume> --tv <Target volume>`
 :white_check_mark:            | Priming       | Beer Priming Calculator                        | `priming --temp <Beer temperature> --amount <Beer volume> --co2_volumes <co2_volumes>`
 :white_check_mark:            | SG Correction | Corrects SG reading according to the difference between the measurement temperature and the calibration temperature | `sg_correction --sg <Specific gravity reading> --ct <Calibration temperature> --mt <Measurement temperature>`
+:white_check_mark:            | Beer style    | Finds beer styles matching given parameters    | `beer_style (--og <Original gravity>) (--fg <Final gravity>) (--abv <Alcohol by volume>) (--ibu <International bittering units> (--color <SRM color>)`
 
 This list will expand as ideas and suggestions come in.
 
