@@ -59,7 +59,7 @@ mod tests {
         ];
         assert_eq!(
             expected,
-            NumBottles.calculate_num_bottles("330ml".to_string())
+            NumBottles.calculate_num_bottles("330:ml".to_string())
         );
     }
 
@@ -80,7 +80,7 @@ mod tests {
         ];
         assert_eq!(
             expected,
-            NumBottles.calculate_num_bottles("330l".to_string())
+            NumBottles.calculate_num_bottles("330:l".to_string())
         );
     }
 }
