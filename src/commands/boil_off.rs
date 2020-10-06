@@ -37,8 +37,10 @@ impl AppSubCommand for BoilOff {
 
     fn do_matches<'c>(&self, matches: &ArgMatches<'c>) {
         if let Some(ref sub_matches) = matches.subcommand_matches("boil_off") {
-            let wort_volume = value_t!(sub_matches, "wort_volume", f32).unwrap_or_else(|e| e.exit());
-            let current_gravity = value_t!(sub_matches, "current_gravity", f32).unwrap_or_else(|e| e.exit());
+            let wort_volume =
+                value_t!(sub_matches, "wort_volume", f32).unwrap_or_else(|e| e.exit());
+            let current_gravity =
+                value_t!(sub_matches, "current_gravity", f32).unwrap_or_else(|e| e.exit());
 
             println!("Wort Volume: {}", wort_volume);
             println!("Current Gravity: {}", current_gravity);
