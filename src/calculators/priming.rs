@@ -9,7 +9,7 @@
 //! let priming = Priming;
 //!
 //! // Arguments are in Farenheit, liters, and c02 volumes
-//! let sugars = priming.calculate_sugar(77., 5., 2.);
+//! let sugars = priming.calculate_sugars(77., 5., 2.);
 //!
 //! println!("You can add: ");
 //!
