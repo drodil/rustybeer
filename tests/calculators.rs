@@ -30,9 +30,14 @@ fn diluting() {
 
     let diluting = Diluting;
 
-    assert!(14.162499 - diluting.calculate_dilution(9.1, 5.2, 3.2) < f32::EPSILON);
+    assert!(14.162499 - diluting.calculate_new_gravity(9.1, 5.2, 3.2) < f32::EPSILON);
 
-    assert!(4.5304832 - diluting.calculate_dilution(9.1, 3.16, 7.25) < f32::EPSILON);
+    assert!(4.5304832 - diluting.calculate_new_gravity(9.1, 3.16, 7.25) < f32::EPSILON);
+
+    assert!(2. - diluting.calculate_new_volume(2., 2., 2.) < f32::EPSILON);
+
+    assert!(14. - diluting.calculate_new_volume(7., 5., 3.) < f32::EPSILON);
+
 }
 
 #[test]
