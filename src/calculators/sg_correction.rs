@@ -7,12 +7,9 @@ pub struct SgCorrection;
 
 impl SgCorrection {
     /// Corrects a specific gravity value with respect to
-    /// a given calibration temperature, measurement
-    /// temperature
+    /// a given calibration temperature and
+    /// measurement temperature
     /// ```
-    /// // rustybeer sg_correction --sg 5 --ct 23 --mt 22
-    /// // should display Corrected gravity: 5.000
-    ///
     /// use rustybeer::calculators::sg_correction::SgCorrection;
     ///
     /// let sg_correction = SgCorrection;

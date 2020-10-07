@@ -7,7 +7,7 @@
 //! priming calculator, and specific gravity
 //! correction.
 //!
-//! There's also a lost of beer styles that can
+//! There's also a list of beer styles that can
 //! be indexed and requested
 
 pub mod calculators;
