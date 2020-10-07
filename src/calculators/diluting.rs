@@ -14,14 +14,8 @@ pub fn calculate_new_gravity(current_gravity: f32, current_volume: f32, target_v
     (current_gravity - 1.0) * (current_volume / target_volume) + 1.0
 }
 
-
 /// Calculates the new volume based off a current
 /// gravity, a current volume, and a target gravity
-pub fn calculate_new_volume(
-    &self,
-    current_gravity: f32,
-    current_volume: f32,
-    target_gravity: f32,
-) -> f32 {
+pub fn calculate_new_volume(current_gravity: f32, current_volume: f32, target_gravity: f32) -> f32 {
     current_volume * (current_gravity - 1.) / (target_gravity - 1.)
 }
