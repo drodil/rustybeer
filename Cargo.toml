@@ -6,5 +6,5 @@ edition = "2018"
 
 [dependencies]
 clap = "2.33.*"
-measurements = "0.2.1"
+measurements = "0.10.3"
 regex = "1"
