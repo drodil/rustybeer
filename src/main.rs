@@ -1,4 +1,3 @@
-#[macro_use]
 use clap::{App, AppSettings, ArgMatches};
 
 mod calculators;
