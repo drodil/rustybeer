@@ -1,3 +1,4 @@
+#[macro_use]
 use clap::{App, AppSettings, ArgMatches};
 
 mod calculators;
@@ -37,6 +38,7 @@ fn main() {
     commands.push(commands::priming::Priming);
     commands.push(commands::sg_correction::SgCorrection);
     commands.push(commands::beer_style::BeerStyleFinder);
+    commands.push(commands::num_bottles::NumBottles);
 
     // Allow subcommands to add their own parameters
     for command in &commands.list {
