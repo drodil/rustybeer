@@ -1,30 +1,26 @@
 #[test]
 fn abv() {
-    use rustybeer::calculators::abv::Abv;
+    use rustybeer::calculators::abv::calculate_abv;
 
-    let abv = Abv;
+    assert!(1050. - calculate_abv(10., 2.) < f32::EPSILON);
 
-    assert!(1050. - abv.calculate_abv(10., 2.) < f32::EPSILON);
-
-    assert!(39.554_813 - abv.calculate_abv(0.3026, 0.00123) < f32::EPSILON)
+    assert!(39.554_813 - calculate_abv(0.3026, 0.00123) < f32::EPSILON)
 }
 
 #[test]
 fn boil_off() {
-    use rustybeer::calculators::boil_off::BoilOff;
+    use rustybeer::calculators::diluting::*;
 
-    let boil_off = BoilOff;
+    assert!(2. - calculate_new_volume(2., 2., 2.) < f32::EPSILON);
 
-    assert!(2. - boil_off.calculate_boileoff_new_volume(2., 2., 2.) < f32::EPSILON);
+    assert!(14. - calculate_new_volume(7., 5., 3.) < f32::EPSILON);
 
-    assert!(14. - boil_off.calculate_boileoff_new_volume(7., 5., 3.) < f32::EPSILON);
+    assert!(10.333333 - calculate_new_gravity(7., 5., 3.) < f32::EPSILON);
 
-    assert!(10.333333 - boil_off.calculate_boileoff_new_gravity(7., 5., 3.) < f32::EPSILON);
-
-    assert!(63.857_143 - boil_off.calculate_boileoff_new_gravity(4., 3.2, 0.14) < f32::EPSILON);
+    assert!(63.857_143 - calculate_new_gravity(4., 3.2, 0.14) < f32::EPSILON);
 }
 
-#[test]
+/*#[test]
 fn diluting() {
     use rustybeer::calculators::diluting::Diluting;
 
@@ -37,20 +33,17 @@ fn diluting() {
     assert!(2. - diluting.calculate_new_volume(2., 2., 2.) < f32::EPSILON);
 
     assert!(14. - diluting.calculate_new_volume(7., 5., 3.) < f32::EPSILON);
-
-}
+}*/
 
 #[test]
 fn priming() {
-    use rustybeer::calculators::priming::{Priming, Sugar};
+    use rustybeer::calculators::priming::{calculate_co2, calculate_sugars, Sugar};
 
-    let priming = Priming;
+    assert!(2.3466187499999998 - calculate_co2(15.) < f64::EPSILON);
 
-    assert!(2.3466187499999998 - priming.calculate_co2(15.) < f64::EPSILON);
+    assert!(2.4556890138750003 - calculate_co2(12.45) < f64::EPSILON);
 
-    assert!(2.4556890138750003 - priming.calculate_co2(12.45) < f64::EPSILON);
-
-    let stream = priming.calculate_sugars(77., 5., 2.);
+    let stream = calculate_sugars(77., 5., 2.);
 
     let expected = vec![
         Sugar::new(String::from("Table Sugar (sucrose)"), 24.850561000000013),
@@ -77,13 +70,11 @@ fn priming() {
 
 #[test]
 fn sg_correction() {
-    use rustybeer::calculators::sg_correction::SgCorrection;
+    use rustybeer::calculators::sg_correction::correct_sg;
 
-    let sg_correction = SgCorrection;
+    assert!(5.00096332765874 - correct_sg(5.0, 2.9, 1.37) < f64::EPSILON);
 
-    assert!(5.00096332765874 - sg_correction.correct_sg(5.0, 2.9, 1.37) < f64::EPSILON);
+    assert!(7.3023498553759225 - correct_sg(7.3, 8.1, 5.12) < f64::EPSILON);
 
-    assert!(7.3023498553759225 - sg_correction.correct_sg(7.3, 8.1, 5.12) < f64::EPSILON);
-
-    assert!(7.417526019059315 - sg_correction.correct_sg(7.413, 28.1, 55.1212) < f64::EPSILON);
+    assert!(7.417526019059315 - correct_sg(7.413, 28.1, 55.1212) < f64::EPSILON);
 }
