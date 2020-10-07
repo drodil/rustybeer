@@ -7,7 +7,7 @@
 //!
 //! // This displays how a target volume based off the
 //! // current volume, current gravity, and target gravity
-//! assert_eq!(17.28, Diluting.calculate_new_volume(50., 3.16, 7.25));
+//! assert_eq!(17.28, Diluting.calculate_new_volume(3.16, 50., 7.25));
 //! ```
 
 pub struct Diluting;
