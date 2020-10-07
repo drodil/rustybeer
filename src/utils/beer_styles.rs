@@ -14,6 +14,7 @@ pub struct BeerStyle<'a> {
 }
 
 impl<'a> BeerStyle<'a> {
+    #[allow(clippy::too_many_arguments)]
     pub const fn new(
         name: &'a str,
         original_gravity_min: f32,
@@ -1270,7 +1271,7 @@ pub const SAHTI: BeerStyle = BeerStyle::new(
     "Sahti", 1.076, 1.120, 1.016, 1.020, 7.0, 11.0, 7, 15, 4.0, 22.0,
 );
 
-pub static BEER_STYLES: &'static [BeerStyle] = &[
+pub static BEER_STYLES: &[BeerStyle] = &[
     LITE_AMERICAN_LAGER,
     AMERICAN_LAGER,
     CREAM_ALE,
