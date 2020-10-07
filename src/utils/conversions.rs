@@ -3,77 +3,83 @@ use std::num::ParseFloatError;
 
 use measurements::{Temperature, Volume};
 
+/// Used to build new measurements::Temperature structs.
+///
+/// To be removed if the dependency some time allows creating measurement units from
+/// strings.
 pub struct TemperatureBuilder;
 
 impl TemperatureBuilder {
+    /// Creates measurements::Temperature from string
+    ///
+    /// Tries to figure out the temperature unit from the string. If the string value is plain
+    /// number, it will be considered as Celsius. Also empty strings are considered as
+    /// zero Celsius in Temperature.
     pub fn from_str(val: &str) -> Result<measurements::Temperature, ParseFloatError> {
         if val.is_empty() {
             return Ok(Temperature::from_celsius(0.0));
         }
 
         let re = Regex::new(r"([0-9.]*)\s?([a-zA-Z]{1})$").unwrap();
-        let capture = re.captures(val);
-        if capture.is_none() {
-            return Ok(Temperature::from_celsius(val.parse::<f64>()?));
+        if let Some(caps) = re.captures(val) {
+            let float_val = caps.get(1).unwrap().as_str();
+            return Ok(
+                match caps.get(2).unwrap().as_str().to_uppercase().as_str() {
+                    "F" => Temperature::from_fahrenheit(float_val.parse::<f64>()?),
+                    "C" => Temperature::from_celsius(float_val.parse::<f64>()?),
+                    "K" => Temperature::from_kelvin(float_val.parse::<f64>()?),
+                    "R" => Temperature::from_rankine(float_val.parse::<f64>()?),
+                    _ => Temperature::from_celsius(val.parse::<f64>()?),
+                },
+            );
         }
 
-        let caps = capture.unwrap();
-        if caps.len() == 1 {
-            return Ok(Temperature::from_celsius(val.parse::<f64>()?));
-        }
-
-        let float_val = caps.get(1).unwrap().as_str();
-        Ok(
-            match caps.get(2).unwrap().as_str().to_uppercase().as_str() {
-                "F" => Temperature::from_fahrenheit(float_val.parse::<f64>()?),
-                "C" => Temperature::from_celsius(float_val.parse::<f64>()?),
-                "K" => Temperature::from_kelvin(float_val.parse::<f64>()?),
-                "R" => Temperature::from_rankine(float_val.parse::<f64>()?),
-                _ => Temperature::from_celsius(val.parse::<f64>()?),
-            },
-        )
+        Ok(Temperature::from_celsius(val.parse::<f64>()?))
     }
 }
 
+/// Used to build new measurements::Volume structs.
+///
+/// To be removed if the dependency some time allows creating measurement units from
+/// strings.
 pub struct VolumeBuilder;
 
 impl VolumeBuilder {
+    /// Creates measurements::Volume from string
+    ///
+    /// Tries to figure out the volume unit from the string. If the string value is plain
+    /// number, it will be considered as litres. Also empty strings are considered as
+    /// zero litres in Volume.
     pub fn from_str(val: &str) -> Result<measurements::Volume, ParseFloatError> {
         if val.is_empty() {
             return Ok(Volume::from_litres(0.0));
         }
 
         let re = Regex::new(r"([0-9.]*)\s?([a-zA-Z]{1,3}[0-9]{0,1})$").unwrap();
-        let capture = re.captures(val);
-        if capture.is_none() {
-            return Ok(Volume::from_litres(val.parse::<f64>()?));
+        if let Some(caps) = re.captures(val) {
+            let float_val = caps.get(1).unwrap().as_str();
+            return Ok(
+                match caps.get(2).unwrap().as_str().to_lowercase().as_str() {
+                    "cm3" => Volume::from_cubic_centimeters(float_val.parse::<f64>()?),
+                    "ft3" => Volume::from_cubic_feet(float_val.parse::<f64>()?),
+                    "yd3" => Volume::from_cubic_yards(float_val.parse::<f64>()?),
+                    "in3" => Volume::from_cubic_inches(float_val.parse::<f64>()?),
+                    "gal" => Volume::from_gallons(float_val.parse::<f64>()?),
+                    "cup" => Volume::from_cups(float_val.parse::<f64>()?),
+                    "tsp" => Volume::from_teaspoons(float_val.parse::<f64>()?),
+                    "ml" => Volume::from_milliliters(float_val.parse::<f64>()?),
+                    "m3" => Volume::from_cubic_meters(float_val.parse::<f64>()?),
+                    "μl" => Volume::from_drops(float_val.parse::<f64>()?),
+                    "dr" => Volume::from_drams(float_val.parse::<f64>()?),
+                    "l" => Volume::from_litres(float_val.parse::<f64>()?),
+                    "p" => Volume::from_pints(float_val.parse::<f64>()?),
+                    "ʒ" => Volume::from_pints(float_val.parse::<f64>()?),
+                    _ => Volume::from_litres(val.parse::<f64>()?),
+                },
+            );
         }
 
-        let caps = capture.unwrap();
-        if caps.len() == 1 {
-            return Ok(Volume::from_litres(val.parse::<f64>()?));
-        }
-
-        let float_val = caps.get(1).unwrap().as_str();
-        Ok(
-            match caps.get(2).unwrap().as_str().to_lowercase().as_str() {
-                "cm3" => Volume::from_cubic_centimeters(float_val.parse::<f64>()?),
-                "ft3" => Volume::from_cubic_feet(float_val.parse::<f64>()?),
-                "yd3" => Volume::from_cubic_yards(float_val.parse::<f64>()?),
-                "in3" => Volume::from_cubic_inches(float_val.parse::<f64>()?),
-                "gal" => Volume::from_gallons(float_val.parse::<f64>()?),
-                "cup" => Volume::from_cups(float_val.parse::<f64>()?),
-                "tsp" => Volume::from_teaspoons(float_val.parse::<f64>()?),
-                "ml" => Volume::from_milliliters(float_val.parse::<f64>()?),
-                "m3" => Volume::from_cubic_meters(float_val.parse::<f64>()?),
-                "μl" => Volume::from_drops(float_val.parse::<f64>()?),
-                "dr" => Volume::from_drams(float_val.parse::<f64>()?),
-                "l" => Volume::from_litres(float_val.parse::<f64>()?),
-                "p" => Volume::from_pints(float_val.parse::<f64>()?),
-                "ʒ" => Volume::from_pints(float_val.parse::<f64>()?),
-                _ => Volume::from_litres(val.parse::<f64>()?),
-            },
-        )
+        Ok(Volume::from_litres(val.parse::<f64>()?))
     }
 }
 
@@ -173,6 +179,8 @@ mod tests {
             123.0,
             TemperatureBuilder::from_str("123").unwrap().as_celsius(),
         );
+
+        assert_almost_equal(123.0, VolumeBuilder::from_str("123").unwrap().as_litres());
     }
 
     #[test]
