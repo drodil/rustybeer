@@ -29,7 +29,7 @@ impl AppSubCommand for Priming {
     }
 
     fn do_matches<'c>(&self, matches: &ArgMatches<'c>) {
-        if let Some(ref sub_matches) = matches.subcommand_matches("priming") {
+        if let Some(sub_matches) = matches.subcommand_matches("priming") {
             let temperature = value_t!(sub_matches, "temp", String).unwrap_or_else(|e| e.exit());
             let amount_str = value_t!(sub_matches, "amount", String).unwrap_or_else(|e| e.exit());
             let co2_volumes =

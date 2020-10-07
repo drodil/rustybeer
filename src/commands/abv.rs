@@ -32,7 +32,7 @@ impl AppSubCommand for Abv {
     }
 
     fn do_matches<'a>(&self, matches: &ArgMatches<'a>) {
-        if let Some(ref matches) = matches.subcommand_matches("abv") {
+        if let Some(matches) = matches.subcommand_matches("abv") {
             if matches.is_present("fg") {
                 let fg = value_t!(matches, "fg", f32).unwrap_or_else(|e| e.exit());
                 let og = value_t!(matches, "og", f32).unwrap_or_else(|e| e.exit());

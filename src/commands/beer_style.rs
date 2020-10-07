@@ -54,7 +54,7 @@ impl AppSubCommand for BeerStyleFinder {
     }
 
     fn do_matches<'a>(&self, matches: &ArgMatches<'a>) {
-        if let Some(ref matches) = matches.subcommand_matches("beer_style") {
+        if let Some(matches) = matches.subcommand_matches("beer_style") {
             let fg = matches.value_of("fg");
             let og = matches.value_of("og");
             let abv = matches.value_of("abv");

@@ -39,7 +39,7 @@ impl AppSubCommand for Diluting {
     }
 
     fn do_matches<'a>(&self, matches: &ArgMatches<'a>) {
-        if let Some(ref matches) = matches.subcommand_matches("diluting") {
+        if let Some(matches) = matches.subcommand_matches("diluting") {
             let sg = value_t!(matches, "sg", f32).unwrap_or_else(|e| e.exit());
             let cv = value_t!(matches, "cv", f32).unwrap_or_else(|e| e.exit());
             let tv = value_t!(matches, "tv", f32).unwrap_or_else(|e| e.exit());

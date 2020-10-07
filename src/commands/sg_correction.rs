@@ -35,7 +35,7 @@ impl AppSubCommand for SgCorrection {
     }
 
     fn do_matches<'a>(&self, matches: &ArgMatches<'a>) {
-        if let Some(ref matches) = matches.subcommand_matches("sg_correction") {
+        if let Some(matches) = matches.subcommand_matches("sg_correction") {
             let sg = value_t!(matches, "sg", f64).unwrap_or_else(|e| e.exit());
             let ct_str = value_t!(matches, "ct", String).unwrap_or_else(|e| e.exit());
             let ct = TemperatureBuilder::from_str(ct_str.clone())
