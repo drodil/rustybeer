@@ -37,7 +37,6 @@ fn diluting() {
     assert!(2. - diluting.calculate_new_volume(2., 2., 2.) < f32::EPSILON);
 
     assert!(14. - diluting.calculate_new_volume(7., 5., 3.) < f32::EPSILON);
-
 }
 
 #[test]
