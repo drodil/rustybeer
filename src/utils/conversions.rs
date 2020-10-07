@@ -1,3 +1,4 @@
+use regex::Regex;
 use std::num::ParseFloatError;
 
 use measurements::{Temperature, Volume};
@@ -5,68 +6,74 @@ use measurements::{Temperature, Volume};
 pub struct TemperatureBuilder;
 
 impl TemperatureBuilder {
-    pub fn from_str<S: Into<String>>(val: S) -> Result<measurements::Temperature, ParseFloatError> {
-        let temp = val.into().to_uppercase();
-        if temp.is_empty() {
+    pub fn from_str(val: &str) -> Result<measurements::Temperature, ParseFloatError> {
+        if val.is_empty() {
             return Ok(Temperature::from_celsius(0.0));
         }
 
-        let last = temp.chars().last().unwrap();
-        let ret = match last {
-            'F' => Temperature::from_fahrenheit(temp[..temp.len() - 1].parse::<f64>()?),
-            'C' => Temperature::from_celsius(temp[..temp.len() - 1].parse::<f64>()?),
-            'K' => Temperature::from_kelvin(temp[..temp.len() - 1].parse::<f64>()?),
-            'R' => Temperature::from_rankine(temp[..temp.len() - 1].parse::<f64>()?),
-            _ => Temperature::from_celsius(temp.parse::<f64>()?),
-        };
-        Ok(ret)
+        let re = Regex::new(r"([0-9.]*)\s?([a-zA-Z]{1})$").unwrap();
+        let capture = re.captures(val);
+        if capture.is_none() {
+            return Ok(Temperature::from_celsius(val.parse::<f64>()?));
+        }
+
+        let caps = capture.unwrap();
+        if caps.len() == 1 {
+            return Ok(Temperature::from_celsius(val.parse::<f64>()?));
+        }
+
+        let float_val = caps.get(1).unwrap().as_str();
+        Ok(
+            match caps.get(2).unwrap().as_str().to_uppercase().as_str() {
+                "F" => Temperature::from_fahrenheit(float_val.parse::<f64>()?),
+                "C" => Temperature::from_celsius(float_val.parse::<f64>()?),
+                "K" => Temperature::from_kelvin(float_val.parse::<f64>()?),
+                "R" => Temperature::from_rankine(float_val.parse::<f64>()?),
+                _ => Temperature::from_celsius(val.parse::<f64>()?),
+            },
+        )
     }
 }
 
 pub struct VolumeBuilder;
 
 impl VolumeBuilder {
-    pub fn from_str<S: Into<String>>(val: S) -> Result<measurements::Volume, ParseFloatError> {
-        let vol = val.into().to_lowercase();
-        if vol.is_empty() {
+    pub fn from_str(val: &str) -> Result<measurements::Volume, ParseFloatError> {
+        if val.is_empty() {
             return Ok(Volume::from_litres(0.0));
         }
 
-        match vol.find(':') {
-            Some(count) => {
-                let (temperature, mut temperature_form) = vol.split_at(count);
-                temperature_form = &temperature_form[1..];
-                let len = temperature_form.len();
-                if len == 3 {
-                    Ok(match temperature_form {
-                        "cm3" => Volume::from_cubic_centimeters(temperature.parse::<f64>()?),
-                        "ft3" => Volume::from_cubic_feet(temperature.parse::<f64>()?),
-                        "yd3" => Volume::from_cubic_yards(temperature.parse::<f64>()?),
-                        "in3" => Volume::from_cubic_inches(temperature.parse::<f64>()?),
-                        "gal" => Volume::from_gallons(temperature.parse::<f64>()?),
-                        "cup" => Volume::from_cups(temperature.parse::<f64>()?),
-                        "tsp" => Volume::from_teaspoons(temperature.parse::<f64>()?),
-                        _ => Volume::from_cubic_centimeters(temperature.parse::<f64>()?),
-                    })
-                } else if len == 2 {
-                    Ok(match temperature_form {
-                        "ml" => Volume::from_milliliters(temperature.parse::<f64>()?),
-                        "m3" => Volume::from_cubic_meters(temperature.parse::<f64>()?),
-                        "μl" => Volume::from_drops(temperature.parse::<f64>()?),
-                        "dr" => Volume::from_drams(temperature.parse::<f64>()?),
-                        _ => Volume::from_milliliters(temperature.parse::<f64>()?),
-                    })
-                } else {
-                    Ok(match temperature_form {
-                        "l" => Volume::from_litres(temperature.parse::<f64>()?),
-                        "p" => Volume::from_pints(temperature.parse::<f64>()?),
-                        "ʒ" => Volume::from_pints(temperature.parse::<f64>()?),
-                        _ => Volume::from_litres(vol.parse::<f64>()?),
-                    })
-                }
-            }
-            None => panic!("When parsing volumes, a ':' is required between "),
+        let re = Regex::new(r"([0-9.]*)\s?([a-zA-Z]{1,3}[0-9]{0,1})$").unwrap();
+        let capture = re.captures(val);
+        if capture.is_none() {
+            return Ok(Volume::from_litres(val.parse::<f64>()?));
         }
+
+        let caps = capture.unwrap();
+        if caps.len() == 1 {
+            return Ok(Volume::from_litres(val.parse::<f64>()?));
+        }
+
+        let float_val = caps.get(1).unwrap().as_str();
+        Ok(
+            match caps.get(2).unwrap().as_str().to_lowercase().as_str() {
+                "cm3" => Volume::from_cubic_centimeters(float_val.parse::<f64>()?),
+                "ft3" => Volume::from_cubic_feet(float_val.parse::<f64>()?),
+                "yd3" => Volume::from_cubic_yards(float_val.parse::<f64>()?),
+                "in3" => Volume::from_cubic_inches(float_val.parse::<f64>()?),
+                "gal" => Volume::from_gallons(float_val.parse::<f64>()?),
+                "cup" => Volume::from_cups(float_val.parse::<f64>()?),
+                "tsp" => Volume::from_teaspoons(float_val.parse::<f64>()?),
+                "ml" => Volume::from_milliliters(float_val.parse::<f64>()?),
+                "m3" => Volume::from_cubic_meters(float_val.parse::<f64>()?),
+                "μl" => Volume::from_drops(float_val.parse::<f64>()?),
+                "dr" => Volume::from_drams(float_val.parse::<f64>()?),
+                "l" => Volume::from_litres(float_val.parse::<f64>()?),
+                "p" => Volume::from_pints(float_val.parse::<f64>()?),
+                "ʒ" => Volume::from_pints(float_val.parse::<f64>()?),
+                _ => Volume::from_litres(val.parse::<f64>()?),
+            },
+        )
     }
 }
 
@@ -74,107 +81,148 @@ impl VolumeBuilder {
 mod tests {
     use super::TemperatureBuilder;
     use super::VolumeBuilder;
+    const DELTA: f64 = 1e-5;
+
+    fn abs(x: f64) -> f64 {
+        if x > 0.0 {
+            x
+        } else {
+            -x
+        }
+    }
+
+    fn assert_almost_equal(a: f64, b: f64) {
+        if !((abs(a - b) / a) < DELTA) {
+            panic!("assertion failed: {:?} != {:?}", a, b);
+        }
+    }
 
     #[test]
     fn fahrenheit_from_string() {
-        assert!(
-            123.0
-                - TemperatureBuilder::from_str("123F")
-                    .unwrap()
-                    .as_fahrenheit()
-                    .round()
-                < f64::EPSILON
+        assert_almost_equal(
+            123.0,
+            TemperatureBuilder::from_str("123F")
+                .unwrap()
+                .as_fahrenheit(),
+        );
+        assert_almost_equal(
+            123.0,
+            TemperatureBuilder::from_str("123 F")
+                .unwrap()
+                .as_fahrenheit(),
+        );
+        assert_almost_equal(
+            123.0,
+            TemperatureBuilder::from_str("123 f")
+                .unwrap()
+                .as_fahrenheit(),
         );
     }
 
     #[test]
     fn celsius_from_string() {
-        assert!(
-            123.0
-                - TemperatureBuilder::from_str("123C")
-                    .unwrap()
-                    .as_celsius()
-                    .round()
-                < f64::EPSILON
+        assert_almost_equal(
+            123.0,
+            TemperatureBuilder::from_str("123C").unwrap().as_celsius(),
+        );
+        assert_almost_equal(
+            123.0,
+            TemperatureBuilder::from_str("123 C").unwrap().as_celsius(),
+        );
+        assert_almost_equal(
+            123.0,
+            TemperatureBuilder::from_str("123 c").unwrap().as_celsius(),
         );
     }
 
     #[test]
     fn kelvin_from_string() {
-        assert!(
-            123.0
-                - TemperatureBuilder::from_str("123K")
-                    .unwrap()
-                    .as_kelvin()
-                    .round()
-                < f64::EPSILON
+        assert_almost_equal(
+            123.0,
+            TemperatureBuilder::from_str("123K").unwrap().as_kelvin(),
+        );
+        assert_almost_equal(
+            123.0,
+            TemperatureBuilder::from_str("123 K").unwrap().as_kelvin(),
+        );
+        assert_almost_equal(
+            123.0,
+            TemperatureBuilder::from_str("123 k").unwrap().as_kelvin(),
         );
     }
 
     #[test]
     fn rankine_from_string() {
-        assert!(
-            123.0
-                - TemperatureBuilder::from_str("123R")
-                    .unwrap()
-                    .as_rankine()
-                    .round()
-                < f64::EPSILON
+        assert_almost_equal(
+            123.0,
+            TemperatureBuilder::from_str("123R").unwrap().as_rankine(),
+        );
+        assert_almost_equal(
+            123.0,
+            TemperatureBuilder::from_str("123 R").unwrap().as_rankine(),
+        );
+        assert_almost_equal(
+            123.0,
+            TemperatureBuilder::from_str("123 r").unwrap().as_rankine(),
         );
     }
 
     #[test]
     fn default_from_string() {
-        assert!(
-            123.0
-                - TemperatureBuilder::from_str("123")
-                    .unwrap()
-                    .as_celsius()
-                    .round()
-                < f64::EPSILON
+        assert_almost_equal(
+            123.0,
+            TemperatureBuilder::from_str("123").unwrap().as_celsius(),
         );
     }
 
     #[test]
     fn zero_from_string() {
-        assert!(
-            TemperatureBuilder::from_str("")
-                .unwrap()
-                .as_celsius()
-                .round()
-                - 0.0
-                < f64::EPSILON
-        );
+        assert_eq!(0.0, TemperatureBuilder::from_str("").unwrap().as_celsius());
+        assert_eq!(0.0, VolumeBuilder::from_str("").unwrap().as_litres());
     }
 
     #[test]
     fn cubic_centimeters_from_string() {
-        assert!(
-            123.0
-                - VolumeBuilder::from_str("123:cm3")
-                    .unwrap()
-                    .as_cubic_centimeters()
-                    .round()
-                < f64::EPSILON
+        assert_almost_equal(
+            123.0,
+            VolumeBuilder::from_str("123cm3")
+                .unwrap()
+                .as_cubic_centimeters(),
+        );
+        assert_almost_equal(
+            123.0,
+            VolumeBuilder::from_str("123 cm3")
+                .unwrap()
+                .as_cubic_centimeters(),
+        );
+        assert_almost_equal(
+            123.0,
+            VolumeBuilder::from_str("123 CM3")
+                .unwrap()
+                .as_cubic_centimeters(),
         );
     }
 
     #[test]
     fn milliliters_from_string() {
-        assert!(
-            123.0
-                - VolumeBuilder::from_str("123:ml")
-                    .unwrap()
-                    .as_milliliters()
-                    .round()
-                < f64::EPSILON
+        assert_almost_equal(
+            123.0,
+            VolumeBuilder::from_str("123ml").unwrap().as_milliliters(),
+        );
+        assert_almost_equal(
+            123.0,
+            VolumeBuilder::from_str("123 ml").unwrap().as_milliliters(),
+        );
+        assert_almost_equal(
+            123.0,
+            VolumeBuilder::from_str("123 ml").unwrap().as_milliliters(),
         );
     }
 
     #[test]
     fn pints_from_string() {
-        assert!(
-            123.0 - VolumeBuilder::from_str("123:p").unwrap().as_pints().round() < f64::EPSILON
-        );
+        assert_almost_equal(123.0, VolumeBuilder::from_str("123p").unwrap().as_pints());
+        assert_almost_equal(123.0, VolumeBuilder::from_str("123 p").unwrap().as_pints());
+        assert_almost_equal(123.0, VolumeBuilder::from_str("123 P").unwrap().as_pints());
     }
 }

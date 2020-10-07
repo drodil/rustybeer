@@ -1,11 +1,10 @@
-use crate::utils::conversions::VolumeBuilder; // Converts string input to unit measurements
 /// A struct used to print how many bottles are needed to contain a given volume (in mL or L)
 pub struct NumBottles;
 
 impl NumBottles {
     // A function to store the different bottle types.
     // Can be extended as needed
-    fn bottles(&self) -> Vec<(String, f32)> {
+    fn bottles(&self) -> Vec<(String, f64)> {
         vec![
             ("330ml bottle".to_string(), 330.0),
             ("Twelve ounce bottle".to_string(), 355.0),
@@ -23,12 +22,11 @@ impl NumBottles {
     /// Prints out the quantity of bottles needed to store a given volume
     ///
     /// # Arguments
-    /// * 'volume' - A string of the volume to hold, with units appended e.g "10:mL", "5.4:gal", "3.99:L" etc.
+    /// * 'volume' - A volume to bottle in milliliters
     ///
-    pub fn calculate_num_bottles(&self, volume: String) -> Vec<(String, i32)> {
+    pub fn calculate_num_bottles(&self, volume: f64) -> Vec<(String, i32)> {
         let bottle_types = self.bottles();
         let mut bottle_counter: Vec<(String, i32)> = Vec::with_capacity(bottle_types.len());
-        let volume = VolumeBuilder::from_str(volume).unwrap().as_milliliters() as f32;
 
         for bottle in bottle_types {
             let num_bottles: i32 = ((volume) / bottle.1).ceil() as i32;
@@ -57,10 +55,7 @@ mod tests {
             ("Gallon jug".to_string(), 1),
             ("5 liter mini keg".to_string(), 1),
         ];
-        assert_eq!(
-            expected,
-            NumBottles.calculate_num_bottles("330:ml".to_string())
-        );
+        assert_eq!(expected, NumBottles.calculate_num_bottles(330.0));
     }
 
     #[test]
@@ -78,9 +73,6 @@ mod tests {
             ("Gallon jug".to_string(), 88),
             ("5 liter mini keg".to_string(), 66),
         ];
-        assert_eq!(
-            expected,
-            NumBottles.calculate_num_bottles("330:l".to_string())
-        );
+        assert_eq!(expected, NumBottles.calculate_num_bottles(330000.0));
     }
 }
