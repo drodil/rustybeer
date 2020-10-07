@@ -4,9 +4,9 @@ fn abv() {
 
     let abv = Abv;
 
-    assert_eq!(1050., abv.calculate_abv(10., 2.));
+    assert!(1050. - abv.calculate_abv(10., 2.) < f32::EPSILON);
 
-    assert_eq!(39.5548125, abv.calculate_abv(0.3026, 0.00123))
+    assert!(39.554_813 - abv.calculate_abv(0.3026, 0.00123) < f32::EPSILON)
 }
 
 #[test]
@@ -15,19 +15,13 @@ fn boil_off() {
 
     let boil_off = BoilOff;
 
-    assert_eq!(2., boil_off.calculate_boileoff_new_volume(2., 2., 2.));
+    assert!(2. - boil_off.calculate_boileoff_new_volume(2., 2., 2.) < f32::EPSILON);
 
-    assert_eq!(14., boil_off.calculate_boileoff_new_volume(7., 5., 3.));
+    assert!(14. - boil_off.calculate_boileoff_new_volume(7., 5., 3.) < f32::EPSILON);
 
-    assert_eq!(
-        10.333333,
-        boil_off.calculate_boileoff_new_gravity(7., 5., 3.)
-    );
+    assert!(10.333333 - boil_off.calculate_boileoff_new_gravity(7., 5., 3.) < f32::EPSILON);
 
-    assert_eq!(
-        63.85714285714286,
-        boil_off.calculate_boileoff_new_gravity(4., 3.2, 0.14)
-    );
+    assert!(63.857_143 - boil_off.calculate_boileoff_new_gravity(4., 3.2, 0.14) < f32::EPSILON);
 }
 
 #[test]
@@ -36,9 +30,14 @@ fn diluting() {
 
     let diluting = Diluting;
 
-    assert_eq!(14.162499, diluting.calculate_dilution(9.1, 5.2, 3.2));
+    assert!(14.162499 - diluting.calculate_new_gravity(9.1, 5.2, 3.2) < f32::EPSILON);
 
-    assert_eq!(4.5304832, diluting.calculate_dilution(9.1, 3.16, 7.25));
+    assert!(4.5304832 - diluting.calculate_new_gravity(9.1, 3.16, 7.25) < f32::EPSILON);
+
+    assert!(2. - diluting.calculate_new_volume(2., 2., 2.) < f32::EPSILON);
+
+    assert!(14. - diluting.calculate_new_volume(7., 5., 3.) < f32::EPSILON);
+
 }
 
 #[test]
@@ -47,9 +46,9 @@ fn priming() {
 
     let priming = Priming;
 
-    assert_eq!(2.3466187499999998, priming.calculate_co2(15.));
+    assert!(2.3466187499999998 - priming.calculate_co2(15.) < f64::EPSILON);
 
-    assert_eq!(2.4556890138750003, priming.calculate_co2(12.45));
+    assert!(2.4556890138750003 - priming.calculate_co2(12.45) < f64::EPSILON);
 
     let stream = priming.calculate_sugars(77., 5., 2.);
 
@@ -82,12 +81,9 @@ fn sg_correction() {
 
     let sg_correction = SgCorrection;
 
-    assert_eq!(5.00096332765874, sg_correction.correct_sg(5.0, 2.9, 1.37));
+    assert!(5.00096332765874 - sg_correction.correct_sg(5.0, 2.9, 1.37) < f64::EPSILON);
 
-    assert_eq!(7.3023498553759225, sg_correction.correct_sg(7.3, 8.1, 5.12));
+    assert!(7.3023498553759225 - sg_correction.correct_sg(7.3, 8.1, 5.12) < f64::EPSILON);
 
-    assert_eq!(
-        7.417526019059315,
-        sg_correction.correct_sg(7.413, 28.1, 55.1212)
-    );
+    assert!(7.417526019059315 - sg_correction.correct_sg(7.413, 28.1, 55.1212) < f64::EPSILON);
 }
