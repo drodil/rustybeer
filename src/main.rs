@@ -51,6 +51,5 @@ fn main() {
             _ => println!("Not recognised subcommand"),
         },
         None => println!("A subcommand must be provided"),
-
     }
 }

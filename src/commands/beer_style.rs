@@ -64,7 +64,7 @@ impl AppSubCommand for BeerStyleFinder {
                 });
             }
 
-          if let Some(fg) = matches.value_of("fg") {
+            if let Some(fg) = matches.value_of("fg") {
                 let fg_value = fg.parse::<f32>().unwrap();
                 resp.retain(|&style| {
                     fg_value > style.final_gravity_min && fg_value < style.final_gravity_max
