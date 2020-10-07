@@ -55,40 +55,34 @@ impl AppSubCommand for BeerStyleFinder {
 
     fn do_matches<'a>(&self, matches: &ArgMatches<'a>) {
         if let Some(matches) = matches.subcommand_matches("beer_style") {
-            let fg = matches.value_of("fg");
-            let og = matches.value_of("og");
-            let abv = matches.value_of("abv");
-            let ibu = matches.value_of("ibu");
-            let srm = matches.value_of("color");
-
             let mut resp = BEER_STYLES.to_vec();
 
-            if let Some(og) = og {
+            if let Some(og) = matches.value_of("og") {
                 let og_value = og.parse::<f32>().unwrap();
                 resp.retain(|&style| {
                     og_value > style.original_gravity_min && og_value < style.original_gravity_max
                 });
             }
 
-            if let Some(fg) = fg {
+          if let Some(fg) = matches.value_of("fg") {
                 let fg_value = fg.parse::<f32>().unwrap();
                 resp.retain(|&style| {
                     fg_value > style.final_gravity_min && fg_value < style.final_gravity_max
                 });
             }
 
-            if let Some(abv) = abv {
+            if let Some(abv) = matches.value_of("abv") {
                 let abv_value = abv.parse::<f32>().unwrap();
                 resp.retain(|&style| abv_value > style.abv_min && abv_value < style.abv_max);
             }
 
-            if let Some(ibu_value) = ibu {
-                let ibu_value = ibu_value.parse::<u8>().unwrap();
+            if let Some(ibu) = matches.value_of("ibu") {
+                let ibu_value = ibu.parse::<u8>().unwrap();
                 resp.retain(|&style| ibu_value > style.ibu_min && ibu_value < style.ibu_max);
             }
 
-            if let Some(srm_value) = srm {
-                let srm_value = srm_value.parse::<f32>().unwrap();
+            if let Some(srm) = matches.value_of("srm") {
+                let srm_value = srm.parse::<f32>().unwrap();
                 resp.retain(|&style| {
                     srm_value > style.color_srm_min && srm_value < style.color_srm_max
                 });

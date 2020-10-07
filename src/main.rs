@@ -1,3 +1,4 @@
+#[macro_use]
 use clap::{App, AppSettings, ArgMatches};
 
 mod calculators;
@@ -51,5 +52,6 @@ fn main() {
             _ => println!("Not recognised subcommand"),
         },
         None => println!("A subcommand must be provided"),
+
     }
 }
