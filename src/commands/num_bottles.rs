@@ -2,12 +2,12 @@ extern crate clap;
 pub use crate::calculators::num_bottles::NumBottles;
 use crate::utils::conversions::VolumeBuilder; // Converts string input to unit measurements
 use crate::AppSubCommand;
-use clap::{value_t, App, Arg, ArgMatches, SubCommand};
+use clap::{value_t, App, Arg, ArgMatches};
 
 impl AppSubCommand for NumBottles {
-    fn add_subcommand<'a, 'b>(&self, app: App<'a, 'b>) -> App<'a, 'b> {
-        let ret = app.subcommand(
-            SubCommand::with_name("num_bottles")
+    fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
+        App::new(
+            "num_bottles")
                 .version("0.1")
                 .author("Ilakkiyan Jeyakumar (ilakkiyan.jeyakumar@gmail.com)")
                 .about("Calculates the number of different standard-size bottles needed to contain a given volume")
@@ -19,10 +19,7 @@ impl AppSubCommand for NumBottles {
                         .help("Volume as a string ('e.g 10mL, 4gal')")
                         .required(true)
                         .takes_value(true),
-                ),
-        );
-
-        ret
+        )
     }
 
     fn do_matches<'a>(&self, matches: &ArgMatches<'a>) {

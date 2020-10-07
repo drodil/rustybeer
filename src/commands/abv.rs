@@ -1,10 +1,10 @@
 pub use crate::calculators::abv::Abv;
 use crate::AppSubCommand;
-use clap::{value_t, App, Arg, ArgMatches, SubCommand};
+use clap::{value_t, App, Arg, ArgMatches};
 
 impl AppSubCommand for Abv {
-    fn add_subcommand<'a, 'b>(&self, app: App<'a, 'b>) -> App<'a, 'b> {
-        let ret = app.subcommand(SubCommand::with_name("abv")
+    fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
+        App::new("abv")
             .version("0.1")
             .author("Heikki Hellgren (heiccih@gmail.com)")
             .about("Calculates Alcohol By Volue (ABV) from original and final gravity or final gravity from original gravity and ABV")
@@ -28,12 +28,11 @@ impl AppSubCommand for Abv {
                  .value_name("ABV")
                  .help("Alcohol by volume")
                  .required_unless("fg")
-                 .takes_value(true)));
-        ret
+                 .takes_value(true))
     }
 
     fn do_matches<'a>(&self, matches: &ArgMatches<'a>) {
-        if let Some(ref matches) = matches.subcommand_matches("abv") {
+        if let Some(matches) = matches.subcommand_matches("abv") {
             if matches.is_present("fg") {
                 let fg = value_t!(matches, "fg", f32).unwrap_or_else(|e| e.exit());
                 let og = value_t!(matches, "og", f32).unwrap_or_else(|e| e.exit());

@@ -6,48 +6,50 @@ mod utils;
 
 // Trait that all subcommands must implement
 trait AppSubCommand {
-    fn add_subcommand<'a, 'b>(&self, app: App<'a, 'b>) -> App<'a, 'b>;
+    fn add_subcommand<'a, 'b>() -> App<'a, 'b>;
     fn do_matches<'c>(&self, matches: &ArgMatches<'c>);
 }
 
-// List containing all subcommands
-struct ListOfSubCommands {
-    pub list: Vec<Box<dyn AppSubCommand>>,
-}
-
-impl ListOfSubCommands {
-    fn new() -> Self {
-        Self { list: Vec::new() }
-    }
-    pub fn push<S: AppSubCommand + 'static>(&mut self, item: S) {
-        self.list.push(Box::new(item));
-    }
-}
-
 fn main() {
-    let mut app = App::new("RustyBeer")
+    let app = App::new("RustyBeer")
         .version("0.1")
-        .setting(AppSettings::ArgRequiredElseHelp);
+        .subcommand(commands::abv::Abv::add_subcommand())
+        .subcommand(commands::beer_style::BeerStyleFinder::add_subcommand())
+        .subcommand(commands::boil_off::BoilOff::add_subcommand())
+        .subcommand(commands::diluting::Diluting::add_subcommand())
+        .subcommand(commands::priming::Priming::add_subcommand())
+        .subcommand(commands::sg_correction::SgCorrection::add_subcommand())
+        .setting(AppSettings::ArgRequiredElseHelp)
+        .get_matches();
 
-    // Add subcommands here
-    let mut commands = ListOfSubCommands::new();
-    commands.push(commands::abv::Abv);
-    commands.push(commands::boil_off::BoilOff);
-    commands.push(commands::diluting::Diluting);
-    commands.push(commands::priming::Priming);
-    commands.push(commands::sg_correction::SgCorrection);
-    commands.push(commands::beer_style::BeerStyleFinder);
-    commands.push(commands::num_bottles::NumBottles);
-
-    // Allow subcommands to add their own parameters
-    for command in &commands.list {
-        app = command.add_subcommand(app);
-    }
-
-    let matches = app.get_matches();
-
-    // Allow subcommands to handle their own parameters
-    for command in &commands.list {
-        command.do_matches(&matches);
+    match app.subcommand_name() {
+        Some(s) => match s {
+            "abv" => {
+                let abv = commands::abv::Abv;
+                abv.do_matches(&app);
+            }
+            "beer_style" => {
+                let beer_style = commands::beer_style::BeerStyleFinder;
+                beer_style.do_matches(&app);
+            }
+            "boil_off" => {
+                let boil_off = commands::boil_off::BoilOff;
+                boil_off.do_matches(&app);
+            }
+            "diluting" => {
+                let diluting = commands::diluting::Diluting;
+                diluting.do_matches(&app);
+            }
+            "priming" => {
+                let priming = commands::priming::Priming;
+                priming.do_matches(&app);
+            }
+            "sg_correction" => {
+                let sg_correction = commands::sg_correction::SgCorrection;
+                sg_correction.do_matches(&app);
+            }
+            _ => println!("Not recognised subcommand"),
+        },
+        None => println!("A subcommand must be provided"),
     }
 }

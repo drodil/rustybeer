@@ -1,64 +1,60 @@
-extern crate clap;
 pub use crate::calculators::abv::Abv;
 pub use crate::utils::beer_styles::{BeerStyle, BEER_STYLES};
 use crate::AppSubCommand;
-use clap::{App, Arg, ArgMatches, SubCommand};
+use clap::{App, Arg, ArgMatches};
 
 pub struct BeerStyleFinder;
 
 impl AppSubCommand for BeerStyleFinder {
-    fn add_subcommand<'a, 'b>(&self, app: App<'a, 'b>) -> App<'a, 'b> {
-        let ret = app.subcommand(
-            SubCommand::with_name("beer_style")
-                .version("0.1")
-                .author("Heikki Hellgren (heiccih@gmail.com)")
-                .about("Finds matches of beer style based on parameters")
-                .arg(
-                    Arg::with_name("og")
-                        .short("o")
-                        .long("og")
-                        .value_name("OG")
-                        .help("Original gravity")
-                        .takes_value(true),
-                )
-                .arg(
-                    Arg::with_name("fg")
-                        .short("f")
-                        .long("fg")
-                        .value_name("FG")
-                        .help("Final gravity")
-                        .takes_value(true),
-                )
-                .arg(
-                    Arg::with_name("abv")
-                        .short("a")
-                        .long("abv")
-                        .value_name("ABV")
-                        .help("Alcohol By Volume")
-                        .takes_value(true),
-                )
-                .arg(
-                    Arg::with_name("ibu")
-                        .short("i")
-                        .long("ibu")
-                        .value_name("IBU")
-                        .help("International Bittering Units")
-                        .takes_value(true),
-                )
-                .arg(
-                    Arg::with_name("color")
-                        .short("c")
-                        .long("color")
-                        .value_name("COLOR")
-                        .help("Standard Rererence Model Color")
-                        .takes_value(true),
-                ),
-        );
-        ret
+    fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
+        App::new("beer_style")
+            .version("0.1")
+            .author("Heikki Hellgren (heiccih@gmail.com)")
+            .about("Finds matches of beer style based on parameters")
+            .arg(
+                Arg::with_name("og")
+                    .short("o")
+                    .long("og")
+                    .value_name("OG")
+                    .help("Original gravity")
+                    .takes_value(true),
+            )
+            .arg(
+                Arg::with_name("fg")
+                    .short("f")
+                    .long("fg")
+                    .value_name("FG")
+                    .help("Final gravity")
+                    .takes_value(true),
+            )
+            .arg(
+                Arg::with_name("abv")
+                    .short("a")
+                    .long("abv")
+                    .value_name("ABV")
+                    .help("Alcohol By Volume")
+                    .takes_value(true),
+            )
+            .arg(
+                Arg::with_name("ibu")
+                    .short("i")
+                    .long("ibu")
+                    .value_name("IBU")
+                    .help("International Bittering Units")
+                    .takes_value(true),
+            )
+            .arg(
+                Arg::with_name("color")
+                    .short("c")
+                    .long("color")
+                    .value_name("COLOR")
+                    .help("Standard Rererence Model Color")
+                    .takes_value(true),
+            )
     }
 
     fn do_matches<'a>(&self, matches: &ArgMatches<'a>) {
-        if let Some(ref matches) = matches.subcommand_matches("beer_style") {
+        if let Some(matches) = matches.subcommand_matches("beer_style") {
             let mut resp = BEER_STYLES.to_vec();
 
             if let Some(og) = matches.value_of("og") {
