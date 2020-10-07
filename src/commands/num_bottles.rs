@@ -1,5 +1,6 @@
 extern crate clap;
 pub use crate::calculators::num_bottles::NumBottles;
+use crate::utils::conversions::VolumeBuilder; // Converts string input to unit measurements
 use crate::AppSubCommand;
 use clap::{value_t, App, Arg, ArgMatches, SubCommand};
 
@@ -27,9 +28,10 @@ impl AppSubCommand for NumBottles {
     fn do_matches<'a>(&self, matches: &ArgMatches<'a>) {
         if let Some(ref matches) = matches.subcommand_matches("num_bottles") {
             let vol = value_t!(matches, "volume", String).unwrap_or_else(|e| e.exit());
+            let volume = VolumeBuilder::from_str(&vol).unwrap().as_milliliters();
             println!("Volume to contain: {}", vol);
             println!("=======================================================");
-            let bottles = self.calculate_num_bottles(vol);
+            let bottles = self.calculate_num_bottles(volume);
             for bottle in bottles {
                 let output = format!(
                     "Type: {0: <20} | Quantity required: {1: <5} |",
