@@ -7,7 +7,7 @@
 //!
 //! // This displays how a target volume based off the
 //! // current volume, current gravity, and target gravity
-//! assert_eq!(17.28, Diluting.calculate_new_volume(50., 3.16, 7.25));
+//! assert_eq!(17.28, Diluting.calculate_new_volume(3.16, 50., 7.25));
 //! ```
 
 pub struct Diluting;
@@ -25,11 +25,11 @@ impl Diluting {
     }
 
     /// Calculates the new volume based off a current
-    /// volume, a current gravity, and a target gravity
+    /// gravity, a current volume, and a target gravity
     pub fn calculate_new_volume(
         &self,
-        current_volume: f32,
         current_gravity: f32,
+        current_volume: f32,
         target_gravity: f32,
     ) -> f32 {
         current_volume * (current_gravity - 1.) / (target_gravity - 1.)
