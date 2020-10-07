@@ -25,11 +25,11 @@ impl Diluting {
     }
 
     /// Calculates the new volume based off a current
-    /// volume, a current gravity, and a target gravity
+    /// gravity, a current volume, and a target gravity
     pub fn calculate_new_volume(
         &self,
-        current_volume: f32,
         current_gravity: f32,
+        current_volume: f32,
         target_gravity: f32,
     ) -> f32 {
         current_volume * (current_gravity - 1.) / (target_gravity - 1.)
