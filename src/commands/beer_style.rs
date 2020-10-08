@@ -1,4 +1,4 @@
-pub use crate::utils::beer_styles::{BeerStyle, BEER_STYLES};
+pub use crate::utils::beer_styles::{BeerStyle, Criteria, BEER_STYLES};
 use clap::{App, Arg, ArgMatches};
 
 pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
@@ -48,39 +48,25 @@ pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
         )
 }
 
+fn matches_to_criteria<'a>(matches: &ArgMatches<'a>) -> Criteria {
+    Criteria {
+        og: matches.value_of("og").map(|value| value.parse().unwrap()),
+        fg: matches.value_of("fg").map(|value| value.parse().unwrap()),
+        abv: matches.value_of("abv").map(|value| value.parse().unwrap()),
+        ibu: matches.value_of("ibu").map(|value| value.parse().unwrap()),
+        srm: matches.value_of("srm").map(|value| value.parse().unwrap()),
+    }
+}
+
 pub fn do_matches<'a>(matches: &ArgMatches<'a>) {
     if let Some(matches) = matches.subcommand_matches("beer_style") {
-        let mut resp = BEER_STYLES.to_vec();
+        let criteria = matches_to_criteria(matches);
+        let mut resp: Vec<&BeerStyle> = Vec::new();
 
-        if let Some(og) = matches.value_of("og") {
-            let og_value = og.parse::<f32>().unwrap();
-            resp.retain(|&style| {
-                og_value > style.original_gravity_min && og_value < style.original_gravity_max
-            });
-        }
-
-        if let Some(fg) = matches.value_of("fg") {
-            let fg_value = fg.parse::<f32>().unwrap();
-            resp.retain(|&style| {
-                fg_value > style.final_gravity_min && fg_value < style.final_gravity_max
-            });
-        }
-
-        if let Some(abv) = matches.value_of("abv") {
-            let abv_value = abv.parse::<f32>().unwrap();
-            resp.retain(|&style| abv_value > style.abv_min && abv_value < style.abv_max);
-        }
-
-        if let Some(ibu) = matches.value_of("ibu") {
-            let ibu_value = ibu.parse::<u8>().unwrap();
-            resp.retain(|&style| ibu_value > style.ibu_min && ibu_value < style.ibu_max);
-        }
-
-        if let Some(srm) = matches.value_of("srm") {
-            let srm_value = srm.parse::<f32>().unwrap();
-            resp.retain(|&style| {
-                srm_value > style.color_srm_min && srm_value < style.color_srm_max
-            });
+        for style in BEER_STYLES.iter() {
+            if criteria.matches(style) {
+                resp.push(style)
+            }
         }
 
         if resp.is_empty() {
