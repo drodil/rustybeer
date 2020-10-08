@@ -1,11 +1,9 @@
-pub use crate::calculators::priming::Priming;
+pub use crate::calculators::priming::{calculate_co2, calculate_sugars};
 use crate::utils::conversions::{TemperatureBuilder, VolumeBuilder};
-use crate::AppSubCommand;
 use clap::{value_t, App, Arg, ArgMatches};
 
-impl AppSubCommand for Priming {
-    fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
-        App::new("priming")
+pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
+    App::new("priming")
                 .about("Beer Priming Calculator")   // The message displayed in "-h"
                 .arg(Arg::with_name("temp")         // Priming own arguments
                         .long("temp")
@@ -26,31 +24,29 @@ impl AppSubCommand for Priming {
                         .help("Volumes of wanted CO2, depends on beer style (e.g. British Style Ales 1.5 to 2.0)")
                         .default_value("2.0")
                         .takes_value(true))
-    }
+}
 
-    fn do_matches<'c>(&self, matches: &ArgMatches<'c>) {
-        if let Some(sub_matches) = matches.subcommand_matches("priming") {
-            let temperature = value_t!(sub_matches, "temp", String).unwrap_or_else(|e| e.exit());
-            let amount_str = value_t!(sub_matches, "amount", String).unwrap_or_else(|e| e.exit());
-            let co2_volumes =
-                value_t!(sub_matches, "co2_volumes", f64).unwrap_or_else(|e| e.exit());
+pub fn do_matches<'c>(matches: &ArgMatches<'c>) {
+    if let Some(sub_matches) = matches.subcommand_matches("priming") {
+        let temperature = value_t!(sub_matches, "temp", String).unwrap_or_else(|e| e.exit());
+        let amount_str = value_t!(sub_matches, "amount", String).unwrap_or_else(|e| e.exit());
+        let co2_volumes = value_t!(sub_matches, "co2_volumes", f64).unwrap_or_else(|e| e.exit());
 
-            let fahrenheit = TemperatureBuilder::from_str(&temperature)
-                .unwrap()
-                .as_fahrenheit();
-            let amount = VolumeBuilder::from_str(&amount_str).unwrap().as_litres();
-            let co2_beer = self.calculate_co2(fahrenheit);
-            let sugars = self.calculate_sugars(fahrenheit, amount, co2_volumes);
+        let fahrenheit = TemperatureBuilder::from_str(&temperature)
+            .unwrap()
+            .as_fahrenheit();
+        let amount = VolumeBuilder::from_str(&amount_str).unwrap().as_litres();
+        let co2_beer = calculate_co2(fahrenheit);
+        let sugars = calculate_sugars(fahrenheit, amount, co2_volumes);
 
-            println!("Amount: {}", amount_str);
-            println!("Volumes of CO2: {}", co2_volumes);
-            println!("Temperature: {}", temperature);
-            println!("CO2 in Beer: {:.2} volumes", co2_beer);
-            println!("Priming Sugar Options:");
+        println!("Amount: {}", amount_str);
+        println!("Volumes of CO2: {}", co2_volumes);
+        println!("Temperature: {}", temperature);
+        println!("CO2 in Beer: {:.2} volumes", co2_beer);
+        println!("Priming Sugar Options:");
 
-            for sugar in sugars.iter() {
-                println!("{:>23}: {:.2} g", sugar.name, sugar.ratio);
-            }
+        for sugar in sugars.iter() {
+            println!("{:>23}: {:.2} g", sugar.name, sugar.ratio);
         }
     }
 }

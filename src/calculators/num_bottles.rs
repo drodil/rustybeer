@@ -1,39 +1,35 @@
-/// A struct used to print how many bottles are needed to contain a given volume (in mL or L)
-pub struct NumBottles;
+// A function to store the different bottle types.
+// Can be extended as needed
+fn bottles() -> Vec<(String, f64)> {
+    vec![
+        ("330ml bottle".to_string(), 330.0),
+        ("Twelve ounce bottle".to_string(), 355.0),
+        ("Groish bottle".to_string(), 450.0),
+        ("Half liter bottle".to_string(), 500.0),
+        ("Pint".to_string(), 568.0),
+        ("Graft bottle".to_string(), 650.0),
+        ("Wine bottle".to_string(), 750.0),
+        ("Grenade jug".to_string(), 946.0),
+        ("Growler jug".to_string(), 1893.0),
+        ("Gallon jug".to_string(), 3785.0),
+        ("5 liter mini keg".to_string(), 5000.0),
+    ]
+}
 
-impl NumBottles {
-    // A function to store the different bottle types.
-    // Can be extended as needed
-    fn bottles(&self) -> Vec<(String, f64)> {
-        vec![
-            ("330ml bottle".to_string(), 330.0),
-            ("Twelve ounce bottle".to_string(), 355.0),
-            ("Groish bottle".to_string(), 450.0),
-            ("Half liter bottle".to_string(), 500.0),
-            ("Pint".to_string(), 568.0),
-            ("Graft bottle".to_string(), 650.0),
-            ("Wine bottle".to_string(), 750.0),
-            ("Grenade jug".to_string(), 946.0),
-            ("Growler jug".to_string(), 1893.0),
-            ("Gallon jug".to_string(), 3785.0),
-            ("5 liter mini keg".to_string(), 5000.0),
-        ]
-    }
-    /// Prints out the quantity of bottles needed to store a given volume
-    ///
-    /// # Arguments
-    /// * 'volume' - A volume to bottle in milliliters
-    ///
-    pub fn calculate_num_bottles(&self, volume: f64) -> Vec<(String, i32)> {
-        let bottle_types = self.bottles();
-        let mut bottle_counter: Vec<(String, i32)> = Vec::with_capacity(bottle_types.len());
+/// Prints out the quantity of bottles needed to store a given volume
+///
+/// # Arguments
+/// * 'volume' - A volume to bottle in milliliters
+///
+pub fn calculate_num_bottles(volume: f64) -> Vec<(String, i32)> {
+    let bottle_types = bottles();
+    let mut bottle_counter: Vec<(String, i32)> = Vec::with_capacity(bottle_types.len());
 
-        for bottle in bottle_types {
-            let num_bottles: i32 = ((volume) / bottle.1).ceil() as i32;
-            bottle_counter.push((bottle.0, num_bottles));
-        }
-        bottle_counter
+    for bottle in bottle_types {
+        let num_bottles: i32 = ((volume) / bottle.1).ceil() as i32;
+        bottle_counter.push((bottle.0, num_bottles));
     }
+    bottle_counter
 }
 
 #[cfg(test)]
@@ -55,7 +51,7 @@ mod tests {
             ("Gallon jug".to_string(), 1),
             ("5 liter mini keg".to_string(), 1),
         ];
-        assert_eq!(expected, NumBottles.calculate_num_bottles(330.0));
+        assert_eq!(expected, calculate_num_bottles(330.0));
     }
 
     #[test]
@@ -73,6 +69,6 @@ mod tests {
             ("Gallon jug".to_string(), 88),
             ("5 liter mini keg".to_string(), 66),
         ];
-        assert_eq!(expected, NumBottles.calculate_num_bottles(330000.0));
+        assert_eq!(expected, calculate_num_bottles(330000.0));
     }
 }
