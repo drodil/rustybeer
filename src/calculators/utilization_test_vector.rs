@@ -1,4 +1,9 @@
-use crate::calculators::ibu::test::TestVector;
+pub struct TestVector {
+    pub og: Vec<f64>,
+    pub boiling_time: Vec<u32>,
+    pub utilization: Vec<Vec<f64>>,
+}
+
 pub fn get_vector() -> TestVector {
     TestVector {
         og: vec![
