@@ -1,0 +1,338 @@
+[
+    {
+        "hop": "Admiral",
+        "alpha_acids": 14.5
+    },
+    {
+        "hop": "Ahtanum",
+        "alpha_acids": 5.5
+    },
+    {
+        "hop": "Amarillo",
+        "alpha_acids": 8.6
+    },
+    {
+        "hop": "Aquila",
+        "alpha_acids": 7
+    },
+    {
+        "hop": "B. C. Goldings",
+        "alpha_acids": 5
+    },
+    {
+        "hop": "Banner",
+        "alpha_acids": 10
+    },
+    {
+        "hop": "Bramling Cross",
+        "alpha_acids": 6.5
+    },
+    {
+        "hop": "Brewer’s Gold",
+        "alpha_acids": 9
+    },
+    {
+        "hop": "Bullion",
+        "alpha_acids": 7.5
+    },
+    {
+        "hop": "Cascade",
+        "alpha_acids": 7
+    },
+    {
+        "hop": "Centennial",
+        "alpha_acids": 8.5
+    },
+    {
+        "hop": "Challenger",
+        "alpha_acids": 7.5
+    },
+    {
+        "hop": "Chinook",
+        "alpha_acids": 13
+    },
+    {
+        "hop": "Citra",
+        "alpha_acids": 11
+    },
+    {
+        "hop": "Cluster",
+        "alpha_acids": 6.5
+    },
+    {
+        "hop": "Columbus",
+        "alpha_acids": 15
+    },
+    {
+        "hop": "Comet",
+        "alpha_acids": 10
+    },
+    {
+        "hop": "Crystal",
+        "alpha_acids": 4.3
+    },
+    {
+        "hop": "Domesic Hallertau",
+        "alpha_acids": 3.9
+    },
+    {
+        "hop": "East Kent Goldings",
+        "alpha_acids": 5
+    },
+    {
+        "hop": "Eroica",
+        "alpha_acids": 12
+    },
+    {
+        "hop": "First Gold",
+        "alpha_acids": 7.5
+    },
+    {
+        "hop": "Fuggles",
+        "alpha_acids": 4.5
+    },
+    {
+        "hop": "Galena",
+        "alpha_acids": 13
+    },
+    {
+        "hop": "Glacier",
+        "alpha_acids": 5.5
+    },
+    {
+        "hop": "Goldings",
+        "alpha_acids": 4.5
+    },
+    {
+        "hop": "Galaxy",
+        "alpha_acids": 13.5
+    },
+    {
+        "hop": "Hallertau Mittelfruh",
+        "alpha_acids": 3.75
+    },
+    {
+        "hop": "Hallertau Hersbrucker",
+        "alpha_acids": 4
+    },
+    {
+        "hop": "Herald",
+        "alpha_acids": 12
+    },
+    {
+        "hop": "Hersbrucker",
+        "alpha_acids": 4
+    },
+    {
+        "hop": "Horizon",
+        "alpha_acids": 12.5
+    },
+    {
+        "hop": "Huller Bitterer",
+        "alpha_acids": 5.75
+    },
+    {
+        "hop": "Kent Goldings",
+        "alpha_acids": 5
+    },
+    {
+        "hop": "Liberty",
+        "alpha_acids": 4
+    },
+    {
+        "hop": "Lublin",
+        "alpha_acids": 4.5
+    },
+    {
+        "hop": "Magnum",
+        "alpha_acids": 15
+    },
+    {
+        "hop": "Millenium",
+        "alpha_acids": 15.5
+    },
+    {
+        "hop": "Mount Hood",
+        "alpha_acids": 4.8
+    },
+    {
+        "hop": "Mount Rainier",
+        "alpha_acids": 6.2
+    },
+    {
+        "hop": "Motueka",
+        "alpha_acids": 7.0
+    },
+    {
+        "hop": "Nelson Sauvin",
+        "alpha_acids": 12.5
+    },
+    {
+        "hop": "Newport",
+        "alpha_acids": 15.5
+    },
+    {
+        "hop": "Northdown",
+        "alpha_acids": 8.6
+    },
+    {
+        "hop": "Northern Brewer",
+        "alpha_acids": 7.8
+    },
+    {
+        "hop": "Nugget",
+        "alpha_acids": 14
+    },
+    {
+        "hop": "Olympic",
+        "alpha_acids": 12
+    },
+    {
+        "hop": "Omega",
+        "alpha_acids": 10
+    },
+    {
+        "hop": "Orion",
+        "alpha_acids": 7
+    },
+    {
+        "hop": "Pacific Gem",
+        "alpha_acids": 15.4
+    },
+    {
+        "hop": "Perle",
+        "alpha_acids": 8.2
+    },
+    {
+        "hop": "Phoenix",
+        "alpha_acids": 10
+    },
+    {
+        "hop": "Pioneer",
+        "alpha_acids": 9
+    },
+    {
+        "hop": "Pride of Ringwood",
+        "alpha_acids": 10
+    },
+    {
+        "hop": "Progress",
+        "alpha_acids": 6.25
+    },
+    {
+        "hop": "Record",
+        "alpha_acids": 6.5
+    },
+    {
+        "hop": "Saaz",
+        "alpha_acids": 3.5
+    },
+    {
+        "hop": "Santiam",
+        "alpha_acids": 6.5
+    },
+    {
+        "hop": "Satus",
+        "alpha_acids": 13
+    },
+    {
+        "hop": "Simcoe",
+        "alpha_acids": 12.7
+    },
+    {
+        "hop": "Sorachi Ace",
+        "alpha_acids": 11.1
+    },
+    {
+        "hop": "Spalt",
+        "alpha_acids": 4.5
+    },
+    {
+        "hop": "Sterling",
+        "alpha_acids": 8.7
+    },
+    {
+        "hop": "Sticklebract",
+        "alpha_acids": 11.5
+    },
+    {
+        "hop": "Strisselspalt",
+        "alpha_acids": 3.5
+    },
+    {
+        "hop": "Styrian Goldings",
+        "alpha_acids": 5.5
+    },
+    {
+        "hop": "Super Alpha",
+        "alpha_acids": 13
+    },
+    {
+        "hop": "Super Styrians",
+        "alpha_acids": 9
+    },
+    {
+        "hop": "Summit",
+        "alpha_acids": 18.5
+    },
+    {
+        "hop": "Talisman",
+        "alpha_acids": 8
+    },
+    {
+        "hop": "Target",
+        "alpha_acids": 11.5
+    },
+    {
+        "hop": "Tettnanger",
+        "alpha_acids": 4.5
+    },
+    {
+        "hop": "Tomahawk",
+        "alpha_acids": 15
+    },
+    {
+        "hop": "Ultra",
+        "alpha_acids": 4.5
+    },
+    {
+        "hop": "Vanguard",
+        "alpha_acids": 5
+    },
+    {
+        "hop": "Warrior",
+        "alpha_acids": 16
+    },
+    {
+        "hop": "Whitbread Golding",
+        "alpha_acids": 6
+    },
+    {
+        "hop": "Willamette",
+        "alpha_acids": 4.5
+    },
+    {
+        "hop": "Wye Target",
+        "alpha_acids": 10
+    },
+    {
+        "hop": "Yamhill Goldings",
+        "alpha_acids": 4
+    },
+    {
+        "hop": "Yakima Cluster",
+        "alpha_acids": 7
+    },
+    {
+        "hop": "Yeoman",
+        "alpha_acids": 7.25
+    },
+    {
+        "hop": "Zenith",
+        "alpha_acids": 9
+    },
+    {
+        "hop": "Zeus",
+        "alpha_acids": 16
+    }
+]
