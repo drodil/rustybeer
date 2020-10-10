@@ -19,7 +19,7 @@ pub struct BeerStyle {
 }
 
 // Raw inlined style data
-static BEER_STYLES_JSON: &str = include_str!("beer_styles.json");
+static BEER_STYLES_JSON: &str = include_str!("json/beer_styles.json");
 
 /// All available beer styles.
 ///

@@ -1,6 +1,6 @@
-use crate::utils::conversions::TemperatureBuilder;
 use clap::{value_t, App, Arg, ArgMatches};
 use rustybeer::calculators::sg_correction::correct_sg;
+use rustybeer_util::conversions::TemperatureBuilder;
 
 pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
     let ret = App::new("sg_correction")

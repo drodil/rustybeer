@@ -11,6 +11,3 @@
 //! be indexed and requested
 
 pub mod calculators;
-pub mod utils;
-
-pub use calculators::*;

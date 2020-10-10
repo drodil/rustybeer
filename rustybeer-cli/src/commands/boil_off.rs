@@ -1,5 +1,5 @@
-pub use crate::calculators::diluting::{calculate_new_gravity, calculate_new_volume};
 use clap::{value_t, App, Arg, ArgGroup, ArgMatches};
+pub use rustybeer::calculators::diluting::{calculate_new_gravity, calculate_new_volume};
 
 pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
     App::new("boil_off")

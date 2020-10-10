@@ -1,5 +1,5 @@
-pub use crate::calculators::abv::{calculate_abv, calculate_fg};
 use clap::{value_t, App, Arg, ArgMatches};
+pub use rustybeer::calculators::abv::{calculate_abv, calculate_fg};
 
 pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
     App::new("abv")

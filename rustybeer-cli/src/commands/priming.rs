@@ -1,6 +1,6 @@
-pub use crate::calculators::priming::{calculate_co2, calculate_sugars};
-use crate::utils::conversions::{TemperatureBuilder, VolumeBuilder};
 use clap::{value_t, App, Arg, ArgMatches};
+use rustybeer::calculators::priming::{calculate_co2, calculate_sugars};
+use rustybeer_util::conversions::{TemperatureBuilder, VolumeBuilder};
 
 pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
     App::new("priming")

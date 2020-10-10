@@ -126,7 +126,6 @@ impl MassBuilder {
 #[cfg(test)]
 mod tests {
     use super::{MassBuilder, TemperatureBuilder, VolumeBuilder};
-    use std::num::ParseFloatError;
     const DELTA: f64 = 1e-5;
 
     fn abs(x: f64) -> f64 {
@@ -226,9 +225,9 @@ mod tests {
 
     #[test]
     fn zero_from_string() {
-        assert_eq!(0.0, TemperatureBuilder::from_str("").unwrap().as_celsius());
-        assert_eq!(0.0, VolumeBuilder::from_str("").unwrap().as_litres());
-        assert_eq!(0.0, MassBuilder::from_str("").unwrap().as_grams());
+        assert_almost_equal(0.0, TemperatureBuilder::from_str("").unwrap().as_celsius());
+        assert_almost_equal(0.0, VolumeBuilder::from_str("").unwrap().as_litres());
+        assert_almost_equal(0.0, MassBuilder::from_str("").unwrap().as_grams());
     }
 
     #[test]
