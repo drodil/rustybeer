@@ -15,6 +15,7 @@ pub struct BeerStyle {
     pub ibu_max: u8,
     pub color_srm_min: f32,
     pub color_srm_max: f32,
+    pub description: String,
 }
 
 // Raw inlined style data
@@ -88,6 +89,7 @@ mod tests {
         ibu_max: 16,
         color_srm_min: -1234.5,
         color_srm_max: 1234.5,
+        description: String::from("Test"),
     });
 
     #[test]
