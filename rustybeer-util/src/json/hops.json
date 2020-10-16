@@ -1,338 +1,892 @@
-[
-    {
-        "hop": "Admiral",
-        "alpha_acids": 14.5
-    },
-    {
-        "hop": "Ahtanum",
-        "alpha_acids": 5.5
-    },
-    {
-        "hop": "Amarillo",
-        "alpha_acids": 8.6
-    },
-    {
-        "hop": "Aquila",
-        "alpha_acids": 7
-    },
-    {
-        "hop": "B. C. Goldings",
-        "alpha_acids": 5
-    },
-    {
-        "hop": "Banner",
-        "alpha_acids": 10
-    },
-    {
-        "hop": "Bramling Cross",
-        "alpha_acids": 6.5
-    },
-    {
-        "hop": "Brewer’s Gold",
-        "alpha_acids": 9
-    },
-    {
-        "hop": "Bullion",
-        "alpha_acids": 7.5
-    },
-    {
-        "hop": "Cascade",
-        "alpha_acids": 7
-    },
-    {
-        "hop": "Centennial",
-        "alpha_acids": 8.5
-    },
-    {
-        "hop": "Challenger",
-        "alpha_acids": 7.5
-    },
-    {
-        "hop": "Chinook",
-        "alpha_acids": 13
-    },
-    {
-        "hop": "Citra",
-        "alpha_acids": 11
-    },
-    {
-        "hop": "Cluster",
-        "alpha_acids": 6.5
-    },
-    {
-        "hop": "Columbus",
-        "alpha_acids": 15
-    },
-    {
-        "hop": "Comet",
-        "alpha_acids": 10
-    },
-    {
-        "hop": "Crystal",
-        "alpha_acids": 4.3
-    },
-    {
-        "hop": "Domesic Hallertau",
-        "alpha_acids": 3.9
-    },
-    {
-        "hop": "East Kent Goldings",
-        "alpha_acids": 5
-    },
-    {
-        "hop": "Eroica",
-        "alpha_acids": 12
-    },
-    {
-        "hop": "First Gold",
-        "alpha_acids": 7.5
-    },
-    {
-        "hop": "Fuggles",
-        "alpha_acids": 4.5
-    },
-    {
-        "hop": "Galena",
-        "alpha_acids": 13
-    },
-    {
-        "hop": "Glacier",
-        "alpha_acids": 5.5
-    },
-    {
-        "hop": "Goldings",
-        "alpha_acids": 4.5
-    },
-    {
-        "hop": "Galaxy",
-        "alpha_acids": 13.5
-    },
-    {
-        "hop": "Hallertau Mittelfruh",
-        "alpha_acids": 3.75
-    },
-    {
-        "hop": "Hallertau Hersbrucker",
-        "alpha_acids": 4
-    },
-    {
-        "hop": "Herald",
-        "alpha_acids": 12
-    },
-    {
-        "hop": "Hersbrucker",
-        "alpha_acids": 4
-    },
-    {
-        "hop": "Horizon",
-        "alpha_acids": 12.5
-    },
-    {
-        "hop": "Huller Bitterer",
-        "alpha_acids": 5.75
-    },
-    {
-        "hop": "Kent Goldings",
-        "alpha_acids": 5
-    },
-    {
-        "hop": "Liberty",
-        "alpha_acids": 4
-    },
-    {
-        "hop": "Lublin",
-        "alpha_acids": 4.5
-    },
-    {
-        "hop": "Magnum",
-        "alpha_acids": 15
-    },
-    {
-        "hop": "Millenium",
-        "alpha_acids": 15.5
-    },
-    {
-        "hop": "Mount Hood",
-        "alpha_acids": 4.8
-    },
-    {
-        "hop": "Mount Rainier",
-        "alpha_acids": 6.2
-    },
-    {
-        "hop": "Motueka",
-        "alpha_acids": 7.0
-    },
-    {
-        "hop": "Nelson Sauvin",
-        "alpha_acids": 12.5
-    },
-    {
-        "hop": "Newport",
-        "alpha_acids": 15.5
-    },
-    {
-        "hop": "Northdown",
-        "alpha_acids": 8.6
-    },
-    {
-        "hop": "Northern Brewer",
-        "alpha_acids": 7.8
-    },
-    {
-        "hop": "Nugget",
-        "alpha_acids": 14
-    },
-    {
-        "hop": "Olympic",
-        "alpha_acids": 12
-    },
-    {
-        "hop": "Omega",
-        "alpha_acids": 10
-    },
-    {
-        "hop": "Orion",
-        "alpha_acids": 7
-    },
-    {
-        "hop": "Pacific Gem",
-        "alpha_acids": 15.4
-    },
-    {
-        "hop": "Perle",
-        "alpha_acids": 8.2
-    },
-    {
-        "hop": "Phoenix",
-        "alpha_acids": 10
-    },
-    {
-        "hop": "Pioneer",
-        "alpha_acids": 9
-    },
-    {
-        "hop": "Pride of Ringwood",
-        "alpha_acids": 10
-    },
-    {
-        "hop": "Progress",
-        "alpha_acids": 6.25
-    },
-    {
-        "hop": "Record",
-        "alpha_acids": 6.5
-    },
-    {
-        "hop": "Saaz",
-        "alpha_acids": 3.5
-    },
-    {
-        "hop": "Santiam",
-        "alpha_acids": 6.5
-    },
-    {
-        "hop": "Satus",
-        "alpha_acids": 13
-    },
-    {
-        "hop": "Simcoe",
-        "alpha_acids": 12.7
-    },
-    {
-        "hop": "Sorachi Ace",
-        "alpha_acids": 11.1
-    },
-    {
-        "hop": "Spalt",
-        "alpha_acids": 4.5
-    },
-    {
-        "hop": "Sterling",
-        "alpha_acids": 8.7
-    },
-    {
-        "hop": "Sticklebract",
-        "alpha_acids": 11.5
-    },
-    {
-        "hop": "Strisselspalt",
-        "alpha_acids": 3.5
-    },
-    {
-        "hop": "Styrian Goldings",
-        "alpha_acids": 5.5
-    },
-    {
-        "hop": "Super Alpha",
-        "alpha_acids": 13
-    },
-    {
-        "hop": "Super Styrians",
-        "alpha_acids": 9
-    },
-    {
-        "hop": "Summit",
-        "alpha_acids": 18.5
-    },
-    {
-        "hop": "Talisman",
-        "alpha_acids": 8
-    },
-    {
-        "hop": "Target",
-        "alpha_acids": 11.5
-    },
-    {
-        "hop": "Tettnanger",
-        "alpha_acids": 4.5
-    },
-    {
-        "hop": "Tomahawk",
-        "alpha_acids": 15
-    },
-    {
-        "hop": "Ultra",
-        "alpha_acids": 4.5
-    },
-    {
-        "hop": "Vanguard",
-        "alpha_acids": 5
-    },
-    {
-        "hop": "Warrior",
-        "alpha_acids": 16
-    },
-    {
-        "hop": "Whitbread Golding",
-        "alpha_acids": 6
-    },
-    {
-        "hop": "Willamette",
-        "alpha_acids": 4.5
-    },
-    {
-        "hop": "Wye Target",
-        "alpha_acids": 10
-    },
-    {
-        "hop": "Yamhill Goldings",
-        "alpha_acids": 4
-    },
-    {
-        "hop": "Yakima Cluster",
-        "alpha_acids": 7
-    },
-    {
-        "hop": "Yeoman",
-        "alpha_acids": 7.25
-    },
-    {
-        "hop": "Zenith",
-        "alpha_acids": 9
-    },
-    {
-        "hop": "Zeus",
-        "alpha_acids": 16
+[{
+        "name": "Admiral",
+        "aa_min": 13.5,
+        "aa_max": 16.2,
+        "ba_min": 4.8,
+        "ba_max": 6.1,
+        "purpose": ["Bittering"],
+        "country": "UK",
+        "description": "Aggressive but smooth bittering with an orange-citrys and herbal resonance",
+        "substitutions": ["Northdown", "Target", "Challenger"]
+    },
+    {
+        "name": "Ahtanum",
+        "aa_min": 4.0,
+        "aa_max": 6.3,
+        "ba_min": 5.0,
+        "ba_max": 6.5,
+        "purpose": ["Aroma"],
+        "country": "US",
+        "description": "Distinct citrus character with notes of grapefruit",
+        "substitutions": ["Cascade"]
+    },
+    {
+        "name": "Amarillo",
+        "aa_min": 8.0,
+        "aa_max": 11.0,
+        "ba_min": 6.0,
+        "ba_max": 7.0,
+        "purpose": ["Aroma"],
+        "country": "US",
+        "description": "Orange citrus flavor",
+        "substitutions": ["Cascade", "Centennial", "Simcoe"]
+    },
+    {
+        "name": "Aquila",
+        "aa_min": 6.7,
+        "aa_max": 8.9,
+        "ba_min": 4.1,
+        "ba_max": 4.9,
+        "purpose": ["Aroma"],
+        "country": "US",
+        "description": "",
+        "substitutions": ["Cluster"]
+    },
+    {
+        "name": "Aramis",
+        "aa_min": 7.9,
+        "aa_max": 8.3,
+        "ba_min": 3.8,
+        "ba_max": 4.5,
+        "purpose": ["Aroma"],
+        "country": "France",
+        "description": "Sweet with notes of spice, citrus and herbs",
+        "substitutions": ["Centennial", "Chinook", "Hallertau", "Tettnang"]
+    },
+    {
+        "name": "Bitter Gold",
+        "aa_min": 15.4,
+        "aa_max": 18.8,
+        "ba_min": 6.1,
+        "ba_max": 8.0,
+        "purpose": ["Bittering"],
+        "country": "US",
+        "description": "Use for bittering only, has no notable aroma",
+        "substitutions": ["Galena", "Nugget"]
+    },
+    {
+        "name": "Golding (US)",
+        "aa_min": 4,
+        "aa_max": 6.0,
+        "ba_min": 2.0,
+        "ba_max": 3.0,
+        "purpose": ["Aroma"],
+        "country": "US",
+        "description": "Delicate English-style aromas, fruits, herbs",
+        "substitutions": []
+    },
+    {
+        "name": "Banner",
+        "aa_min": 8.4,
+        "aa_max": 13.0,
+        "ba_min": 5.3,
+        "ba_max": 8.0,
+        "purpose": ["Bittering"],
+        "country": "US",
+        "description": "Moderate bittering potential, pleasant aroma",
+        "substitutions": []
+    },
+    {
+        "name": "Bramling Cross",
+        "aa_min": 5.0,
+        "aa_max": 7.8,
+        "ba_min": 2.3,
+        "ba_max": 3.2,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "UK",
+        "description": "Notes of lemon, blackcurrant, blackberries and plums particularly when used as a late addition",
+        "substitutions": []
+    },
+    {
+        "name": "Brewer’s Gold",
+        "aa_min": 7.1,
+        "aa_max": 11.3,
+        "ba_min": 3.3,
+        "ba_max": 6.1,
+        "purpose": ["Bittering"],
+        "country": "UK",
+        "description": "Notes of spice and blackcurrant",
+        "substitutions": ["Galena", "Northern Brewer", "Northdown"]
+    },
+    {
+        "name": "Bullion",
+        "aa_min": 6.7,
+        "aa_max": 12.9,
+        "ba_min": 3.7,
+        "ba_max": 9.1,
+        "purpose": ["Bittering"],
+        "country": "UK",
+        "description": "Elements of spice and dark fruits",
+        "substitutions": ["Brewer’s Gold", "Chinook", "Columbus", "Galena", "Northern Brewer"]
+    },
+    {
+        "name": "Cascade (NZ)",
+        "aa_min": 7.0,
+        "aa_max": 8.0,
+        "ba_min": 5.0,
+        "ba_max": 5.5,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "New Zealand",
+        "description": "Floral, with elements of citrus and notes of grapefruit",
+        "substitutions": ["Ahtanum", "Amarillo", "Centennial"]
+    },
+    {
+        "name": "Cascade (US)",
+        "aa_min": 4.5,
+        "aa_max": 8.9,
+        "ba_min": 3.6,
+        "ba_max": 7.5,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "US",
+        "description": "Floral, with elements of citrus and notes of grapefruit",
+        "substitutions": ["Ahtanum", "Amarillo", "Centennial"]
+    },
+    {
+        "name": "Centennial",
+        "aa_min": 9.5,
+        "aa_max": 11.5,
+        "ba_min": 3.5,
+        "ba_max": 4.5,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "US",
+        "description": "Earthy and floral with an element of citrus",
+        "substitutions": ["Cascade", "Chinook", "Columbus"]
+    },
+    {
+        "name": "Challenger",
+        "aa_min": 6.5,
+        "aa_max": 9.0,
+        "ba_min": 3.2,
+        "ba_max": 4.5,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "UK",
+        "description": "A spicy, cedar, green tea aroma with sweet floral flavor notes",
+        "substitutions": ["Northern Brewer", "Perle"]
+    },
+    {
+        "name": "Chinook",
+        "aa_min": 12.0,
+        "aa_max": 14.0,
+        "ba_min": 3.0,
+        "ba_max": 4.0,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "",
+        "description": "Bouquet of pine and spice",
+        "substitutions": ["Columbus", "Northern Brewer", "Nugget"]
+    },
+    {
+        "name": "Citra",
+        "aa_min": 10,
+        "aa_max": 15.0,
+        "ba_min": 3.0,
+        "ba_max": 4.5,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "US",
+        "description": "Citrus, grapefruit, lime, tropical fruits, harsh bitterness",
+        "substitutions": ["Galaxy", "Taurus"]
+    },
+    {
+        "name": "Cluster",
+        "aa_min": 5.5,
+        "aa_max": 9.0,
+        "ba_min": 4.0,
+        "ba_max": 6.0,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "US",
+        "description": "Clean, neutral, slightly floral",
+        "substitutions": ["Galena"]
+    },
+    {
+        "name": "Columbus",
+        "aa_min": 14,
+        "aa_max": 18,
+        "ba_min": 4.5,
+        "ba_max": 6.0,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "US",
+        "description": "Pungent, resiny, earthy and spicy; sometimes having the aroma of black pepper or licorice. Aroma can change to qualities of marijuana if used heavily in the end of the brew",
+        "substitutions": ["Chinook", "Galena", "Millenium", "Nugget", "Zeus"]
+    },
+    {
+        "name": "Comet",
+        "aa_min": 9.4,
+        "aa_max": 12.4,
+        "ba_min": 3.0,
+        "ba_max": 6.1,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "US",
+        "description": "Strong grapefruit, dank reisin flavors",
+        "substitutions": ["Galena", "Summit"]
+    },
+    {
+        "name": "Crystal",
+        "aa_min": 2.8,
+        "aa_max": 4.4,
+        "ba_min": 5.8,
+        "ba_max": 7.0,
+        "purpose": ["Aroma"],
+        "country": "",
+        "description": "Woody, floral and fruity with spice notes of cinnamon, nutmeg and black pepper",
+        "substitutions": ["Hallertau", "Liberty", "Mt. Hood", "Strisselpalt", "Hersbruker"]
+    },
+    {
+        "name": "East Kent Golding",
+        "aa_min": 5,
+        "aa_max": 6.0,
+        "ba_min": 2.0,
+        "ba_max": 3.0,
+        "purpose": ["Aroma"],
+        "country": "",
+        "description": "Aromas of lavender, spice, honey, thyme, earthy flavors",
+        "substitutions": ["Golding", "Progress"]
+    },
+    {
+        "name": "Eroica",
+        "aa_min": 12.0,
+        "aa_max": 12.5,
+        "ba_min": 4.0,
+        "ba_max": 4.6,
+        "purpose": ["Bittering"],
+        "country": "",
+        "description": "Sharp fruity essence",
+        "substitutions": ["Brewer’s Gold", "Galena", "Glacier", "Bullion"]
+    },
+    {
+        "name": "First Gold",
+        "aa_min": 5.6,
+        "aa_max": 9.3,
+        "ba_min": 2.3,
+        "ba_max": 4.1,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "UK",
+        "description": "Tangerine, orange, cinnamon aroma, marmalade flavors",
+        "substitutions": ["Crystal", "East Kent Golding"]
+    },
+    {
+        "name": "Fuggle",
+        "aa_min": 2.4,
+        "aa_max": 6.1,
+        "ba_min": 2.1,
+        "ba_max": 2.8,
+        "purpose": ["Aroma"],
+        "country": "UK",
+        "description": "",
+        "substitutions": ["Willamette", "Styrian Golding"]
+    },
+    {
+        "name": "Galena",
+        "aa_min": 12,
+        "aa_max": 12,
+        "ba_min": 7.5,
+        "ba_max": 7.5,
+        "purpose": ["Aroma"],
+        "country": "US",
+        "description": "Fruity aroma",
+        "substitutions": ["Brewer’s Gold", "Columbus", "Nugget"]
+    },
+    {
+        "name": "Glacier",
+        "aa_min": 3.3,
+        "aa_max": 9.7,
+        "ba_min": 5.4,
+        "ba_max": 10.0,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "",
+        "description": "Herbs, wood and citrus",
+        "substitutions": ["Fuggle", "Willamette", "Styrian Golding"]
+    },
+    {
+        "name": "Galaxy",
+        "aa_min": 11.0,
+        "aa_max": 16.0,
+        "ba_min": 5.0,
+        "ba_max": 6.9,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "Australia",
+        "description": "Citrus, peach and passionfruit aromas",
+        "substitutions": ["Citra"]
+    },
+    {
+        "name": "Hallertau",
+        "aa_min": 3.5,
+        "aa_max": 3.75,
+        "ba_min": 3.5,
+        "ba_max": 4.5,
+        "purpose": ["Aroma"],
+        "country": "Germany",
+        "description": "Lighly flowery and spicy aroma",
+        "substitutions": ["Liberty", "Vanguard", "Tradition"]
+    },
+    {
+        "name": "Hersbrucker",
+        "aa_min": 2,
+        "aa_max": 5.0,
+        "ba_min": 4.0,
+        "ba_max": 6.0,
+        "purpose": ["Aroma"],
+        "country": "Germany",
+        "description": "Floral, fruity and spicy aromas",
+        "substitutions": []
+    },
+    {
+        "name": "Herald",
+        "aa_min": 11.9,
+        "aa_max": 12.8,
+        "ba_min": 4.8,
+        "ba_max": 5.5,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "UK",
+        "description": "",
+        "substitutions": ["Hallertau"]
+    },
+    {
+        "name": "Hersbrucker E",
+        "aa_min": 4,
+        "aa_max": 6.0,
+        "ba_min": 5.0,
+        "ba_max": 7.0,
+        "purpose": ["Aroma"],
+        "country": "UK",
+        "description": "",
+        "substitutions": ["Mt. Hood", "Strisselpalt"]
+    },
+    {
+        "name": "Horizon",
+        "aa_min": 8.8,
+        "aa_max": 16.5,
+        "ba_min": 5.5,
+        "ba_max": 8.5,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "US",
+        "description": "Floral, citrusy",
+        "substitutions": ["Magnum"]
+    },
+    {
+        "name": "Huller Bitterer",
+        "aa_min": 4.5,
+        "aa_max": 7.0,
+        "ba_min": 4.5,
+        "ba_max": 5.5,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "Germany",
+        "description": "",
+        "substitutions": []
+    },
+    {
+        "name": "Liberty",
+        "aa_min": 3.0,
+        "aa_max": 6.0,
+        "ba_min": 3.5,
+        "ba_max": 3.5,
+        "purpose": ["Aroma"],
+        "country": "US",
+        "description": "Noble hop characteristics",
+        "substitutions": ["Hallertau", "Mt. Hood", "Tradition"]
+    },
+    {
+        "name": "Lublin",
+        "aa_min": 3.0,
+        "aa_max": 5.0,
+        "ba_min": 2.5,
+        "ba_max": 4.0,
+        "purpose": ["Aroma"],
+        "country": "Czechoslovakia",
+        "description": "Noble-like character",
+        "substitutions": []
+    },
+    {
+        "name": "Magnum",
+        "aa_min": 12.0,
+        "aa_max": 14.0,
+        "ba_min": 4.5,
+        "ba_max": 5.5,
+        "purpose": ["Bittering"],
+        "country": "Germany",
+        "description": "Clean bitterness, subtle citrus flavors",
+        "substitutions": ["Columbus", "Nugget"]
+    },
+    {
+        "name": "Millenium",
+        "aa_min": 14.5,
+        "aa_max": 16.5,
+        "ba_min": 4.3,
+        "ba_max": 5.3,
+        "purpose": ["Bittering"],
+        "country": "",
+        "description": "Mild, herbaceous, elements of resin",
+        "substitutions": ["Columbus", "Nugget", "Summit"]
+    },
+    {
+        "name": "Mt. Hood",
+        "aa_min": 4.8,
+        "aa_max": 8.0,
+        "ba_min": 5.0,
+        "ba_max": 8.0,
+        "purpose": ["Aroma"],
+        "country": "US",
+        "description": "Noble hop aroma",
+        "substitutions": ["Strisselpalt", "Hallertau", "Hersbruker"]
+    },
+    {
+        "name": "Mt. Rainier",
+        "aa_min": 5.0,
+        "aa_max": 8.1,
+        "ba_min": 5.0,
+        "ba_max": 7.0,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "",
+        "description": "Hallertau-like aroma, notes of citrus and licorice",
+        "substitutions": ["Brewer’s Gold", "Fuggle", "Hallertau"]
+    },
+    {
+        "name": "Motueka",
+        "aa_min": 6.5,
+        "aa_max": 8.5,
+        "ba_min": 5.0,
+        "ba_max": 5.5,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "New Zealand",
+        "description": "Tropical fruit and citrus",
+        "substitutions": ["Saaz", "Sterling"]
+    },
+    {
+        "name": "Nelson Sauvin",
+        "aa_min": 12.0,
+        "aa_max": 13.0,
+        "ba_min": 6.0,
+        "ba_max": 8.0,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "New Zealand",
+        "description": "Smooth bittering, rich, fruity, gooseberry and white-wine flavors",
+        "substitutions": []
+    },
+    {
+        "name": "Newport",
+        "aa_min": 13.5,
+        "aa_max": 17.0,
+        "ba_min": 7.2,
+        "ba_max": 9.1,
+        "purpose": ["Bittering"],
+        "country": "US",
+        "description": "Clean bitterness, flavors of wine and balsamic",
+        "substitutions": ["Brewer’s Gold", "Fuggle", "Galena", "Magnum", "Nugget"]
+    },
+    {
+        "name": "Northdown",
+        "aa_min": 7.0,
+        "aa_max": 10.0,
+        "ba_min": 4.0,
+        "ba_max": 5.5,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "UK",
+        "description": "Fresh, flowery, piney, berry and spice",
+        "substitutions": ["Northern Brewer", "Challenger"]
+    },
+    {
+        "name": "Northern Brewer",
+        "aa_min": 8.0,
+        "aa_max": 10.0,
+        "ba_min": 3.0,
+        "ba_max": 5.0,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "US",
+        "description": "",
+        "substitutions": ["Chinook", "Columbus", "Galena", "Magnum", "Brewer’s Gold"]
+    },
+    {
+        "name": "Nugget",
+        "aa_min": 9.5,
+        "aa_max": 14.0,
+        "ba_min": 4.2,
+        "ba_max": 5.8,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "US",
+        "description": "Solid bittering, light flavor, herbal aroma",
+        "substitutions": ["Columbus", "Galena", "Magnum"]
+    },
+    {
+        "name": "Olympic",
+        "aa_min": 10.6,
+        "aa_max": 13.8,
+        "ba_min": 3.8,
+        "ba_max": 6.1,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "US",
+        "description": "Notes of spice and citrus",
+        "substitutions": ["Chinook"]
+    },
+    {
+        "name": "Omega",
+        "aa_min": 9.0,
+        "aa_max": 10.0,
+        "ba_min": 3.0,
+        "ba_max": 4.0,
+        "purpose": ["Aroma"],
+        "country": "UK",
+        "description": "Pleasant European aroma",
+        "substitutions": []
+    },
+    {
+        "name": "Orion",
+        "aa_min": 8.0,
+        "aa_max": 9.0,
+        "ba_min": 4.94,
+        "ba_max": 5.73,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "Germany",
+        "description": "",
+        "substitutions": []
+    },
+    {
+        "name": "Pacific Gem",
+        "aa_min": 13.0,
+        "aa_max": 16.0,
+        "ba_min": 7.0,
+        "ba_max": 9.0,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "New Zealand",
+        "description": "Notes of oak and blackberry",
+        "substitutions": ["Galena"]
+    },
+    {
+        "name": "Perle",
+        "aa_min": 8.0,
+        "aa_max": 9.0,
+        "ba_min": 8.0,
+        "ba_max": 8.0,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "Germany",
+        "description": "",
+        "substitutions": ["Northern Brewer"]
+    },
+    {
+        "name": "Phoenix",
+        "aa_min": 8.5,
+        "aa_max": 13.5,
+        "ba_min": 3.3,
+        "ba_max": 5.5,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "UK",
+        "description": "Aromas of spice, pine, chocolate and molasses",
+        "substitutions": ["Northdown", "Challenger"]
+    },
+    {
+        "name": "Pioneer",
+        "aa_min": 8.0,
+        "aa_max": 10.0,
+        "ba_min": 3.5,
+        "ba_max": 4.5,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "UK",
+        "description": "Clean bittering, aromas of citrus, lemon, grapefruit, herbs and cedar",
+        "substitutions": ["East Kent Golding"]
+    },
+    {
+        "name": "Pride of Ringwood",
+        "aa_min": 7.0,
+        "aa_max": 11.0,
+        "ba_min": 4.0,
+        "ba_max": 8.0,
+        "purpose": ["Bittering"],
+        "country": "Australia",
+        "description": "Spicy, fruity aroma",
+        "substitutions": []
+    },
+    {
+        "name": "Progress",
+        "aa_min": 6.0,
+        "aa_max": 7.5,
+        "ba_min": 2.0,
+        "ba_max": 3.3,
+        "purpose": ["Aroma"],
+        "country": "UK",
+        "description": "Sweet flavor, Fuggle-like aromas of grass, mint and earth. Subtle bitterness",
+        "substitutions": ["Fuggle", "East Kent Golding"]
+    },
+    {
+        "name": "Record",
+        "aa_min": 7.0,
+        "aa_max": 12.0,
+        "ba_min": 4.0,
+        "ba_max": 8.0,
+        "purpose": ["Aroma"],
+        "country": "Belgium",
+        "description": "Pleasant European aroma, mildly fruity",
+        "substitutions": []
+    },
+    {
+        "name": "Saaz",
+        "aa_min": 2.5,
+        "aa_max": 4.5,
+        "ba_min": 4.0,
+        "ba_max": 6.0,
+        "purpose": ["Aroma"],
+        "country": "Czech",
+        "description": "Noble, herbal character",
+        "substitutions": ["Sterling", "Lublin"]
+    },
+    {
+        "name": "Santiam",
+        "aa_min": 5.0,
+        "aa_max": 8.0,
+        "ba_min": 5.3,
+        "ba_max": 8.5,
+        "purpose": ["Aroma"],
+        "country": "US",
+        "description": "Soft, herbal, floral, fruity aromas with hints of pepper and spice",
+        "substitutions": ["Spalt", "Tettnang", "Select"]
+    },
+    {
+        "name": "Satus",
+        "aa_min": 12.5,
+        "aa_max": 14.0,
+        "ba_min": 8.5,
+        "ba_max": 9.5,
+        "purpose": ["Bittering"],
+        "country": "US",
+        "description": "",
+        "substitutions": ["Nugget", "Galena"]
+    },
+    {
+        "name": "Simcoe",
+        "aa_min": 12.0,
+        "aa_max": 14.0,
+        "ba_min": 4.0,
+        "ba_max": 5.0,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "US",
+        "description": "Bright citrus flavors with earthy undertones, aromas of grapefruit, pine and herbs",
+        "substitutions": ["Magnum", "Summit"]
+    },
+    {
+        "name": "Sorachi Ace",
+        "aa_min": 11.5,
+        "aa_max": 16.0,
+        "ba_min": 6.0,
+        "ba_max": 7.5,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "Japan",
+        "description": "Flavors of lemon citrus, orange, dill, cilantro",
+        "substitutions": []
+    },
+    {
+        "name": "Spalt",
+        "aa_min": 2.5,
+        "aa_max": 5.7,
+        "ba_min": 3.0,
+        "ba_max": 5.0,
+        "purpose": ["Aroma"],
+        "country": "Germany",
+        "description": "Earth, spice",
+        "substitutions": ["Saaz", "Tettnanger", "Santiam", "Liberty", "Hallertau"]
+    },
+    {
+        "name": "Sterling",
+        "aa_min": 4.5,
+        "aa_max": 9.0,
+        "ba_min": 4.0,
+        "ba_max": 6.0,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "US",
+        "description": "Spicy, citrus aroma, herbal notes",
+        "substitutions": ["Saaz", "Lublin"]
+    },
+    {
+        "name": "Sticklebract",
+        "aa_min": 13.0,
+        "aa_max": 14.2,
+        "ba_min": 7.5,
+        "ba_max": 8.5,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "New Zealand",
+        "description": "Aromas of pine and citrus",
+        "substitutions": ["Northern Brewer"]
+    },
+    {
+        "name": "Strisselspalt",
+        "aa_min": 1.8,
+        "aa_max": 5.7,
+        "ba_min": 2.5,
+        "ba_max": 6.0,
+        "purpose": ["Aroma"],
+        "country": "France",
+        "description": "Pleasant continental-style aroma, herbal, floral, spicy, citrus, fruit",
+        "substitutions": ["Crystal", "Liberty", "Mt. Hood", "Hersbruker"]
+    },
+    {
+        "name": "Styrian Golding",
+        "aa_min": 2.8,
+        "aa_max": 6.0,
+        "ba_min": 2.0,
+        "ba_max": 3.0,
+        "purpose": ["Aroma"],
+        "country": "Austria",
+        "description": "Resinous and earthy with hints of white pepper",
+        "substitutions": []
+    },
+    {
+        "name": "Super Alpha",
+        "aa_min": 10,
+        "aa_max": 12.0,
+        "ba_min": 7.0,
+        "ba_max": 8.0,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "New Zealand",
+        "description": "Grass, pine and citrus flavors",
+        "substitutions": []
+    },
+    {
+        "name": "Super Styrians",
+        "aa_min": 7.0,
+        "aa_max": 12.0,
+        "ba_min": 2.7,
+        "ba_max": 5.0,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "Slovenia",
+        "description": "Spicy",
+        "substitutions": []
+    },
+    {
+        "name": "Summit",
+        "aa_min": 16.0,
+        "aa_max": 18.0,
+        "ba_min": 3.3,
+        "ba_max": 4.3,
+        "purpose": ["Bittering"],
+        "country": "US",
+        "description": "Citrus aromas",
+        "substitutions": ["Columbus", "Millenium", "Simcoe", "Warrior"]
+    },
+    {
+        "name": "Talisman",
+        "aa_min": 5.7,
+        "aa_max": 6.7,
+        "ba_min": 2.8,
+        "ba_max": 3.6,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "US",
+        "description": "",
+        "substitutions": []
+    },
+    {
+        "name": "Target",
+        "aa_min": 8.0,
+        "aa_max": 12.5,
+        "ba_min": 5.0,
+        "ba_max": 5.5,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "UK",
+        "description": "",
+        "substitutions": ["Fuggle", "Willamette"]
+    },
+    {
+        "name": "Tettnanger",
+        "aa_min": 3.0,
+        "aa_max": 5.8,
+        "ba_min": 2.8,
+        "ba_max": 5.3,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "Germany",
+        "description": "Balanced floral and herbal aromas with some spiciness",
+        "substitutions": ["Fuggle", "Santiam", "Spalt"]
+    },
+    {
+        "name": "Ultra",
+        "aa_min": 3.0,
+        "aa_max": 5.0,
+        "ba_min": 3.6,
+        "ba_max": 5.0,
+        "purpose": ["Aroma"],
+        "country": "US",
+        "description": "Mildly spicy aroma and flavor",
+        "substitutions": ["Hallertau"]
+    },
+    {
+        "name": "Vanguard",
+        "aa_min": 4.4,
+        "aa_max": 6.0,
+        "ba_min": 6.0,
+        "ba_max": 7.0,
+        "purpose": ["Aroma"],
+        "country": "US",
+        "description": "",
+        "substitutions": ["Hallertau", "Liberty", "Mt. Hood", "Hersbruker"]
+    },
+    {
+        "name": "Warrior",
+        "aa_min": 14.5,
+        "aa_max": 18.0,
+        "ba_min": 4.3,
+        "ba_max": 6.0,
+        "purpose": ["Bittering"],
+        "country": "US",
+        "description": "Aromas of citrus and spice",
+        "substitutions": ["Columbus", "Magnum", "Nugget"]
+    },
+    {
+        "name": "Whitbread Golding",
+        "aa_min": 5.0,
+        "aa_max": 7.5,
+        "ba_min": 2.5,
+        "ba_max": 3.5,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "UK",
+        "description": "Pleasant, fruity, European style aroma",
+        "substitutions": []
+    },
+    {
+        "name": "Willamette",
+        "aa_min": 4.0,
+        "aa_max": 6.5,
+        "ba_min": 3.0,
+        "ba_max": 4.0,
+        "purpose": ["Aroma"],
+        "country": "US",
+        "description": "Heraceous spiciness, floral, fruity",
+        "substitutions": ["Fuggle", "Glacier", "Tettnang", "Styrian Golding"]
+    },
+    {
+        "name": "Yakima Cluster",
+        "aa_min": 4.4,
+        "aa_max": 9.8,
+        "ba_min": 3.0,
+        "ba_max": 6.1,
+        "purpose": ["Bittering"],
+        "country": "US",
+        "description": "",
+        "substitutions": ["Chinook"]
+    },
+    {
+        "name": "Yeoman",
+        "aa_min": 12.0,
+        "aa_max": 16.0,
+        "ba_min": 4.0,
+        "ba_max": 5.0,
+        "purpose": ["Bittering", "Aroma"],
+        "country": "UK",
+        "description": "",
+        "substitutions": []
+    },
+    {
+        "name": "Zenith",
+        "aa_min": 9,
+        "aa_max": 11.0,
+        "ba_min": 3.0,
+        "ba_max": 3.0,
+        "purpose": ["Bittering"],
+        "country": "",
+        "description": "",
+        "substitutions": []
+    },
+    {
+        "name": "Zeus",
+        "aa_min": 13.0,
+        "aa_max": 17.5,
+        "ba_min": 4.5,
+        "ba_max": 6.5,
+        "purpose": ["Bittering"],
+        "country": "US",
+        "description": "Sweet citrus, herbal aromas",
+        "substitutions": ["Columbus"]
     }
 ]
