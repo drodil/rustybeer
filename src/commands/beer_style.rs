@@ -76,20 +76,17 @@ pub fn do_matches<'a>(matches: &ArgMatches<'a>) {
 
         println!("Found the following beer styles with criteria:");
         for x in &resp {
-            println!("* {}", x.name);
-            println!(
-                "    OG: {}-{}, FG: {}-{}, ABV: {}%-{}%, IBU: {}-{}, SRM: {}-{}",
-                x.original_gravity_min,
-                x.original_gravity_max,
-                x.final_gravity_min,
-                x.final_gravity_max,
-                x.abv_min,
-                x.abv_max,
-                x.ibu_min,
-                x.ibu_max,
-                x.color_srm_min,
-                x.color_srm_max
-            );
+            println!("---------------------");
+            println!("{}", x.name);
+            println!("");
+            println!("{}", x.description);
+            println!("");
+            println!("OG: {}-{}", x.original_gravity_min, x.original_gravity_max);
+            println!("FG: {}-{}", x.final_gravity_min, x.final_gravity_max);
+            println!("ABV: {}%-{}%", x.abv_min, x.abv_max);
+            println!("IBU: {}-{}", x.ibu_min, x.ibu_max);
+            println!("SRM: {}-{}", x.color_srm_min, x.color_srm_max);
         }
+        println!("---------------------");
     }
 }
