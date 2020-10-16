@@ -1,4 +1,5 @@
 pub mod abv;
+pub mod calorie_counter;
 pub mod diluting;
 pub mod ibu;
 pub mod num_bottles;
