@@ -1,10 +1,10 @@
-pub struct TestVector {
+pub(crate) struct TestVector {
     pub og: Vec<f64>,
     pub boiling_time: Vec<u32>,
     pub utilization: Vec<Vec<f64>>,
 }
 
-pub fn get_vector() -> TestVector {
+pub(crate) fn get_vector() -> TestVector {
     TestVector {
         og: vec![
             1.030, 1.040, 1.050, 1.060, 1.070, 1.080, 1.090, 1.100, 1.110, 1.120, 1.130,

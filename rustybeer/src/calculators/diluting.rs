@@ -1,7 +1,7 @@
 //! This calculates how much wort is needed to be
 //! diluted or boiled down to hit a certain gravity
 //! ```
-//! use rustybeer::diluting::calculate_new_volume;
+//! use rustybeer::calculators::diluting::calculate_new_volume;
 //!
 //! // This displays how a target volume based off the
 //! // current volume, current gravity, and target gravity

@@ -6,4 +6,4 @@ pub mod priming;
 pub mod sg_correction;
 
 #[cfg(test)]
-mod utilization_test_vector;
+mod test_vectors;

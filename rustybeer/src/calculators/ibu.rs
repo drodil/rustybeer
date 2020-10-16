@@ -231,13 +231,11 @@ pub mod test {
         calculate_bittering_weight, calculate_ibu, HopAddition, HopAdditionType, NegativeIbuError,
         _calculate_ibu_single_hop, _calculate_utilization,
     };
-    use crate::calculators::utilization_test_vector;
     use average::assert_almost_eq;
 
     #[test]
     fn utilization() {
-        let test_vector: utilization_test_vector::TestVector =
-            utilization_test_vector::get_vector();
+        let test_vector = crate::calculators::test_vectors::utilization_test_vector::get_vector();
         for (og_idx, og) in test_vector.og.iter().enumerate() {
             for (boiling_time_idx, boiling_time) in test_vector.boiling_time.iter().enumerate() {
                 let ut = _calculate_utilization(*og, *boiling_time);

@@ -1,7 +1,7 @@
 //! A calculator used to calculate
 //! alcohol by volume
 //! ```
-//! use rustybeer::abv::calculate_abv;
+//! use rustybeer::calculators::abv::calculate_abv;
 //!
 //! // Takes the arguments original gravity
 //! // and final gravity
