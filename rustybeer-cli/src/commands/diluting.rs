@@ -1,5 +1,5 @@
-pub use crate::calculators::diluting::calculate_new_gravity;
 use clap::{value_t, App, Arg, ArgMatches};
+use rustybeer::calculators::diluting::calculate_new_gravity;
 
 pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
     App::new("diluting")

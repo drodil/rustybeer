@@ -3,7 +3,7 @@
 //! time for brewed beer
 //! # Example
 //! ```
-//! use rustybeer::priming::{calculate_sugars, Sugar};
+//! use rustybeer::calculators::priming::{calculate_sugars, Sugar};
 //!
 //! // Arguments are in Farenheit, liters, and c02 volumes
 //! let sugars = calculate_sugars(77., 5., 2.);

@@ -11,7 +11,7 @@ pub struct Hop {
     pub alpha_acid: f64,
 }
 
-const HOPS_JSON: &str = include_str!("hops.json");
+const HOPS_JSON: &str = include_str!("json/hops.json");
 
 fn percentage_to_float<'de, D>(deserializer: D) -> Result<f64, D::Error>
 where

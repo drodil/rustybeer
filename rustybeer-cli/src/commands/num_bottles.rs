@@ -1,6 +1,6 @@
-pub use crate::calculators::num_bottles::calculate_num_bottles;
-use crate::utils::conversions::VolumeBuilder; // Converts string input to unit measurements
 use clap::{value_t, App, Arg, ArgMatches};
+use rustybeer::calculators::num_bottles::calculate_num_bottles;
+use rustybeer_util::conversions::VolumeBuilder; // Converts string input to unit measurements
 
 pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
     App::new(

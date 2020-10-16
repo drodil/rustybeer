@@ -1,5 +1,5 @@
-pub use crate::utils::beer_styles::{BeerStyle, Criteria, BEER_STYLES};
 use clap::{App, Arg, ArgMatches};
+pub use rustybeer_util::beer_styles::{BeerStyle, Criteria, BEER_STYLES};
 
 pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
     App::new("beer_style")

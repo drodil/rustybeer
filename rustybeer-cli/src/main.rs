@@ -1,10 +1,6 @@
 use clap::{App, AppSettings};
 
-mod calculators;
 mod commands;
-mod utils;
-
-use commands::*;
 
 fn main() {
     let app = App::new("RustyBeer")
@@ -21,22 +17,22 @@ fn main() {
     match app.subcommand_name() {
         Some(s) => match s {
             "abv" => {
-                abv::do_matches(&app);
+                commands::abv::do_matches(&app);
             }
             "beer_style" => {
-                beer_style::do_matches(&app);
+                commands::beer_style::do_matches(&app);
             }
             "boil_off" => {
-                boil_off::do_matches(&app);
+                commands::boil_off::do_matches(&app);
             }
             "diluting" => {
-                diluting::do_matches(&app);
+                commands::diluting::do_matches(&app);
             }
             "priming" => {
-                priming::do_matches(&app);
+                commands::priming::do_matches(&app);
             }
             "sg_correction" => {
-                sg_correction::do_matches(&app);
+                commands::sg_correction::do_matches(&app);
             }
             _ => println!("Not recognised subcommand"),
         },
