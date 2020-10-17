@@ -19,7 +19,7 @@ pub static ABV_CALORIES: Lazy<Vec<ABVCalories>> = Lazy::new(|| {
     serde_json::from_str(ABV_CALORIES_JSON).expect("ABV to calories data could not be deserialised")
 });
 
-/// Criteria for selecting a beer style.
+/// Criteria for selecting a ABV to calories.
 ///
 /// If an attribute is `None`, it is ignored.
 #[derive(Debug, Clone, Default)]
@@ -28,10 +28,10 @@ pub struct Criteria {
 }
 
 impl Criteria {
-    /// Whether the given beer style matches **all** criteria that are `Some`.
+    /// To check whether the given ABV is within range
     pub fn matches(&self, cal: &ABVCalories) -> bool {
         if let Some(abv) = self.abv {
-            if abv == cal.abv {
+            if (abv - 0.5) >= cal.abv {
                 return false;
             }
         }
