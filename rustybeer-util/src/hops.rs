@@ -39,16 +39,19 @@ pub static HOPS: Lazy<Vec<Hop>> = Lazy::new(|| serde_json::from_str(HOPS_JSON).u
 
 #[cfg(test)]
 pub mod test {
-    use super::{Hop, HOPS};
+    use super::HOPS;
 
     #[test]
     fn centennial() {
-        assert_eq!(
-            0.095,
-            HOPS.iter()
-                .find(|&h| h.name == "Centennial")
-                .unwrap()
-                .alpha_acid_min
+        assert!(
+            (0.095
+                - HOPS
+                    .iter()
+                    .find(|&h| h.name == "Centennial")
+                    .unwrap()
+                    .alpha_acid_min)
+                .abs()
+                < f64::EPSILON
         );
     }
 }
