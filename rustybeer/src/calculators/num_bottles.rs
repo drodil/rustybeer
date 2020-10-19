@@ -13,6 +13,7 @@ fn bottles() -> Vec<(String, f64)> {
         ("Growler jug".to_string(), 1893.0),
         ("Gallon jug".to_string(), 3785.0),
         ("5 liter mini keg".to_string(), 5000.0),
+        ("50 liter keg".to_string(), 50_000.0),
     ]
 }
 
