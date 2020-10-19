@@ -1,8 +1,8 @@
 pub use crate::calculators::calorie_counter::{
     calculate_alcohol_calories, calculate_carbs_calories, calculate_total_calories,
-    convert_oz_to_ml,
 };
 pub use crate::utils::abv_calories::{ABVCalories, Criteria, ABV_CALORIES};
+pub use crate::utils::conversions::{MassBuilder, VolumeBuilder};
 use clap::{value_t, App, Arg, ArgMatches};
 
 pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
@@ -31,13 +31,13 @@ pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
                  .help("Alcohol by volume")
                  .required_unless("fg")
                  .takes_value(true))
-            .arg(Arg::with_name("cv")
-                 .short("c")
-                 .long("cv")
-                 .value_name("CV")
-                 .help("Custom volume")
+            .arg(Arg::with_name("volume")
+                 .short("v")
+                 .long("volume")
+                 .value_name("vol")
+                 .help("volume as string ('e.g 10m, 4gal')")
                  .required(false)
-                 .default_value("100")
+                 .default_value("100ml")
                  .takes_value(true))
 }
 
@@ -52,27 +52,31 @@ pub fn do_matches<'a>(matches: &ArgMatches<'a>) {
         if matches.is_present("fg") && matches.is_present("og") {
             let fg = value_t!(matches, "fg", f32).unwrap_or_else(|e| e.exit());
             let og = value_t!(matches, "og", f32).unwrap_or_else(|e| e.exit());
-            let cv = value_t!(matches, "cv", f32).unwrap_or_else(|e| e.exit());
-            let ac = calculate_alcohol_calories(og, fg, cv);
-            let cc = calculate_carbs_calories(og, fg, cv);
-            let tc = calculate_total_calories(og, fg, cv);
+            let cv = value_t!(matches, "volume", String).unwrap_or_else(|e| e.exit());
+            let conversion = MassBuilder::from_str("12oz").unwrap().as_grams() as f32;
+            let vol = VolumeBuilder::from_str(&cv).unwrap().as_milliliters() as f32;
+            let ac = calculate_alcohol_calories(og, fg) / conversion * vol;
+            let cc = calculate_carbs_calories(og, fg) / conversion * vol;
+            let tc = calculate_total_calories(og, fg) / conversion * vol;
             println!("{:<8} {:>8} {:>8}", "", "kcal", "kJ");
             println!("{:<8} {:>8.0} {:>8.0}", "Alcohol:", ac, ac * 4.184);
             println!("{:<8} {:>8.0} {:>8.0}", "Carbs:", cc, cc * 4.184);
             println!("{:<8} {:>8.0} {:>8.0}", "Total:", tc, tc * 4.184);
-            println!("Per: {:.0} ml", cv);
+            println!("Per: {:.0} ml", vol);
         } else if matches.is_present("abv") {
             let abv = value_t!(matches, "abv", f32).unwrap_or_else(|e| e.exit());
-            let cv = value_t!(matches, "cv", f32).unwrap_or_else(|e| e.exit());
+            let cv = value_t!(matches, "volume", String).unwrap_or_else(|e| e.exit());
             let criteria = matches_to_criteria(matches);
 
             for abv in ABV_CALORIES.iter() {
                 if criteria.matches(abv) {
-                    let lc = convert_oz_to_ml(abv.calories_low, cv);
-                    let hc = convert_oz_to_ml(abv.calories_high, cv);
+                    let conversion = MassBuilder::from_str("12oz").unwrap().as_grams() as f32;
+                    let vol = VolumeBuilder::from_str(&cv).unwrap().as_milliliters() as f32;
+                    let lc = abv.calories_low / conversion * vol;
+                    let hc = abv.calories_high / conversion * vol;
                     println!("Calories: {:.0} to {:.0} kcal", lc, hc);
                     println!("          {:.0} to {:.0} kJ", lc * 4.184, hc * 4.184);
-                    println!("Per: {:.0} ml", cv);
+                    println!("Per: {:.0} ml", vol);
                     return;
                 }
             }
