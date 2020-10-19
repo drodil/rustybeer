@@ -19,10 +19,10 @@ pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
         )
 }
 
-pub fn do_matches<'a>(matches: &ArgMatches<'a>) {
+pub fn do_matches(matches: &ArgMatches) {
     if let Some(ref matches) = matches.subcommand_matches("num_bottles") {
         let vol = value_t!(matches, "volume", String).unwrap_or_else(|e| e.exit());
-        let volume = VolumeBuilder::from_str(&vol).unwrap().as_milliliters();
+        let volume = VolumeBuilder::new(&vol).unwrap().as_milliliters();
         println!("Volume to contain: {}", vol);
         println!("=======================================================");
         let bottles = calculate_num_bottles(volume);

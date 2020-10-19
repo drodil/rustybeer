@@ -15,7 +15,7 @@ impl TemperatureBuilder {
     /// Tries to figure out the temperature unit from the string. If the string value is plain
     /// number, it will be considered as Celsius. Also empty strings are considered as
     /// zero Celsius in Temperature.
-    pub fn from_str(val: &str) -> Result<measurements::Temperature, ParseFloatError> {
+    pub fn new(val: &str) -> Result<measurements::Temperature, ParseFloatError> {
         if val.is_empty() {
             return Ok(Temperature::from_celsius(0.0));
         }
@@ -50,7 +50,7 @@ impl VolumeBuilder {
     /// Tries to figure out the volume unit from the string. If the string value is plain
     /// number, it will be considered as litres. Also empty strings are considered as
     /// zero litres in Volume.
-    pub fn from_str(val: &str) -> Result<measurements::Volume, ParseFloatError> {
+    pub fn new(val: &str) -> Result<measurements::Volume, ParseFloatError> {
         if val.is_empty() {
             return Ok(Volume::from_litres(0.0));
         }
@@ -95,7 +95,7 @@ impl MassBuilder {
     /// Tries to figure out the mass unit from the string. If the string value is plain
     /// number, it will be considered as grams. Also empty strings are considered as
     /// zero grams in Mass.
-    pub fn from_str(val: &str) -> Result<measurements::Mass, ParseFloatError> {
+    pub fn new(val: &str) -> Result<measurements::Mass, ParseFloatError> {
         if val.is_empty() {
             return Ok(Mass::from_grams(0.0));
         }
@@ -133,21 +133,21 @@ mod tests {
     fn fahrenheit_from_string() {
         assert_almost_eq!(
             123.0,
-            TemperatureBuilder::from_str("123F")
+            TemperatureBuilder::new("123F")
                 .unwrap()
                 .as_fahrenheit(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            TemperatureBuilder::from_str("123 F")
+            TemperatureBuilder::new("123 F")
                 .unwrap()
                 .as_fahrenheit(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            TemperatureBuilder::from_str("123 f")
+            TemperatureBuilder::new("123 f")
                 .unwrap()
                 .as_fahrenheit(),
             DELTA
@@ -158,17 +158,17 @@ mod tests {
     fn celsius_from_string() {
         assert_almost_eq!(
             123.0,
-            TemperatureBuilder::from_str("123C").unwrap().as_celsius(),
+            TemperatureBuilder::new("123C").unwrap().as_celsius(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            TemperatureBuilder::from_str("123 C").unwrap().as_celsius(),
+            TemperatureBuilder::new("123 C").unwrap().as_celsius(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            TemperatureBuilder::from_str("123 c").unwrap().as_celsius(),
+            TemperatureBuilder::new("123 c").unwrap().as_celsius(),
             DELTA
         );
     }
@@ -177,17 +177,17 @@ mod tests {
     fn kelvin_from_string() {
         assert_almost_eq!(
             123.0,
-            TemperatureBuilder::from_str("123K").unwrap().as_kelvin(),
+            TemperatureBuilder::new("123K").unwrap().as_kelvin(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            TemperatureBuilder::from_str("123 K").unwrap().as_kelvin(),
+            TemperatureBuilder::new("123 K").unwrap().as_kelvin(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            TemperatureBuilder::from_str("123 k").unwrap().as_kelvin(),
+            TemperatureBuilder::new("123 k").unwrap().as_kelvin(),
             DELTA
         );
     }
@@ -196,17 +196,17 @@ mod tests {
     fn rankine_from_string() {
         assert_almost_eq!(
             123.0,
-            TemperatureBuilder::from_str("123R").unwrap().as_rankine(),
+            TemperatureBuilder::new("123R").unwrap().as_rankine(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            TemperatureBuilder::from_str("123 R").unwrap().as_rankine(),
+            TemperatureBuilder::new("123 R").unwrap().as_rankine(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            TemperatureBuilder::from_str("123 r").unwrap().as_rankine(),
+            TemperatureBuilder::new("123 r").unwrap().as_rankine(),
             DELTA
         );
     }
@@ -215,18 +215,18 @@ mod tests {
     fn default_from_string() {
         assert_almost_eq!(
             123.0,
-            TemperatureBuilder::from_str("123").unwrap().as_celsius(),
+            TemperatureBuilder::new("123").unwrap().as_celsius(),
             DELTA
         );
 
         assert_almost_eq!(
             123.0,
-            VolumeBuilder::from_str("123").unwrap().as_litres(),
+            VolumeBuilder::new("123").unwrap().as_litres(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123").unwrap().as_grams(),
+            MassBuilder::new("123").unwrap().as_grams(),
             DELTA
         );
     }
@@ -235,32 +235,32 @@ mod tests {
     fn zero_from_string() {
         assert_almost_eq!(
             0.,
-            TemperatureBuilder::from_str("").unwrap().as_celsius(),
+            TemperatureBuilder::new("").unwrap().as_celsius(),
             DELTA
         );
-        assert_almost_eq!(0., VolumeBuilder::from_str("").unwrap().as_litres(), DELTA);
-        assert_almost_eq!(0., MassBuilder::from_str("").unwrap().as_grams(), DELTA);
+        assert_almost_eq!(0., VolumeBuilder::new("").unwrap().as_litres(), DELTA);
+        assert_almost_eq!(0., MassBuilder::new("").unwrap().as_grams(), DELTA);
     }
 
     #[test]
     fn cubic_centimeters_from_string() {
         assert_almost_eq!(
             123.0,
-            VolumeBuilder::from_str("123cm3")
+            VolumeBuilder::new("123cm3")
                 .unwrap()
                 .as_cubic_centimeters(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            VolumeBuilder::from_str("123 cm3")
+            VolumeBuilder::new("123 cm3")
                 .unwrap()
                 .as_cubic_centimeters(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            VolumeBuilder::from_str("123 CM3")
+            VolumeBuilder::new("123 CM3")
                 .unwrap()
                 .as_cubic_centimeters(),
             DELTA
@@ -271,17 +271,17 @@ mod tests {
     fn milliliters_from_string() {
         assert_almost_eq!(
             123.0,
-            VolumeBuilder::from_str("123ml").unwrap().as_milliliters(),
+            VolumeBuilder::new("123ml").unwrap().as_milliliters(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            VolumeBuilder::from_str("123 ml").unwrap().as_milliliters(),
+            VolumeBuilder::new("123 ml").unwrap().as_milliliters(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            VolumeBuilder::from_str("123 ml").unwrap().as_milliliters(),
+            VolumeBuilder::new("123 ml").unwrap().as_milliliters(),
             DELTA
         );
     }
@@ -290,17 +290,17 @@ mod tests {
     fn pints_from_string() {
         assert_almost_eq!(
             123.0,
-            VolumeBuilder::from_str("123p").unwrap().as_pints(),
+            VolumeBuilder::new("123p").unwrap().as_pints(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            VolumeBuilder::from_str("123 p").unwrap().as_pints(),
+            VolumeBuilder::new("123 p").unwrap().as_pints(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            VolumeBuilder::from_str("123 P").unwrap().as_pints(),
+            VolumeBuilder::new("123 P").unwrap().as_pints(),
             DELTA
         );
     }
@@ -309,22 +309,22 @@ mod tests {
     fn micrograms_from_string() {
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123ug").unwrap().as_micrograms(),
+            MassBuilder::new("123ug").unwrap().as_micrograms(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123 ug").unwrap().as_micrograms(),
+            MassBuilder::new("123 ug").unwrap().as_micrograms(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123μg").unwrap().as_micrograms(),
+            MassBuilder::new("123μg").unwrap().as_micrograms(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123 μg").unwrap().as_micrograms(),
+            MassBuilder::new("123 μg").unwrap().as_micrograms(),
             DELTA
         );
     }
@@ -333,12 +333,12 @@ mod tests {
     fn milligrams_from_string() {
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123mg").unwrap().as_milligrams(),
+            MassBuilder::new("123mg").unwrap().as_milligrams(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123 mg").unwrap().as_milligrams(),
+            MassBuilder::new("123 mg").unwrap().as_milligrams(),
             DELTA
         );
     }
@@ -347,12 +347,12 @@ mod tests {
     fn carats_from_string() {
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123ct").unwrap().as_carats(),
+            MassBuilder::new("123ct").unwrap().as_carats(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123 ct").unwrap().as_carats(),
+            MassBuilder::new("123 ct").unwrap().as_carats(),
             DELTA
         );
     }
@@ -361,12 +361,12 @@ mod tests {
     fn grams_from_string() {
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123g").unwrap().as_grams(),
+            MassBuilder::new("123g").unwrap().as_grams(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123 g").unwrap().as_grams(),
+            MassBuilder::new("123 g").unwrap().as_grams(),
             DELTA
         );
     }
@@ -375,12 +375,12 @@ mod tests {
     fn kilograms_from_string() {
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123kg").unwrap().as_kilograms(),
+            MassBuilder::new("123kg").unwrap().as_kilograms(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123 kg").unwrap().as_kilograms(),
+            MassBuilder::new("123 kg").unwrap().as_kilograms(),
             DELTA
         );
     }
@@ -389,12 +389,12 @@ mod tests {
     fn tonnes_from_string() {
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123T").unwrap().as_tonnes(),
+            MassBuilder::new("123T").unwrap().as_tonnes(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123 T").unwrap().as_tonnes(),
+            MassBuilder::new("123 T").unwrap().as_tonnes(),
             DELTA
         );
     }
@@ -403,12 +403,12 @@ mod tests {
     fn grains_from_string() {
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123gr").unwrap().as_grains(),
+            MassBuilder::new("123gr").unwrap().as_grains(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123 gr").unwrap().as_grains(),
+            MassBuilder::new("123 gr").unwrap().as_grains(),
             DELTA
         );
     }
@@ -417,12 +417,12 @@ mod tests {
     fn pennyweights_from_string() {
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123dwt").unwrap().as_pennyweights(),
+            MassBuilder::new("123dwt").unwrap().as_pennyweights(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123 dwt").unwrap().as_pennyweights(),
+            MassBuilder::new("123 dwt").unwrap().as_pennyweights(),
             DELTA
         );
     }
@@ -431,12 +431,12 @@ mod tests {
     fn ounces_from_string() {
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123oz").unwrap().as_ounces(),
+            MassBuilder::new("123oz").unwrap().as_ounces(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123 oz").unwrap().as_ounces(),
+            MassBuilder::new("123 oz").unwrap().as_ounces(),
             DELTA
         );
     }
@@ -445,12 +445,12 @@ mod tests {
     fn pounds_from_string() {
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123lbs").unwrap().as_pounds(),
+            MassBuilder::new("123lbs").unwrap().as_pounds(),
             DELTA
         );
         assert_almost_eq!(
             123.0,
-            MassBuilder::from_str("123 lbs").unwrap().as_pounds(),
+            MassBuilder::new("123 lbs").unwrap().as_pounds(),
             DELTA
         );
     }

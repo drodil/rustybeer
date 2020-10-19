@@ -26,16 +26,16 @@ pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
                         .takes_value(true))
 }
 
-pub fn do_matches<'c>(matches: &ArgMatches<'c>) {
+pub fn do_matches(matches: &ArgMatches) {
     if let Some(sub_matches) = matches.subcommand_matches("priming") {
         let temperature = value_t!(sub_matches, "temp", String).unwrap_or_else(|e| e.exit());
         let amount_str = value_t!(sub_matches, "amount", String).unwrap_or_else(|e| e.exit());
         let co2_volumes = value_t!(sub_matches, "co2_volumes", f64).unwrap_or_else(|e| e.exit());
 
-        let fahrenheit = TemperatureBuilder::from_str(&temperature)
+        let fahrenheit = TemperatureBuilder::new(&temperature)
             .unwrap()
             .as_fahrenheit();
-        let amount = VolumeBuilder::from_str(&amount_str).unwrap().as_litres();
+        let amount = VolumeBuilder::new(&amount_str).unwrap().as_litres();
         let co2_beer = calculate_co2(fahrenheit);
         let sugars = calculate_sugars(fahrenheit, amount, co2_volumes);
 

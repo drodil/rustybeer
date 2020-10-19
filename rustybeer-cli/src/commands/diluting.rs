@@ -35,7 +35,7 @@ pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
         )
 }
 
-pub fn do_matches<'a>(matches: &ArgMatches<'a>) {
+pub fn do_matches(matches: &ArgMatches) {
     if let Some(matches) = matches.subcommand_matches("diluting") {
         let sg = value_t!(matches, "sg", f32).unwrap_or_else(|e| e.exit());
         let cv = value_t!(matches, "cv", f32).unwrap_or_else(|e| e.exit());
