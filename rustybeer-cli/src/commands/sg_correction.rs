@@ -36,13 +36,9 @@ pub fn do_matches(matches: &ArgMatches) {
     if let Some(matches) = matches.subcommand_matches("sg_correction") {
         let sg = value_t!(matches, "sg", f64).unwrap_or_else(|e| e.exit());
         let ct_str = value_t!(matches, "ct", String).unwrap_or_else(|e| e.exit());
-        let ct = TemperatureBuilder::new(&ct_str)
-            .unwrap()
-            .as_fahrenheit();
+        let ct = TemperatureBuilder::new(&ct_str).unwrap().as_fahrenheit();
         let mt_str = value_t!(matches, "mt", String).unwrap_or_else(|e| e.exit());
-        let mt = TemperatureBuilder::new(&mt_str)
-            .unwrap()
-            .as_fahrenheit();
+        let mt = TemperatureBuilder::new(&mt_str).unwrap().as_fahrenheit();
 
         println!("Measured gravity: {}", sg);
         println!("Calibration temperature: {}", ct_str);
