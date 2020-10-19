@@ -1,0 +1,16 @@
+[package]
+name = "rustybeer-cli"
+version = "0.1.0"
+authors = ["Heikki Hellgren <heiccih@gmail.com>", "mlatief", "Joseph Russell"]
+edition = "2018"
+
+[dependencies]
+rustybeer = { version = "0.1.0", path = "../rustybeer"}
+rustybeer-util = { version = "0.1.0", path = "../rustybeer-util"}
+
+clap = "2.33.3"
+
+[[bin]]
+name = "rustybeer"
+path = "src/main.rs"
+doc = false

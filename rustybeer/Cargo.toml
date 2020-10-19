@@ -1,0 +1,10 @@
+[package]
+name = "rustybeer"
+version = "0.1.0"
+authors = ["Heikki Hellgren <heiccih@gmail.com>", "mlatief", "Joseph Russell"]
+edition = "2018"
+
+[dependencies]
+
+[dev-dependencies]
+average = "0.10"
