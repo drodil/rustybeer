@@ -13,11 +13,11 @@ fn boil_off() {
 
     assert!((2. - calculate_new_volume(2., 2., 2.)).abs() < f32::EPSILON);
 
-    assert!((14. - calculate_new_volume(7., 5., 3.)).abs() < f32::EPSILON);
+    assert!((15. - calculate_new_volume(7., 5., 3.)).abs() < f32::EPSILON);
 
-    assert!((10.333333 - calculate_new_gravity(7., 5., 3.)).abs() < f32::EPSILON);
+    assert!((8.309999 - calculate_new_gravity(18., 2.15, 5.)).abs() < f32::EPSILON);
 
-    assert!((63.857_143 - calculate_new_gravity(4., 3.2, 0.14)).abs() < f32::EPSILON);
+    assert!((69.57143 - calculate_new_gravity(4., 3.2, 0.14)).abs() < f32::EPSILON);
 }
 
 #[test]
@@ -30,7 +30,7 @@ fn diluting() {
 
     assert!((2. - calculate_new_volume(2., 2., 2.)).abs() < f32::EPSILON);
 
-    assert!((14. - calculate_new_volume(7., 5., 3.)).abs() < f32::EPSILON);
+    assert!((15. - calculate_new_volume(7., 5., 3.)).abs() < f32::EPSILON);
 }
 
 #[test]
