@@ -10,7 +10,7 @@ pub struct ABVCalories {
 }
 
 // Raw inlined style data
-static ABV_CALORIES_JSON: &str = include_str!("json/abv_calories.json");
+static ABV_CALORIES_JSON: &str = include_str!("abv_calories.json");
 
 /// All available ABV to calories.
 ///

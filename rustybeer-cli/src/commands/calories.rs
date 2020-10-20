@@ -64,7 +64,7 @@ pub fn do_matches<'a>(matches: &ArgMatches<'a>) {
             println!("{:<8} {:>8.0} {:>8.0}", "Total:", tc, tc * 4.184);
             println!("Per: {:.0} ml", vol);
         } else if matches.is_present("abv") {
-            let abv = value_t!(matches, "abv", f32).unwrap_or_else(|e| e.exit());
+            //let abv = value_t!(matches, "abv", f32).unwrap_or_else(|e| e.exit());
             let cv = value_t!(matches, "volume", String).unwrap_or_else(|e| e.exit());
             let criteria = matches_to_criteria(matches);
 

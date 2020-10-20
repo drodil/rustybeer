@@ -1,11 +1,11 @@
 //! A calculator used to calculate
 //! calorie content
 //! ```
-//! use rustybeer::calculators::calories::calculate_total_calories;
+//! use rustybeer::calories::calculate_total_calories;
 //!
 //! // Takes the arguments original gravity
 //! // and final gravity
-//! assert_eq!(178.89642, calculate_total_calories(1.054, 1.010));
+//! assert_eq!(178.8962039966718, calculate_total_calories(1.054, 1.010));
 //! ```
 
 /// returns calories for a 12 oz. serving size
