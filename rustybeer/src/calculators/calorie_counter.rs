@@ -1,7 +1,7 @@
 //! A calculator used to calculate
 //! calorie content
 //! ```
-//! use rustybeer::calculators::calories::calculate_total_calories;
+//! use rustybeer::calculators::calorie_counter::calculate_total_calories;
 //!
 //! // Takes the arguments original gravity
 //! // and final gravity
