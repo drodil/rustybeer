@@ -1,6 +1,7 @@
 pub mod abv;
 pub mod beer_style;
 pub mod boil_off;
+pub mod calories;
 pub mod diluting;
 pub mod num_bottles;
 pub mod priming;
