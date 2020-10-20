@@ -13,6 +13,7 @@ fn bottles() -> Vec<(String, f64)> {
         ("Growler jug".to_string(), 1893.0),
         ("Gallon jug".to_string(), 3785.0),
         ("5 liter mini keg".to_string(), 5000.0),
+        ("50 liter keg".to_string(), 50_000.0),
     ]
 }
 
@@ -50,6 +51,7 @@ mod tests {
             ("Growler jug".to_string(), 1),
             ("Gallon jug".to_string(), 1),
             ("5 liter mini keg".to_string(), 1),
+            ("50 liter keg".to_string(), 1),
         ];
         assert_eq!(expected, calculate_num_bottles(330.0));
     }
@@ -68,6 +70,7 @@ mod tests {
             ("Growler jug".to_string(), 175),
             ("Gallon jug".to_string(), 88),
             ("5 liter mini keg".to_string(), 66),
+            ("50 liter keg".to_string(), 7),
         ];
         assert_eq!(expected, calculate_num_bottles(330000.0));
     }

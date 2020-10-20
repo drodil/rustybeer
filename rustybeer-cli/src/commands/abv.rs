@@ -29,7 +29,7 @@ pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
                  .takes_value(true))
 }
 
-pub fn do_matches<'a>(matches: &ArgMatches<'a>) {
+pub fn do_matches(matches: &ArgMatches) {
     if let Some(matches) = matches.subcommand_matches("abv") {
         if matches.is_present("fg") {
             let fg = value_t!(matches, "fg", f32).unwrap_or_else(|e| e.exit());
