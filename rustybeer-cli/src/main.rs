@@ -8,6 +8,7 @@ fn main() {
         .subcommand(commands::abv::add_subcommand())
         .subcommand(commands::beer_style::add_subcommand())
         .subcommand(commands::boil_off::add_subcommand())
+        .subcommand(commands::calories::add_subcommand())
         .subcommand(commands::diluting::add_subcommand())
         .subcommand(commands::priming::add_subcommand())
         .subcommand(commands::sg_correction::add_subcommand())
@@ -24,6 +25,9 @@ fn main() {
             }
             "boil_off" => {
                 commands::boil_off::do_matches(&app);
+            }
+            "calories" => {
+                commands::calories::do_matches(&app);
             }
             "diluting" => {
                 commands::diluting::do_matches(&app);
