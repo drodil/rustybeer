@@ -7,4 +7,5 @@ edition = "2018"
 [dependencies]
 
 [dev-dependencies]
-average = "0.10"
+approx = "0.3.2"
+rustybeer-util = { version = "0.1.0", path = "../rustybeer-util"}
