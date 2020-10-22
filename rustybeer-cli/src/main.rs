@@ -11,6 +11,7 @@ fn main() {
         .subcommand(commands::calories::add_subcommand())
         .subcommand(commands::diluting::add_subcommand())
         .subcommand(commands::priming::add_subcommand())
+        .subcommand(commands::num_bottles::add_subcommand())
         .subcommand(commands::sg_correction::add_subcommand())
         .setting(AppSettings::ArgRequiredElseHelp)
         .get_matches();
@@ -34,6 +35,9 @@ fn main() {
             }
             "priming" => {
                 commands::priming::do_matches(&app);
+            }
+            "num_bottles" => {
+                commands::num_bottles::do_matches(&app);
             }
             "sg_correction" => {
                 commands::sg_correction::do_matches(&app);
