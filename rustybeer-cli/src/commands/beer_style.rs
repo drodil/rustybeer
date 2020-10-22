@@ -48,7 +48,7 @@ pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
         )
 }
 
-fn matches_to_criteria<'a>(matches: &ArgMatches<'a>) -> Criteria {
+fn matches_to_criteria(matches: &ArgMatches) -> Criteria {
     Criteria {
         og: matches.value_of("og").map(|value| value.parse().unwrap()),
         fg: matches.value_of("fg").map(|value| value.parse().unwrap()),
@@ -58,7 +58,7 @@ fn matches_to_criteria<'a>(matches: &ArgMatches<'a>) -> Criteria {
     }
 }
 
-pub fn do_matches<'a>(matches: &ArgMatches<'a>) {
+pub fn do_matches(matches: &ArgMatches) {
     if let Some(matches) = matches.subcommand_matches("beer_style") {
         let criteria = matches_to_criteria(matches);
         let mut resp: Vec<&BeerStyle> = Vec::new();
@@ -77,10 +77,8 @@ pub fn do_matches<'a>(matches: &ArgMatches<'a>) {
         println!("Found the following beer styles with criteria:");
         for x in &resp {
             println!("---------------------");
-            println!("{}", x.name);
-            println!("");
-            println!("{}", x.description);
-            println!("");
+            println!("{}\n", x.name);
+            println!("{}\n", x.description);
             println!("OG: {}-{}", x.original_gravity_min, x.original_gravity_max);
             println!("FG: {}-{}", x.final_gravity_min, x.final_gravity_max);
             println!("ABV: {}%-{}%", x.abv_min, x.abv_max);

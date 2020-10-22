@@ -33,7 +33,7 @@ pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
         )
 }
 
-pub fn do_matches<'c>(matches: &ArgMatches<'c>) {
+pub fn do_matches(matches: &ArgMatches) {
     if let Some(sub_matches) = matches.subcommand_matches("boil_off") {
         let wort_volume = value_t!(sub_matches, "wort_volume", f32).unwrap_or_else(|e| e.exit());
         let current_gravity =
