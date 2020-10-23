@@ -40,7 +40,7 @@ pub static HOPS: Lazy<Vec<Hop>> = Lazy::new(|| serde_json::from_str(HOPS_JSON).u
 #[cfg(test)]
 pub mod tests {
     use super::HOPS;
-    use crate::assert_relative_eq;
+    use approx::assert_relative_eq;
 
     #[test]
     fn centennial() {

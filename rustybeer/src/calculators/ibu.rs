@@ -126,9 +126,9 @@ pub struct NegativeIbuError;
 /// * Cascade (6.4% AA): 28g - 45 mins
 ///
 /// ```
-/// use rustybeer::calculators::ibu::HopAddition;
-/// use rustybeer::calculators::ibu::calculate_ibu;
-/// assert!( (18.972_316 - calculate_ibu(vec![HopAddition::new(28.0, 0.064, 45, Default::default())], 20.0, 1.050)).abs() < 0.01);
+/// use rustybeer::calculators::ibu::{HopAddition, calculate_ibu};
+/// use rustybeer_util::assert_approx;
+/// assert_approx!(18.9723, calculate_ibu(vec![HopAddition::new(28.0, 0.064, 45, Default::default())], 20.0, 1.050));
 /// ```
 ///
 pub fn calculate_ibu(
@@ -175,8 +175,10 @@ pub fn calculate_ibu(
 /// * No other hops additions
 /// ```
 /// use rustybeer::calculators::ibu::calculate_bittering_weight;
+/// use rustybeer_util::assert_approx;
+///
 /// let bittering = calculate_bittering_weight(None, 0.085, None, 22., 1.058, 17.);
-/// assert!( (20.50 - bittering.unwrap()).abs() < 0.01);
+/// assert_approx!( 20.4973, bittering.unwrap());
 /// ```
 ///
 /// With addition of 20gm of Centennial (8.5% AA) for 60min boil,
@@ -231,8 +233,7 @@ pub mod tests {
         calculate_bittering_weight, calculate_ibu, HopAddition, HopAdditionType, NegativeIbuError,
         _calculate_ibu_single_hop, _calculate_utilization,
     };
-
-    use rustybeer_util::assert_relative_eq;
+    use rustybeer_util::assert_approx;
 
     #[test]
     fn utilization() {
@@ -241,7 +242,7 @@ pub mod tests {
             for (boiling_time_idx, boiling_time) in test_vector.boiling_time.iter().enumerate() {
                 let ut = _calculate_utilization(*og, *boiling_time);
                 // Only three decimals provided in test vector
-                assert_relative_eq!(
+                approx::assert_relative_eq!(
                     test_vector.utilization[boiling_time_idx][og_idx],
                     ut,
                     epsilon = 1e-3
@@ -252,7 +253,7 @@ pub mod tests {
 
     #[test]
     fn single_hop_ibu() {
-        assert_relative_eq!(
+        assert_approx!(
             2.8808,
             _calculate_ibu_single_hop(7.0, 0.085, 15, 22.0, 1.058, 1.)
         );
@@ -260,7 +261,7 @@ pub mod tests {
 
     #[test]
     fn multiple_hops_ibu() {
-        assert_relative_eq!(
+        assert_approx!(
             5.7615,
             calculate_ibu(
                 vec![
@@ -276,7 +277,7 @@ pub mod tests {
     #[test]
     fn pellet_hops_ibu() {
         // 6.336 = 5.76 * 1.1
-        assert_relative_eq!(
+        assert_approx!(
             6.3376,
             calculate_ibu(
                 vec![
@@ -310,7 +311,7 @@ pub mod tests {
 
     #[test]
     fn bitter_hops_weight() -> Result<(), NegativeIbuError> {
-        assert_relative_eq!(
+        assert_approx!(
             13.2611,
             calculate_bittering_weight(
                 Some(vec![
@@ -329,6 +330,6 @@ pub mod tests {
 
     #[test]
     fn zero_hops_ibu() {
-        assert_relative_eq!(0., calculate_ibu(vec![], 22.0, 1.058));
+        assert_approx!(0., calculate_ibu(vec![], 22.0, 1.058));
     }
 }

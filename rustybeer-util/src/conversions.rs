@@ -126,36 +126,27 @@ impl MassBuilder {
 #[cfg(test)]
 mod tests {
     use super::{MassBuilder, TemperatureBuilder, VolumeBuilder};
-    use crate::assert_relative_eq;
+    use approx::assert_relative_eq;
 
     #[test]
     fn fahrenheit_from_string() {
         assert_relative_eq!(
             123.0,
-            TemperatureBuilder::new("123F")
-                .unwrap()
-                .as_fahrenheit(),
+            TemperatureBuilder::new("123F").unwrap().as_fahrenheit(),
         );
         assert_relative_eq!(
             123.0,
-            TemperatureBuilder::new("123 F")
-                .unwrap()
-                .as_fahrenheit(),
+            TemperatureBuilder::new("123 F").unwrap().as_fahrenheit(),
         );
         assert_relative_eq!(
             123.0,
-            TemperatureBuilder::new("123 f")
-                .unwrap()
-                .as_fahrenheit(),
+            TemperatureBuilder::new("123 f").unwrap().as_fahrenheit(),
         );
     }
 
     #[test]
     fn celsius_from_string() {
-        assert_relative_eq!(
-            123.0,
-            TemperatureBuilder::new("123C").unwrap().as_celsius(),
-        );
+        assert_relative_eq!(123.0, TemperatureBuilder::new("123C").unwrap().as_celsius(),);
         assert_relative_eq!(
             123.0,
             TemperatureBuilder::new("123 C").unwrap().as_celsius(),
@@ -168,26 +159,14 @@ mod tests {
 
     #[test]
     fn kelvin_from_string() {
-        assert_relative_eq!(
-            123.0,
-            TemperatureBuilder::new("123K").unwrap().as_kelvin(),
-        );
-        assert_relative_eq!(
-            123.0,
-            TemperatureBuilder::new("123 K").unwrap().as_kelvin(),
-        );
-        assert_relative_eq!(
-            123.0,
-            TemperatureBuilder::new("123 k").unwrap().as_kelvin(),
-        );
+        assert_relative_eq!(123.0, TemperatureBuilder::new("123K").unwrap().as_kelvin(),);
+        assert_relative_eq!(123.0, TemperatureBuilder::new("123 K").unwrap().as_kelvin(),);
+        assert_relative_eq!(123.0, TemperatureBuilder::new("123 k").unwrap().as_kelvin(),);
     }
 
     #[test]
     fn rankine_from_string() {
-        assert_relative_eq!(
-            123.0,
-            TemperatureBuilder::new("123R").unwrap().as_rankine(),
-        );
+        assert_relative_eq!(123.0, TemperatureBuilder::new("123R").unwrap().as_rankine(),);
         assert_relative_eq!(
             123.0,
             TemperatureBuilder::new("123 R").unwrap().as_rankine(),
@@ -200,10 +179,7 @@ mod tests {
 
     #[test]
     fn default_from_string() {
-        assert_relative_eq!(
-            123.0,
-            TemperatureBuilder::new("123").unwrap().as_celsius(),
-        );
+        assert_relative_eq!(123.0, TemperatureBuilder::new("123").unwrap().as_celsius(),);
 
         assert_relative_eq!(123.0, VolumeBuilder::new("123").unwrap().as_litres(),);
         assert_relative_eq!(123.0, MassBuilder::new("123").unwrap().as_grams(),);
@@ -220,9 +196,7 @@ mod tests {
     fn cubic_centimeters_from_string() {
         assert_relative_eq!(
             123.0,
-            VolumeBuilder::new("123cm3")
-                .unwrap()
-                .as_cubic_centimeters(),
+            VolumeBuilder::new("123cm3").unwrap().as_cubic_centimeters(),
         );
         assert_relative_eq!(
             123.0,
@@ -240,10 +214,7 @@ mod tests {
 
     #[test]
     fn milliliters_from_string() {
-        assert_relative_eq!(
-            123.0,
-            VolumeBuilder::new("123ml").unwrap().as_milliliters(),
-        );
+        assert_relative_eq!(123.0, VolumeBuilder::new("123ml").unwrap().as_milliliters(),);
         assert_relative_eq!(
             123.0,
             VolumeBuilder::new("123 ml").unwrap().as_milliliters(),
@@ -263,34 +234,16 @@ mod tests {
 
     #[test]
     fn micrograms_from_string() {
-        assert_relative_eq!(
-            123.0,
-            MassBuilder::new("123ug").unwrap().as_micrograms(),
-        );
-        assert_relative_eq!(
-            123.0,
-            MassBuilder::new("123 ug").unwrap().as_micrograms(),
-        );
-        assert_relative_eq!(
-            123.0,
-            MassBuilder::new("123μg").unwrap().as_micrograms(),
-        );
-        assert_relative_eq!(
-            123.0,
-            MassBuilder::new("123 μg").unwrap().as_micrograms(),
-        );
+        assert_relative_eq!(123.0, MassBuilder::new("123ug").unwrap().as_micrograms(),);
+        assert_relative_eq!(123.0, MassBuilder::new("123 ug").unwrap().as_micrograms(),);
+        assert_relative_eq!(123.0, MassBuilder::new("123μg").unwrap().as_micrograms(),);
+        assert_relative_eq!(123.0, MassBuilder::new("123 μg").unwrap().as_micrograms(),);
     }
 
     #[test]
     fn milligrams_from_string() {
-        assert_relative_eq!(
-            123.0,
-            MassBuilder::new("123mg").unwrap().as_milligrams(),
-        );
-        assert_relative_eq!(
-            123.0,
-            MassBuilder::new("123 mg").unwrap().as_milligrams(),
-        );
+        assert_relative_eq!(123.0, MassBuilder::new("123mg").unwrap().as_milligrams(),);
+        assert_relative_eq!(123.0, MassBuilder::new("123 mg").unwrap().as_milligrams(),);
     }
 
     #[test]
@@ -307,14 +260,8 @@ mod tests {
 
     #[test]
     fn kilograms_from_string() {
-        assert_relative_eq!(
-            123.0,
-            MassBuilder::new("123kg").unwrap().as_kilograms(),
-        );
-        assert_relative_eq!(
-            123.0,
-            MassBuilder::new("123 kg").unwrap().as_kilograms(),
-        );
+        assert_relative_eq!(123.0, MassBuilder::new("123kg").unwrap().as_kilograms(),);
+        assert_relative_eq!(123.0, MassBuilder::new("123 kg").unwrap().as_kilograms(),);
     }
 
     #[test]
@@ -331,10 +278,7 @@ mod tests {
 
     #[test]
     fn pennyweights_from_string() {
-        assert_relative_eq!(
-            123.0,
-            MassBuilder::new("123dwt").unwrap().as_pennyweights(),
-        );
+        assert_relative_eq!(123.0, MassBuilder::new("123dwt").unwrap().as_pennyweights(),);
         assert_relative_eq!(
             123.0,
             MassBuilder::new("123 dwt").unwrap().as_pennyweights(),
