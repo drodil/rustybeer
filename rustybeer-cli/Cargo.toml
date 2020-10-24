@@ -5,6 +5,7 @@ authors = ["Heikki Hellgren <heiccih@gmail.com>", "mlatief", "Joseph Russell"]
 edition = "2018"
 
 [dependencies]
+anyhow = "1.0"
 rustybeer = { version = "0.1.0", path = "../rustybeer"}
 rustybeer-util = { version = "0.1.0", path = "../rustybeer-util"}
 structopt = "0.3.20"

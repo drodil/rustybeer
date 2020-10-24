@@ -1,3 +1,4 @@
+use anyhow::{Context, Result};
 use structopt::StructOpt;
 mod commands;
 
@@ -14,8 +15,8 @@ pub enum RustyBeer {
     SgCorrection(commands::sg_correction::SgCorrectionOptions),
 }
 
-fn main() {
-    let opt = RustyBeer::from_args();
+fn main() -> Result<()> {
+    let opt = RustyBeer::from_args_safe().with_context(|| "wrong arguments")?;
     match opt {
         RustyBeer::Abv(opts) => commands::abv::calculate_and_print(opts),
         RustyBeer::BeerStyle(opts) => commands::beer_style::calculate_and_print(opts),
@@ -25,4 +26,6 @@ fn main() {
         RustyBeer::Priming(opts) => commands::priming::calculate_and_print(opts),
         RustyBeer::SgCorrection(opts) => commands::sg_correction::calculate_and_print(opts),
     }
+
+    Ok(())
 }
