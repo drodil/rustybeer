@@ -1,6 +1,6 @@
-use measurements::Temperature;
 use rustybeer::calculators::sg_correction::correct_sg;
 use rustybeer_util::conversions::TemperatureBuilder;
+use rustybeer_util::measurements::Temperature;
 
 use structopt::StructOpt;
 

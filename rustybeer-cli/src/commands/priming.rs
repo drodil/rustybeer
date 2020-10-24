@@ -1,6 +1,6 @@
-use measurements::{Temperature, Volume};
 use rustybeer::calculators::priming::{calculate_co2, calculate_sugars};
 use rustybeer_util::conversions::{TemperatureBuilder, VolumeBuilder};
+use rustybeer_util::measurements::{Temperature, Volume};
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
