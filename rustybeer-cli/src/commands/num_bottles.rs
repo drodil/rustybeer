@@ -1,6 +1,5 @@
 use rustybeer::calculators::num_bottles::calculate_num_bottles;
-use rustybeer_util::conversions::VolumeBuilder;
-use rustybeer_util::measurements::Volume;
+use rustybeer_util::{conversions::VolumeParser, measurements::Volume};
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
@@ -10,7 +9,7 @@ use structopt::StructOpt;
 )]
 /// Calculates the number of different standard-size bottles needed to contain a given volume
 pub struct NumBottlesOptions {
-    #[structopt(short, long, parse(try_from_str = VolumeBuilder::new))]
+    #[structopt(short, long, parse(try_from_str = VolumeParser::parse))]
     /// Volume as a string ('e.g 10mL, 4gal')
     volume: Volume,
 }

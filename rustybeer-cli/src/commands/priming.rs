@@ -1,17 +1,19 @@
 use rustybeer::calculators::priming::{calculate_co2, calculate_sugars};
-use rustybeer_util::conversions::{TemperatureBuilder, VolumeBuilder};
-use rustybeer_util::measurements::{Temperature, Volume};
+use rustybeer_util::{
+    conversions::{TemperatureParser, VolumeParser},
+    measurements::{Temperature, Volume},
+};
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
 #[structopt(name = "priming")]
 /// Beer Priming Calculator
 pub struct PrimingOptions {
-    #[structopt(short, long, parse(try_from_str = TemperatureBuilder::new))]
+    #[structopt(short, long, parse(try_from_str = TemperatureParser::parse))]
     /// Temperature of beer with unit (C, F, K). Defaults to Celsius.
     temp: Temperature,
 
-    #[structopt(short, long = "amount", parse(try_from_str = VolumeBuilder::new))]
+    #[structopt(short, long = "amount", parse(try_from_str = VolumeParser::parse))]
     /// Amount being packaged with unit (l, ml, gal, etc.). Defaults to liters.
     amount: Volume,
 

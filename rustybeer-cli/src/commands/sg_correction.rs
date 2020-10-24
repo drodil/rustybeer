@@ -1,6 +1,5 @@
 use rustybeer::calculators::sg_correction::correct_sg;
-use rustybeer_util::conversions::TemperatureBuilder;
-use rustybeer_util::measurements::Temperature;
+use rustybeer_util::{conversions::TemperatureParser, measurements::Temperature};
 
 use structopt::StructOpt;
 
@@ -15,11 +14,11 @@ pub struct SgCorrectionOptions {
     /// Specific gravity reading
     sg: f64,
 
-    #[structopt(short, long, parse(try_from_str = TemperatureBuilder::new))]
+    #[structopt(short, long, parse(try_from_str = TemperatureParser::parse))]
     /// Calibration temperature with unit (C, F, K, etc.). Defaults to Celsius.
     ct: Temperature,
 
-    #[structopt(short, long, parse(try_from_str = TemperatureBuilder::new))]
+    #[structopt(short, long, parse(try_from_str = TemperatureParser::parse))]
     /// Measurement temperature with unit (C, F, K, etc.). Defaults to Celsius.
     mt: Temperature,
 }

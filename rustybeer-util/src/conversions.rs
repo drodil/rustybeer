@@ -5,15 +5,15 @@ use std::num::ParseFloatError;
 ///
 /// To be removed if the dependency some time allows creating measurement units from
 /// strings.
-pub struct TemperatureBuilder;
+pub struct TemperatureParser;
 
-impl TemperatureBuilder {
+impl TemperatureParser {
     /// Creates measurements::Temperature from string
     ///
     /// Tries to figure out the temperature unit from the string. If the string value is plain
     /// number, it will be considered as Celsius. Also empty strings are considered as
     /// zero Celsius in Temperature.
-    pub fn new(val: &str) -> Result<measurements::Temperature, ParseFloatError> {
+    pub fn parse(val: &str) -> Result<measurements::Temperature, ParseFloatError> {
         if val.is_empty() {
             return Ok(measurements::Temperature::from_celsius(0.0));
         }
@@ -40,15 +40,15 @@ impl TemperatureBuilder {
 ///
 /// To be removed if the dependency some time allows creating measurement units from
 /// strings.
-pub struct VolumeBuilder;
+pub struct VolumeParser;
 
-impl VolumeBuilder {
+impl VolumeParser {
     /// Creates measurements::Volume from string
     ///
     /// Tries to figure out the volume unit from the string. If the string value is plain
     /// number, it will be considered as litres. Also empty strings are considered as
     /// zero litres in Volume.
-    pub fn new(val: &str) -> Result<measurements::Volume, ParseFloatError> {
+    pub fn parse(val: &str) -> Result<measurements::Volume, ParseFloatError> {
         if val.is_empty() {
             return Ok(measurements::Volume::from_litres(0.0));
         }
@@ -87,15 +87,15 @@ impl VolumeBuilder {
 ///
 /// To be removed if the dependency some time allows creating measurement units from
 /// strings.
-pub struct MassBuilder;
+pub struct MassParser;
 
-impl MassBuilder {
+impl MassParser {
     /// Creates measurements::Mass from string
     ///
     /// Tries to figure out the mass unit from the string. If the string value is plain
     /// number, it will be considered as grams. Also empty strings are considered as
     /// zero grams in Mass.
-    pub fn new(val: &str) -> Result<measurements::Mass, ParseFloatError> {
+    pub fn parse(val: &str) -> Result<measurements::Mass, ParseFloatError> {
         if val.is_empty() {
             return Ok(measurements::Mass::from_grams(0.0));
         }
@@ -125,88 +125,102 @@ impl MassBuilder {
 
 #[cfg(test)]
 mod tests {
-    use super::{MassBuilder, TemperatureBuilder, VolumeBuilder};
+    use super::{MassParser, TemperatureParser, VolumeParser};
     use approx::assert_relative_eq;
 
     #[test]
     fn fahrenheit_from_string() {
         assert_relative_eq!(
             123.0,
-            TemperatureBuilder::new("123F").unwrap().as_fahrenheit(),
+            TemperatureParser::parse("123F").unwrap().as_fahrenheit(),
         );
         assert_relative_eq!(
             123.0,
-            TemperatureBuilder::new("123 F").unwrap().as_fahrenheit(),
+            TemperatureParser::parse("123 F").unwrap().as_fahrenheit(),
         );
         assert_relative_eq!(
             123.0,
-            TemperatureBuilder::new("123 f").unwrap().as_fahrenheit(),
+            TemperatureParser::parse("123 f").unwrap().as_fahrenheit(),
         );
     }
 
     #[test]
     fn celsius_from_string() {
-        assert_relative_eq!(123.0, TemperatureBuilder::new("123C").unwrap().as_celsius(),);
         assert_relative_eq!(
             123.0,
-            TemperatureBuilder::new("123 C").unwrap().as_celsius(),
+            TemperatureParser::parse("123C").unwrap().as_celsius(),
         );
         assert_relative_eq!(
             123.0,
-            TemperatureBuilder::new("123 c").unwrap().as_celsius(),
+            TemperatureParser::parse("123 C").unwrap().as_celsius(),
+        );
+        assert_relative_eq!(
+            123.0,
+            TemperatureParser::parse("123 c").unwrap().as_celsius(),
         );
     }
 
     #[test]
     fn kelvin_from_string() {
-        assert_relative_eq!(123.0, TemperatureBuilder::new("123K").unwrap().as_kelvin(),);
-        assert_relative_eq!(123.0, TemperatureBuilder::new("123 K").unwrap().as_kelvin(),);
-        assert_relative_eq!(123.0, TemperatureBuilder::new("123 k").unwrap().as_kelvin(),);
+        assert_relative_eq!(123.0, TemperatureParser::parse("123K").unwrap().as_kelvin(),);
+        assert_relative_eq!(
+            123.0,
+            TemperatureParser::parse("123 K").unwrap().as_kelvin(),
+        );
+        assert_relative_eq!(
+            123.0,
+            TemperatureParser::parse("123 k").unwrap().as_kelvin(),
+        );
     }
 
     #[test]
     fn rankine_from_string() {
-        assert_relative_eq!(123.0, TemperatureBuilder::new("123R").unwrap().as_rankine(),);
         assert_relative_eq!(
             123.0,
-            TemperatureBuilder::new("123 R").unwrap().as_rankine(),
+            TemperatureParser::parse("123R").unwrap().as_rankine(),
         );
         assert_relative_eq!(
             123.0,
-            TemperatureBuilder::new("123 r").unwrap().as_rankine(),
+            TemperatureParser::parse("123 R").unwrap().as_rankine(),
+        );
+        assert_relative_eq!(
+            123.0,
+            TemperatureParser::parse("123 r").unwrap().as_rankine(),
         );
     }
 
     #[test]
     fn default_from_string() {
-        assert_relative_eq!(123.0, TemperatureBuilder::new("123").unwrap().as_celsius(),);
+        assert_relative_eq!(123.0, TemperatureParser::parse("123").unwrap().as_celsius(),);
 
-        assert_relative_eq!(123.0, VolumeBuilder::new("123").unwrap().as_litres(),);
-        assert_relative_eq!(123.0, MassBuilder::new("123").unwrap().as_grams(),);
+        assert_relative_eq!(123.0, VolumeParser::parse("123").unwrap().as_litres(),);
+        assert_relative_eq!(123.0, MassParser::parse("123").unwrap().as_grams(),);
     }
 
     #[test]
     fn zero_from_string() {
-        assert_relative_eq!(0., TemperatureBuilder::new("").unwrap().as_celsius(),);
-        assert_relative_eq!(0., VolumeBuilder::new("").unwrap().as_litres());
-        assert_relative_eq!(0., MassBuilder::new("").unwrap().as_grams());
+        assert_relative_eq!(0., TemperatureParser::parse("").unwrap().as_celsius(),);
+        assert_relative_eq!(0., VolumeParser::parse("").unwrap().as_litres());
+        assert_relative_eq!(0., MassParser::parse("").unwrap().as_grams());
     }
 
     #[test]
     fn cubic_centimeters_from_string() {
         assert_relative_eq!(
             123.0,
-            VolumeBuilder::new("123cm3").unwrap().as_cubic_centimeters(),
-        );
-        assert_relative_eq!(
-            123.0,
-            VolumeBuilder::new("123 cm3")
+            VolumeParser::parse("123cm3")
                 .unwrap()
                 .as_cubic_centimeters(),
         );
         assert_relative_eq!(
             123.0,
-            VolumeBuilder::new("123 CM3")
+            VolumeParser::parse("123 cm3")
+                .unwrap()
+                .as_cubic_centimeters(),
+        );
+        assert_relative_eq!(
+            123.0,
+            VolumeParser::parse("123 CM3")
                 .unwrap()
                 .as_cubic_centimeters(),
         );
@@ -214,86 +228,92 @@ mod tests {
 
     #[test]
     fn milliliters_from_string() {
-        assert_relative_eq!(123.0, VolumeBuilder::new("123ml").unwrap().as_milliliters(),);
         assert_relative_eq!(
             123.0,
-            VolumeBuilder::new("123 ml").unwrap().as_milliliters(),
+            VolumeParser::parse("123ml").unwrap().as_milliliters(),
         );
         assert_relative_eq!(
             123.0,
-            VolumeBuilder::new("123 ml").unwrap().as_milliliters(),
+            VolumeParser::parse("123 ml").unwrap().as_milliliters(),
+        );
+        assert_relative_eq!(
+            123.0,
+            VolumeParser::parse("123 ml").unwrap().as_milliliters(),
         );
     }
 
     #[test]
     fn pints_from_string() {
-        assert_relative_eq!(123.0, VolumeBuilder::new("123p").unwrap().as_pints(),);
-        assert_relative_eq!(123.0, VolumeBuilder::new("123 p").unwrap().as_pints(),);
-        assert_relative_eq!(123.0, VolumeBuilder::new("123 P").unwrap().as_pints(),);
+        assert_relative_eq!(123.0, VolumeParser::parse("123p").unwrap().as_pints(),);
+        assert_relative_eq!(123.0, VolumeParser::parse("123 p").unwrap().as_pints(),);
+        assert_relative_eq!(123.0, VolumeParser::parse("123 P").unwrap().as_pints(),);
     }
 
     #[test]
     fn micrograms_from_string() {
-        assert_relative_eq!(123.0, MassBuilder::new("123ug").unwrap().as_micrograms(),);
-        assert_relative_eq!(123.0, MassBuilder::new("123 ug").unwrap().as_micrograms(),);
-        assert_relative_eq!(123.0, MassBuilder::new("123μg").unwrap().as_micrograms(),);
-        assert_relative_eq!(123.0, MassBuilder::new("123 μg").unwrap().as_micrograms(),);
+        assert_relative_eq!(123.0, MassParser::parse("123ug").unwrap().as_micrograms(),);
+        assert_relative_eq!(123.0, MassParser::parse("123 ug").unwrap().as_micrograms(),);
+        assert_relative_eq!(123.0, MassParser::parse("123μg").unwrap().as_micrograms(),);
+        assert_relative_eq!(123.0, MassParser::parse("123 μg").unwrap().as_micrograms(),);
     }
 
     #[test]
     fn milligrams_from_string() {
-        assert_relative_eq!(123.0, MassBuilder::new("123mg").unwrap().as_milligrams(),);
-        assert_relative_eq!(123.0, MassBuilder::new("123 mg").unwrap().as_milligrams(),);
+        assert_relative_eq!(123.0, MassParser::parse("123mg").unwrap().as_milligrams(),);
+        assert_relative_eq!(123.0, MassParser::parse("123 mg").unwrap().as_milligrams(),);
     }
 
     #[test]
     fn carats_from_string() {
-        assert_relative_eq!(123.0, MassBuilder::new("123ct").unwrap().as_carats(),);
-        assert_relative_eq!(123.0, MassBuilder::new("123 ct").unwrap().as_carats(),);
+        assert_relative_eq!(123.0, MassParser::parse("123ct").unwrap().as_carats(),);
+        assert_relative_eq!(123.0, MassParser::parse("123 ct").unwrap().as_carats(),);
     }
 
     #[test]
     fn grams_from_string() {
-        assert_relative_eq!(123.0, MassBuilder::new("123g").unwrap().as_grams(),);
-        assert_relative_eq!(123.0, MassBuilder::new("123 g").unwrap().as_grams(),);
+        assert_relative_eq!(123.0, MassParser::parse("123g").unwrap().as_grams(),);
+        assert_relative_eq!(123.0, MassParser::parse("123 g").unwrap().as_grams(),);
     }
 
     #[test]
     fn kilograms_from_string() {
-        assert_relative_eq!(123.0, MassBuilder::new("123kg").unwrap().as_kilograms(),);
-        assert_relative_eq!(123.0, MassBuilder::new("123 kg").unwrap().as_kilograms(),);
+        assert_relative_eq!(123.0, MassParser::parse("123kg").unwrap().as_kilograms(),);
+        assert_relative_eq!(123.0, MassParser::parse("123 kg").unwrap().as_kilograms(),);
     }
 
     #[test]
     fn tonnes_from_string() {
-        assert_relative_eq!(123.0, MassBuilder::new("123T").unwrap().as_tonnes(),);
-        assert_relative_eq!(123.0, MassBuilder::new("123 T").unwrap().as_tonnes(),);
+        assert_relative_eq!(123.0, MassParser::parse("123T").unwrap().as_tonnes(),);
+        assert_relative_eq!(123.0, MassParser::parse("123 T").unwrap().as_tonnes(),);
     }
 
     #[test]
     fn grains_from_string() {
-        assert_relative_eq!(123.0, MassBuilder::new("123gr").unwrap().as_grains(),);
-        assert_relative_eq!(123.0, MassBuilder::new("123 gr").unwrap().as_grains(),);
+        assert_relative_eq!(123.0, MassParser::parse("123gr").unwrap().as_grains(),);
+        assert_relative_eq!(123.0, MassParser::parse("123 gr").unwrap().as_grains(),);
     }
 
     #[test]
     fn pennyweights_from_string() {
-        assert_relative_eq!(123.0, MassBuilder::new("123dwt").unwrap().as_pennyweights(),);
         assert_relative_eq!(
             123.0,
-            MassBuilder::new("123 dwt").unwrap().as_pennyweights(),
+            MassParser::parse("123dwt").unwrap().as_pennyweights(),
+        );
+        assert_relative_eq!(
+            123.0,
+            MassParser::parse("123 dwt").unwrap().as_pennyweights(),
         );
     }
 
     #[test]
     fn ounces_from_string() {
-        assert_relative_eq!(123.0, MassBuilder::new("123oz").unwrap().as_ounces(),);
-        assert_relative_eq!(123.0, MassBuilder::new("123 oz").unwrap().as_ounces(),);
+        assert_relative_eq!(123.0, MassParser::parse("123oz").unwrap().as_ounces(),);
+        assert_relative_eq!(123.0, MassParser::parse("123 oz").unwrap().as_ounces(),);
     }
 
     #[test]
     fn pounds_from_string() {
-        assert_relative_eq!(123.0, MassBuilder::new("123lbs").unwrap().as_pounds(),);
-        assert_relative_eq!(123.0, MassBuilder::new("123 lbs").unwrap().as_pounds(),);
+        assert_relative_eq!(123.0, MassParser::parse("123lbs").unwrap().as_pounds(),);
+        assert_relative_eq!(123.0, MassParser::parse("123 lbs").unwrap().as_pounds(),);
     }
 }
