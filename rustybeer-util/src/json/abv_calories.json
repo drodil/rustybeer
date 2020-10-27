@@ -1,0 +1,217 @@
+[
+  {
+    "abv": 1.0,
+    "calories_low": 64,
+    "calories_high": 90
+  },
+  {
+    "abv": 1.5,
+    "calories_low": 75,
+    "calories_high": 101
+  },
+  {
+    "abv": 2.0,
+    "calories_low": 85,
+    "calories_high": 113
+  },
+  {
+    "abv": 2.5,
+    "calories_low": 100,
+    "calories_high": 126
+  },
+  {
+    "abv": 3.0,
+    "calories_low": 113,
+    "calories_high": 139
+  },
+  {
+    "abv": 3.5,
+    "calories_low": 126,
+    "calories_high": 151
+  },
+  {
+    "abv": 4.0,
+    "calories_low": 139,
+    "calories_high": 164
+  },
+  {
+    "abv": 4.5,
+    "calories_low": 151,
+    "calories_high": 176
+  },
+  {
+    "abv": 5.0,
+    "calories_low": 163,
+    "calories_high": 191
+  },
+  {
+    "abv": 5.5,
+    "calories_low": 176,
+    "calories_high": 203
+  },
+  {
+    "abv": 6.0,
+    "calories_low": 189,
+    "calories_high": 216
+  },
+  {
+    "abv": 6.5,
+    "calories_low": 201,
+    "calories_high": 228
+  },
+  {
+    "abv": 7.0,
+    "calories_low": 213,
+    "calories_high": 239
+  },
+  {
+    "abv": 7.5,
+    "calories_low": 226,
+    "calories_high": 253
+  },
+  {
+    "abv": 8.0,
+    "calories_low": 239,
+    "calories_high": 264
+  },
+  {
+    "abv": 8.5,
+    "calories_low": 251,
+    "calories_high": 276
+  },
+  {
+    "abv": 9.0,
+    "calories_low": 263,
+    "calories_high": 290
+  },
+  {
+    "abv": 9.5,
+    "calories_low": 276,
+    "calories_high": 303
+  },
+  {
+    "abv": 10.0,
+    "calories_low": 290,
+    "calories_high": 315
+  },
+  {
+    "abv": 10.5,
+    "calories_low": 302,
+    "calories_high": 327
+  },
+  {
+    "abv": 11.0,
+    "calories_low": 314,
+    "calories_high": 341
+  },
+  {
+    "abv": 11.5,
+    "calories_low": 327,
+    "calories_high": 352
+  },
+  {
+    "abv": 12.0,
+    "calories_low": 339,
+    "calories_high": 364
+  },
+  {
+    "abv": 12.5,
+    "calories_low": 351,
+    "calories_high": 378
+  },
+  {
+    "abv": 13.0,
+    "calories_low": 365,
+    "calories_high": 390
+  },
+  {
+    "abv": 13.5,
+    "calories_low": 375,
+    "calories_high": 402
+  },
+  {
+    "abv": 14.0,
+    "calories_low": 389,
+    "calories_high": 414
+  },
+  {
+    "abv": 14.5,
+    "calories_low": 401,
+    "calories_high": 427
+  },
+  {
+    "abv": 15.0,
+    "calories_low": 41,
+    "calories_high": 440
+  },
+  {
+    "abv": 15.5,
+    "calories_low": 426,
+    "calories_high": 452
+  },
+  {
+    "abv": 16.0,
+    "calories_low": 438,
+    "calories_high": 464
+  },
+  {
+    "abv": 16.5,
+    "calories_low": 450,
+    "calories_high": 476
+  },
+  {
+    "abv": 17.0,
+    "calories_low": 463,
+    "calories_high": 488
+  },
+  {
+    "abv": 17.5,
+    "calories_low": 475,
+    "calories_high": 500
+  },
+  {
+    "abv": 18.0,
+    "calories_low": 489,
+    "calories_high": 513
+  },
+  {
+    "abv": 18.5,
+    "calories_low": 499,
+    "calories_high": 525
+  },
+  {
+    "abv": 19.0,
+    "calories_low": 513,
+    "calories_high": 537
+  },
+  {
+    "abv": 19.5,
+    "calories_low": 524,
+    "calories_high": 551
+  },
+  {
+    "abv": 20.0,
+    "calories_low": 538,
+    "calories_high": 562
+  },
+  {
+    "abv": 20.5,
+    "calories_low": 548,
+    "calories_high": 574
+  },
+  {
+    "abv": 21.0,
+    "calories_low": 562,
+    "calories_high": 586
+  },
+  {
+    "abv": 21.5,
+    "calories_low": 573,
+    "calories_high": 599
+  },
+  {
+    "abv": 22.0,
+    "calories_low": 585,
+    "calories_high": 611
+  }
+]
