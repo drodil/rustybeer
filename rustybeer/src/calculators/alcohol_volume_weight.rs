@@ -1,7 +1,7 @@
 //! A calculator used to calculate
 //! alcohol by weight from alcohol by volume and vice versa
 //! ```
-//! use rustybeer::calculators::abv::calculate_abv_abw;
+//! use rustybeer::calculators::alcohol_volume_weight::calculate_abv_abw;
 //!
 //! // Takes the argument percent (ABV)
 //! assert_eq!(4., calculate_abv_abw(5.));
