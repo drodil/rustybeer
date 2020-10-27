@@ -38,20 +38,18 @@ impl Hop {
 pub static HOPS: Lazy<Vec<Hop>> = Lazy::new(|| serde_json::from_str(HOPS_JSON).unwrap());
 
 #[cfg(test)]
-pub mod test {
+pub mod tests {
     use super::HOPS;
+    use approx::assert_relative_eq;
 
     #[test]
     fn centennial() {
-        assert!(
-            (0.095
-                - HOPS
-                    .iter()
-                    .find(|&h| h.name == "Centennial")
-                    .unwrap()
-                    .alpha_acid_min)
-                .abs()
-                < f64::EPSILON
+        assert_relative_eq!(
+            0.095,
+            HOPS.iter()
+                .find(|&h| h.name == "Centennial")
+                .unwrap()
+                .alpha_acid_min
         );
     }
 }
