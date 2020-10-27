@@ -1,6 +1,6 @@
 # RustyBeer
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/drodil/rustybeer/blob/master/LICENSE)
@@ -83,6 +83,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/flauntingspade4"><img src="https://avatars1.githubusercontent.com/u/48335751?v=4" width="100px;" alt=""/><br /><sub><b>flauntingspade4</b></sub></a><br /><a href="https://github.com/drodil/rustybeer/commits?author=flauntingspade4" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/i-jey"><img src="https://avatars1.githubusercontent.com/u/25993326?v=4" width="100px;" alt=""/><br /><sub><b>Ilakkiyan Jeyakumar</b></sub></a><br /><a href="https://github.com/drodil/rustybeer/commits?author=i-jey" title="Code">💻</a></td>
     <td align="center"><a href="http://linkedin.com/in/tommilligan477"><img src="https://avatars2.githubusercontent.com/u/12255914?v=4" width="100px;" alt=""/><br /><sub><b>Tom Milligan</b></sub></a><br /><a href="https://github.com/drodil/rustybeer/commits?author=tommilligan" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/rogercyyu"><img src="https://avatars0.githubusercontent.com/u/45835736?v=4" width="100px;" alt=""/><br /><sub><b>Roger Y</b></sub></a><br /><a href="https://github.com/drodil/rustybeer/commits?author=rogercyyu" title="Code">💻</a></td>
   </tr>
 </table>
 
