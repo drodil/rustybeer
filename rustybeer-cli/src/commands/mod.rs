@@ -1,4 +1,5 @@
 pub mod abv;
+pub mod abv_abw;
 pub mod beer_style;
 pub mod boil_off;
 pub mod diluting;

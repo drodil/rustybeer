@@ -6,6 +6,7 @@ fn main() {
     let app = App::new("RustyBeer")
         .version("0.1")
         .subcommand(commands::abv::add_subcommand())
+        .subcommand(commands::abv_abw::add_subcommand())
         .subcommand(commands::beer_style::add_subcommand())
         .subcommand(commands::boil_off::add_subcommand())
         .subcommand(commands::diluting::add_subcommand())
@@ -19,6 +20,9 @@ fn main() {
         Some(s) => match s {
             "abv" => {
                 commands::abv::do_matches(&app);
+            }
+            "abv_abw" => {
+                commands::abv_abw::do_matches(&app);
             }
             "beer_style" => {
                 commands::beer_style::do_matches(&app);

@@ -61,6 +61,7 @@ Implemented                   | Function      | Description                     
 :white_check_mark:            | Priming       | Beer Priming Calculator                        | `priming --temp <Beer temperature> --amount <Beer volume> --co2_volumes <co2_volumes>`
 :white_check_mark:            | SG Correction | Corrects SG reading according to the difference between the measurement temperature and the calibration temperature | `sg_correction --sg <Specific gravity reading> --ct <Calibration temperature> --mt <Measurement temperature>`
 :white_check_mark:            | Beer style    | Finds beer styles matching given parameters    | `beer_style (--og <Original gravity>) (--fg <Final gravity>) (--abv <Alcohol by volume>) (--ibu <International bittering units> (--color <SRM color>)`
+:white_check_mark:            | ABV <-> ABW    | Calculates alcohol by weight (ABW) from       | `abv_abw --percent <alcohol percentage> (--total_volume <total beer volume in ml>) (--total_density <density of beer in g/cm³) (--reverse)`
 
 This list will expand as ideas and suggestions come in.
 
