@@ -1,9 +1,9 @@
 use clap::{value_t, App, Arg, ArgMatches};
-use rustybeer_util::conversions::{VolumeBuilder};
 pub use rustybeer::calculators::alcohol_volume_weight::{
     calculate_abv_abw, calculate_abv_abw_density, calculate_abw_abv, calculate_abw_abv_density,
     calculate_alc_vol, calculate_alc_weight,
 };
+use rustybeer_util::conversions::VolumeBuilder;
 
 pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
     App::new("abv_abw")
@@ -77,8 +77,10 @@ pub fn do_matches(matches: &ArgMatches) {
 
             // Quantity of alcohol
             if matches.is_present("total_volume") {
-                let total_volume = value_t!(matches, "total_volume", String).unwrap_or_else(|e| e.exit());
-                let total_volume_millilitres = VolumeBuilder::new(&total_volume).unwrap().as_millilitres();
+                let total_volume =
+                    value_t!(matches, "total_volume", String).unwrap_or_else(|e| e.exit());
+                let total_volume_millilitres =
+                    VolumeBuilder::new(&total_volume).unwrap().as_millilitres();
                 if matches.is_present("reverse") {
                     println!(
                         "Alcohol: {:.3} ml",
