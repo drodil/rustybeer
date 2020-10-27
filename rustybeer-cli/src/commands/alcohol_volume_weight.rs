@@ -1,5 +1,5 @@
 use clap::{value_t, App, Arg, ArgMatches};
-pub use rustybeer::calculators::abv_abw::{calculate_abv_abw, calculate_abv_abw_density, calculate_abw_abv, calculate_abw_abv_density, calculate_alc_vol, calculate_alc_weight};
+pub use rustybeer::calculators::alcohol_volume_weight::{calculate_abv_abw, calculate_abv_abw_density, calculate_abw_abv, calculate_abw_abv_density, calculate_alc_vol, calculate_alc_weight};
 
 pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
     App::new("abv_abw")
