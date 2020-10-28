@@ -10,6 +10,49 @@ fn abv() {
 }
 
 #[test]
+fn alcohol_volume_weight() {
+    use rustybeer::calculators::alcohol_volume_weight::*;
+
+    assert_approx!(4., calculate_abv_abw(5.));
+    assert_approx!(0., calculate_abv_abw(0.));
+    assert_approx!(400., calculate_abv_abw(500.));
+
+    assert_approx!(3.945, calculate_abv_abw_density(5., 1.));
+    assert_approx!(5., calculate_abv_abw_density(5., 0.789));
+    assert_approx!(0.789, calculate_abv_abw_density(5., 5.));
+    assert_approx!(100., calculate_abv_abw_density(5., 0.03945));
+
+    assert_approx!(6.25, calculate_abw_abv(5.));
+    assert_approx!(0., calculate_abw_abv(0.));
+    assert_approx!(625., calculate_abw_abv(500.));
+
+    assert_approx!(6.3371, calculate_abw_abv_density(5., 1.));
+    assert_approx!(5., calculate_abw_abv_density(5., 0.789));
+    assert_approx!(31.6857, calculate_abw_abv_density(5., 5.));
+    assert_approx!(0., calculate_abw_abv_density(5., 0.));
+
+    assert_approx!(50., calculate_alc_vol(1000., 5.));
+    assert_approx!(28.4, calculate_alc_vol(568., 5.));
+    assert_approx!(0., calculate_alc_vol(0., 5.));
+    assert_approx!(0.00005, calculate_alc_vol(0.001, 5.));
+    assert_approx!(5000., calculate_alc_vol(100000., 5.));
+
+    assert_approx!(0., calculate_alc_vol(1000., 0.));
+    assert_approx!(7.89, calculate_alc_vol(1000., 0.789));
+    assert_approx!(1000., calculate_alc_vol(1000., 100.));
+
+    assert_approx!(39.45, calculate_alc_weight(1000., 5.));
+    assert_approx!(22.4076, calculate_alc_weight(568., 5.));
+    assert_approx!(0., calculate_alc_weight(0., 5.));
+    assert_approx!(0.00003945, calculate_alc_weight(0.001, 5.));
+    assert_approx!(3945., calculate_alc_weight(100000., 5.));
+
+    assert_approx!(0., calculate_alc_weight(1000., 0.));
+    assert_approx!(6.22521, calculate_alc_weight(1000., 0.789));
+    assert_approx!(789., calculate_alc_weight(1000., 100.));
+}
+
+#[test]
 fn boil_off() {
     use rustybeer::calculators::diluting::*;
 
