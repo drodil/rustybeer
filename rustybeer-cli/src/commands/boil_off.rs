@@ -1,63 +1,51 @@
-use clap::{value_t, App, Arg, ArgGroup, ArgMatches};
-pub use rustybeer::calculators::diluting::{calculate_new_gravity, calculate_new_volume};
+use rustybeer::calculators::diluting::{calculate_new_gravity, calculate_new_volume};
+use structopt::{clap::ArgGroup, StructOpt};
 
-pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
-    App::new("boil_off")
-            .version("0.1")
-            .about("Calculates how much you need to dilute or boil down your wort volume to hit a certain gravity")
-            .arg(Arg::with_name("wort_volume")
-                    .long("wort_volume")
-                    .short("w")
-                    .help("Wort Volume")
-                    .required(true)
-                    .takes_value(true))
-            .arg(Arg::with_name("current_gravity")
-                    .long("current_gravity")
-                    .short("c")
-                    .help("Current Gravity")
-                    .required(true)
-                    .takes_value(true))
-            .arg(Arg::with_name("desired_gravity")
-                    .long("desired_gravity")
-                    .short("d")
-                    .help("Desired Gravity")
-                    .takes_value(true))
-            .arg(Arg::with_name("target_volume")
-                    .long("target_volume")
-                    .short("t")
-                    .help("Target Volume")
-                    .takes_value(true))
-            .group(ArgGroup::with_name("desired")
-                    .args(&["target_volume", "desired_gravity"])
-                    .required(true)
-        )
+#[derive(Debug, StructOpt)]
+#[structopt(name = "boil_off", group = ArgGroup::with_name("desired").required(true))]
+/// Calculates how much you need to dilute or boil down your wort volume to hit a certain gravity
+pub struct BoilOffOptions {
+    #[structopt(short, long)]
+    /// Wort Volume
+    wort_volume: f32,
+
+    #[structopt(short, long)]
+    /// Current Gravity
+    current_gravity: f32,
+
+    #[structopt(short, long, group = "desired")]
+    /// Desired Gravity
+    desired_gravity: Option<f32>,
+
+    #[structopt(short, long, group = "desired")]
+    /// Target Volume
+    target_volume: Option<f32>,
 }
 
-pub fn do_matches(matches: &ArgMatches) {
-    if let Some(sub_matches) = matches.subcommand_matches("boil_off") {
-        let wort_volume = value_t!(sub_matches, "wort_volume", f32).unwrap_or_else(|e| e.exit());
-        let current_gravity =
-            value_t!(sub_matches, "current_gravity", f32).unwrap_or_else(|e| e.exit());
+pub fn calculate_and_print(boil_off_options: BoilOffOptions) {
+    println!("Wort Volume: {} l", boil_off_options.wort_volume);
+    println!("Current Gravity: {}", boil_off_options.current_gravity);
 
-        println!("Wort Volume: {}", wort_volume);
-        println!("Current Gravity: {}", current_gravity);
+    if let Some(desired_gravity) = boil_off_options.desired_gravity {
+        let new_volume = calculate_new_volume(
+            boil_off_options.wort_volume,
+            boil_off_options.current_gravity,
+            desired_gravity,
+        );
+        println!("New Volume: {}", new_volume);
+        println!("Difference: {}", new_volume - boil_off_options.wort_volume);
+    }
 
-        match value_t!(sub_matches, "desired_gravity", f32) {
-            Ok(desired_gravity) => {
-                let new_volume =
-                    calculate_new_volume(wort_volume, current_gravity, desired_gravity);
-                println!("New Volume: {}", new_volume);
-                println!("Difference: {}", new_volume - wort_volume);
-            }
-            Err(ref e) if e.kind == clap::ErrorKind::ArgumentNotFound => {
-                let target_volume =
-                    value_t!(sub_matches, "target_volume", f32).unwrap_or_else(|er| er.exit());
-                let new_gravity =
-                    calculate_new_gravity(wort_volume, current_gravity, target_volume);
-                println!("New Gravity: {}", new_gravity);
-                println!("Difference: {}", new_gravity - current_gravity);
-            }
-            Err(e) => e.exit(),
-        }
+    if let Some(target_volume) = boil_off_options.target_volume {
+        let new_gravity = calculate_new_gravity(
+            boil_off_options.wort_volume,
+            boil_off_options.current_gravity,
+            target_volume,
+        );
+        println!("New Gravity: {}", new_gravity);
+        println!(
+            "Difference: {}",
+            new_gravity - boil_off_options.current_gravity
+        );
     }
 }

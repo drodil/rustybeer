@@ -1,53 +1,35 @@
-use clap::{App, AppSettings};
-
+use anyhow::{Context, Result};
+use structopt::StructOpt;
 mod commands;
 
-fn main() {
-    let app = App::new("RustyBeer")
-        .version("0.1")
-        .subcommand(commands::abv::add_subcommand())
-        .subcommand(commands::alcohol_volume_weight::add_subcommand())
-        .subcommand(commands::beer_style::add_subcommand())
-        .subcommand(commands::boil_off::add_subcommand())
-        .subcommand(commands::calories::add_subcommand())
-        .subcommand(commands::diluting::add_subcommand())
-        .subcommand(commands::priming::add_subcommand())
-        .subcommand(commands::num_bottles::add_subcommand())
-        .subcommand(commands::sg_correction::add_subcommand())
-        .setting(AppSettings::ArgRequiredElseHelp)
-        .get_matches();
+#[derive(Debug, StructOpt)]
+#[structopt(name = "RustyBeer", version = "0.1")]
+/// RustyBeer Calculators CLI
+pub enum RustyBeer {
+    Abv(commands::abv::AbvOptions),
+    AbvAbw(commands::alcohol_volume_weight::AbvAbwOptions),
+    BeerStyle(commands::beer_style::BeerStyleOptions),
+    BoilOff(commands::boil_off::BoilOffOptions),
+    Calories(commands::calories::CaloriesOptions),
+    Diluting(commands::diluting::DilutingOptions),
+    NumBottles(commands::num_bottles::NumBottlesOptions),
+    Priming(commands::priming::PrimingOptions),
+    SgCorrection(commands::sg_correction::SgCorrectionOptions),
+}
 
-    match app.subcommand_name() {
-        Some(s) => match s {
-            "abv" => {
-                commands::abv::do_matches(&app);
-            }
-            "abv_abw" => {
-                commands::alcohol_volume_weight::do_matches(&app);
-            }
-            "beer_style" => {
-                commands::beer_style::do_matches(&app);
-            }
-            "boil_off" => {
-                commands::boil_off::do_matches(&app);
-            }
-            "calories" => {
-                commands::calories::do_matches(&app);
-            }
-            "diluting" => {
-                commands::diluting::do_matches(&app);
-            }
-            "priming" => {
-                commands::priming::do_matches(&app);
-            }
-            "num_bottles" => {
-                commands::num_bottles::do_matches(&app);
-            }
-            "sg_correction" => {
-                commands::sg_correction::do_matches(&app);
-            }
-            _ => println!("Not recognised subcommand"),
-        },
-        None => println!("A subcommand must be provided"),
+fn main() -> Result<()> {
+    let opt = RustyBeer::from_args_safe().with_context(|| "wrong arguments")?;
+    match opt {
+        RustyBeer::Abv(opts) => commands::abv::calculate_and_print(opts),
+        RustyBeer::AbvAbw(opts) => commands::alcohol_volume_weight::calculate_and_print(opts),
+        RustyBeer::BeerStyle(opts) => commands::beer_style::calculate_and_print(opts),
+        RustyBeer::BoilOff(opts) => commands::boil_off::calculate_and_print(opts),
+        RustyBeer::Calories(opts) => commands::calories::calculate_and_print(opts),
+        RustyBeer::Diluting(opts) => commands::diluting::calculate_and_print(opts),
+        RustyBeer::NumBottles(opts) => commands::num_bottles::calculate_and_print(opts),
+        RustyBeer::Priming(opts) => commands::priming::calculate_and_print(opts),
+        RustyBeer::SgCorrection(opts) => commands::sg_correction::calculate_and_print(opts),
     }
+
+    Ok(())
 }

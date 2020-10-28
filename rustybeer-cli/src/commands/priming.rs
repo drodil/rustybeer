@@ -1,52 +1,39 @@
-use clap::{value_t, App, Arg, ArgMatches};
 use rustybeer::calculators::priming::{calculate_co2, calculate_sugars};
-use rustybeer_util::conversions::{TemperatureBuilder, VolumeBuilder};
+use rustybeer_util::{
+    conversions::{TemperatureParser, VolumeParser},
+    measurements::{Temperature, Volume},
+};
+use structopt::StructOpt;
 
-pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
-    App::new("priming")
-                .about("Beer Priming Calculator")   // The message displayed in "-h"
-                .arg(Arg::with_name("temp")         // Priming own arguments
-                        .long("temp")
-                        .short("t")
-                        .help("Temperature of beer with unit (C, F, K). Defaults to Celsius.")
-                        .default_value("20C")
-                        .required(true)
-                        .takes_value(true))
-                .arg(Arg::with_name("amount")
-                        .long("amount")
-                        .short("a")
-                        .help("Amount being packaged with unit (l, ml, gal, etc.). Defaults to liters.")
-                        .default_value("25l")
-                        .takes_value(true))
-                .arg(Arg::with_name("co2_volumes")
-                        .long("co2_volumes")
-                        .short("c")
-                        .help("Volumes of wanted CO2, depends on beer style (e.g. British Style Ales 1.5 to 2.0)")
-                        .default_value("2.0")
-                        .takes_value(true))
+#[derive(Debug, StructOpt)]
+#[structopt(name = "priming")]
+/// Beer Priming Calculator
+pub struct PrimingOptions {
+    #[structopt(short, long, parse(try_from_str = TemperatureParser::parse))]
+    /// Temperature of beer with unit (C, F, K). Defaults to Celsius.
+    temp: Temperature,
+
+    #[structopt(short, long = "amount", parse(try_from_str = VolumeParser::parse))]
+    /// Amount being packaged with unit (l, ml, gal, etc.). Defaults to liters.
+    amount: Volume,
+
+    #[structopt(short, long = "co2_volumes", default_value = "2.0")]
+    /// Volumes of wanted CO2, depends on beer style (e.g. British Style Ales 1.5 to 2.0)
+    co2_volumes: f64,
 }
 
-pub fn do_matches(matches: &ArgMatches) {
-    if let Some(sub_matches) = matches.subcommand_matches("priming") {
-        let temperature = value_t!(sub_matches, "temp", String).unwrap_or_else(|e| e.exit());
-        let amount_str = value_t!(sub_matches, "amount", String).unwrap_or_else(|e| e.exit());
-        let co2_volumes = value_t!(sub_matches, "co2_volumes", f64).unwrap_or_else(|e| e.exit());
+pub fn calculate_and_print(priming: PrimingOptions) {
+    let fahrenheit = priming.temp.as_fahrenheit();
+    let amount = priming.amount.as_litres();
+    let co2_beer = calculate_co2(fahrenheit);
+    let sugars = calculate_sugars(fahrenheit, amount, priming.co2_volumes);
 
-        let fahrenheit = TemperatureBuilder::new(&temperature)
-            .unwrap()
-            .as_fahrenheit();
-        let amount = VolumeBuilder::new(&amount_str).unwrap().as_litres();
-        let co2_beer = calculate_co2(fahrenheit);
-        let sugars = calculate_sugars(fahrenheit, amount, co2_volumes);
-
-        println!("Amount: {}", amount_str);
-        println!("Volumes of CO2: {}", co2_volumes);
-        println!("Temperature: {}", temperature);
-        println!("CO2 in Beer: {:.2} volumes", co2_beer);
-        println!("Priming Sugar Options:");
-
-        for sugar in sugars.iter() {
-            println!("{:>23}: {:.2} g", sugar.name, sugar.ratio);
-        }
+    println!("Amount: {}l", amount);
+    println!("Volumes of CO2: {}", priming.co2_volumes);
+    println!("Temperature: {}C", fahrenheit);
+    println!("CO2 in Beer: {:.2} volumes", co2_beer);
+    println!("Priming Sugar Options:");
+    for sugar in sugars.iter() {
+        println!("{:>23}: {:.2} g", sugar.name, sugar.ratio);
     }
 }

@@ -1,48 +1,36 @@
-use clap::{value_t, App, Arg, ArgMatches};
 use rustybeer::calculators::sg_correction::correct_sg;
-use rustybeer_util::conversions::TemperatureBuilder;
+use rustybeer_util::{conversions::TemperatureParser, measurements::Temperature};
 
-pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
-    let ret = App::new("sg_correction")
-            .version("0.1")
-            .author("Joseph Russell (josephrussell123@gmail.com)")
-            .about("Corrects SG reading according to the difference between the measurement temperature and the calibration temperature")
-            .arg(Arg::with_name("sg")
-                 .short("s")
-                 .long("sg")
-                 .value_name("GRAVITY")
-                 .help("Specific gravity reading")
-                 .required(true)
-                 .takes_value(true))
-            .arg(Arg::with_name("ct")
-                 .short("c")
-                 .long("ct")
-                 .value_name("CALIBRATION TEMPERATURE")
-                 .help("Calibration temperature with unit (C, F, K, etc.). Defaults to Celsius.")
-                 .required(true)
-                 .takes_value(true))
-            .arg(Arg::with_name("mt")
-                 .short("m")
-                 .long("mt")
-                 .value_name("MEASUREMENT TEMPERATURE")
-                 .help("Measurement temperature with unit (C, F, K, etc.). Defaults to Celsius.")
-                 .required(true)
-                 .takes_value(true));
+use structopt::StructOpt;
 
-    ret
+#[derive(Debug, StructOpt)]
+#[structopt(
+    name = "sg_correction",
+    author("Joseph Russell (josephrussell123@gmail.com)")
+)]
+/// Corrects SG reading according to the difference between the measurement temperature and the calibration temperature
+pub struct SgCorrectionOptions {
+    #[structopt(short, long)]
+    /// Specific gravity reading
+    sg: f64,
+
+    #[structopt(short, long, parse(try_from_str = TemperatureParser::parse))]
+    /// Calibration temperature with unit (C, F, K, etc.). Defaults to Celsius.
+    ct: Temperature,
+
+    #[structopt(short, long, parse(try_from_str = TemperatureParser::parse))]
+    /// Measurement temperature with unit (C, F, K, etc.). Defaults to Celsius.
+    mt: Temperature,
 }
 
-pub fn do_matches(matches: &ArgMatches) {
-    if let Some(matches) = matches.subcommand_matches("sg_correction") {
-        let sg = value_t!(matches, "sg", f64).unwrap_or_else(|e| e.exit());
-        let ct_str = value_t!(matches, "ct", String).unwrap_or_else(|e| e.exit());
-        let ct = TemperatureBuilder::new(&ct_str).unwrap().as_fahrenheit();
-        let mt_str = value_t!(matches, "mt", String).unwrap_or_else(|e| e.exit());
-        let mt = TemperatureBuilder::new(&mt_str).unwrap().as_fahrenheit();
-
-        println!("Measured gravity: {}", sg);
-        println!("Calibration temperature: {}", ct_str);
-        println!("Measurement temperature: {}", mt_str);
-        println!("Corrected gravity: {:.3}", correct_sg(sg, ct, mt));
-    }
+pub fn calculate_and_print(sg_correction_options: SgCorrectionOptions) {
+    let ct = sg_correction_options.ct.as_fahrenheit();
+    let mt = sg_correction_options.mt.as_fahrenheit();
+    println!("Measured gravity: {}", sg_correction_options.sg);
+    println!("Calibration temperature: {} F", ct);
+    println!("Measurement temperature: {} F", mt);
+    println!(
+        "Corrected gravity: {:.3}",
+        correct_sg(sg_correction_options.sg, ct, mt)
+    );
 }
