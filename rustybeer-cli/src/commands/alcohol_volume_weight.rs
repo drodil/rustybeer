@@ -20,19 +20,19 @@ pub fn add_subcommand<'a, 'b>() -> App<'a, 'b> {
                 .takes_value(true),
         )
         .arg(
-            Arg::with_name("total_volume")
+            Arg::with_name("volume")
                 .short("v")
-                .long("total_volume")
-                .value_name("TOTAL_VOLUME")
+                .long("volume")
+                .value_name("VOLUME")
                 .help("Total beer volume")
                 .required(false)
                 .takes_value(true),
         )
         .arg(
-            Arg::with_name("total_density")
+            Arg::with_name("density")
                 .short("d")
-                .long("total_density")
-                .value_name("TOTAL_DENSITY")
+                .long("density")
+                .value_name("DENSITY")
                 .help("Total density of beer in g/cm³")
                 .required(false)
                 .takes_value(true),
@@ -56,19 +56,17 @@ pub fn do_matches(matches: &ArgMatches) {
 
             // main ABV <-> ABW conversion
             if matches.is_present("reverse") {
-                if matches.is_present("total_density") {
-                    let total_density =
-                        value_t!(matches, "total_density", f64).unwrap_or_else(|e| e.exit());
-                    end_percentage = calculate_abw_abv_density(percent, total_density);
+                if matches.is_present("density") {
+                    let density = value_t!(matches, "density", f64).unwrap_or_else(|e| e.exit());
+                    end_percentage = calculate_abw_abv_density(percent, density);
                 } else {
                     end_percentage = calculate_abw_abv(percent);
                 }
                 println!("ABV: {:.3}%", end_percentage);
             } else {
-                if matches.is_present("total_density") {
-                    let total_density =
-                        value_t!(matches, "total_density", f64).unwrap_or_else(|e| e.exit());
-                    end_percentage = calculate_abv_abw_density(percent, total_density);
+                if matches.is_present("density") {
+                    let density = value_t!(matches, "density", f64).unwrap_or_else(|e| e.exit());
+                    end_percentage = calculate_abv_abw_density(percent, density);
                 } else {
                     end_percentage = calculate_abv_abw(percent);
                 }
@@ -76,21 +74,16 @@ pub fn do_matches(matches: &ArgMatches) {
             }
 
             // Quantity of alcohol
-            if matches.is_present("total_volume") {
-                let total_volume =
-                    value_t!(matches, "total_volume", String).unwrap_or_else(|e| e.exit());
-                let total_volume_millilitres =
-                    VolumeBuilder::new(&total_volume).unwrap().as_millilitres();
+            if matches.is_present("volume") {
+                let volume = value_t!(matches, "volume", String).unwrap_or_else(|e| e.exit());
+                let volume_ml = VolumeBuilder::new(&volume).unwrap().as_millilitres();
                 if matches.is_present("reverse") {
                     println!(
                         "Alcohol: {:.3} ml",
-                        calculate_alc_vol(total_volume_millilitres, end_percentage)
+                        calculate_alc_vol(volume_ml, end_percentage)
                     );
                 } else {
-                    println!(
-                        "Alcohol: {:.3} g",
-                        calculate_alc_weight(total_volume_millilitres, percent)
-                    );
+                    println!("Alcohol: {:.3} g", calculate_alc_weight(volume_ml, percent));
                 }
             }
         } else {
