@@ -1,7 +1,8 @@
+use measurements::{Mass, Temperature, Volume};
 use regex::Regex;
 use std::num::ParseFloatError;
 
-/// Used to build new measurements::Temperature structs.
+/// Used to build new Temperature structs.
 ///
 /// To be removed if the dependency some time allows creating measurement units from
 /// strings.
@@ -13,9 +14,9 @@ impl TemperatureParser {
     /// Tries to figure out the temperature unit from the string. If the string value is plain
     /// number, it will be considered as Celsius. Also empty strings are considered as
     /// zero Celsius in Temperature.
-    pub fn parse(val: &str) -> Result<measurements::Temperature, ParseFloatError> {
+    pub fn parse(val: &str) -> Result<Temperature, ParseFloatError> {
         if val.is_empty() {
-            return Ok(measurements::Temperature::from_celsius(0.0));
+            return Ok(Temperature::from_celsius(0.0));
         }
 
         let re = Regex::new(r"([0-9.]*)\s?([a-zA-Z]{1})$").unwrap();
@@ -23,16 +24,16 @@ impl TemperatureParser {
             let float_val = caps.get(1).unwrap().as_str();
             return Ok(
                 match caps.get(2).unwrap().as_str().to_uppercase().as_str() {
-                    "F" => measurements::Temperature::from_fahrenheit(float_val.parse::<f64>()?),
-                    "C" => measurements::Temperature::from_celsius(float_val.parse::<f64>()?),
-                    "K" => measurements::Temperature::from_kelvin(float_val.parse::<f64>()?),
-                    "R" => measurements::Temperature::from_rankine(float_val.parse::<f64>()?),
-                    _ => measurements::Temperature::from_celsius(val.parse::<f64>()?),
+                    "F" => Temperature::from_fahrenheit(float_val.parse::<f64>()?),
+                    "C" => Temperature::from_celsius(float_val.parse::<f64>()?),
+                    "K" => Temperature::from_kelvin(float_val.parse::<f64>()?),
+                    "R" => Temperature::from_rankine(float_val.parse::<f64>()?),
+                    _ => Temperature::from_celsius(val.parse::<f64>()?),
                 },
             );
         }
 
-        Ok(measurements::Temperature::from_celsius(val.parse::<f64>()?))
+        Ok(Temperature::from_celsius(val.parse::<f64>()?))
     }
 }
 
@@ -48,9 +49,9 @@ impl VolumeParser {
     /// Tries to figure out the volume unit from the string. If the string value is plain
     /// number, it will be considered as litres. Also empty strings are considered as
     /// zero litres in Volume.
-    pub fn parse(val: &str) -> Result<measurements::Volume, ParseFloatError> {
+    pub fn parse(val: &str) -> Result<Volume, ParseFloatError> {
         if val.is_empty() {
-            return Ok(measurements::Volume::from_litres(0.0));
+            return Ok(Volume::from_litres(0.0));
         }
 
         let re = Regex::new(r"([0-9.]*)\s?([a-zA-Z]{1,3}[0-9]{0,1})$").unwrap();
@@ -58,28 +59,26 @@ impl VolumeParser {
             let float_val = caps.get(1).unwrap().as_str();
             return Ok(
                 match caps.get(2).unwrap().as_str().to_lowercase().as_str() {
-                    "cm3" => {
-                        measurements::Volume::from_cubic_centimeters(float_val.parse::<f64>()?)
-                    }
-                    "ft3" => measurements::Volume::from_cubic_feet(float_val.parse::<f64>()?),
-                    "yd3" => measurements::Volume::from_cubic_yards(float_val.parse::<f64>()?),
-                    "in3" => measurements::Volume::from_cubic_inches(float_val.parse::<f64>()?),
-                    "gal" => measurements::Volume::from_gallons(float_val.parse::<f64>()?),
-                    "cup" => measurements::Volume::from_cups(float_val.parse::<f64>()?),
-                    "tsp" => measurements::Volume::from_teaspoons(float_val.parse::<f64>()?),
-                    "ml" => measurements::Volume::from_milliliters(float_val.parse::<f64>()?),
-                    "m3" => measurements::Volume::from_cubic_meters(float_val.parse::<f64>()?),
-                    "μl" => measurements::Volume::from_drops(float_val.parse::<f64>()?),
-                    "dr" => measurements::Volume::from_drams(float_val.parse::<f64>()?),
-                    "l" => measurements::Volume::from_litres(float_val.parse::<f64>()?),
-                    "p" => measurements::Volume::from_pints(float_val.parse::<f64>()?),
-                    "ʒ" => measurements::Volume::from_pints(float_val.parse::<f64>()?),
-                    _ => measurements::Volume::from_litres(val.parse::<f64>()?),
+                    "cm3" => Volume::from_cubic_centimeters(float_val.parse::<f64>()?),
+                    "ft3" => Volume::from_cubic_feet(float_val.parse::<f64>()?),
+                    "yd3" => Volume::from_cubic_yards(float_val.parse::<f64>()?),
+                    "in3" => Volume::from_cubic_inches(float_val.parse::<f64>()?),
+                    "gal" => Volume::from_gallons(float_val.parse::<f64>()?),
+                    "cup" => Volume::from_cups(float_val.parse::<f64>()?),
+                    "tsp" => Volume::from_teaspoons(float_val.parse::<f64>()?),
+                    "ml" => Volume::from_milliliters(float_val.parse::<f64>()?),
+                    "m3" => Volume::from_cubic_meters(float_val.parse::<f64>()?),
+                    "μl" => Volume::from_drops(float_val.parse::<f64>()?),
+                    "dr" => Volume::from_drams(float_val.parse::<f64>()?),
+                    "l" => Volume::from_litres(float_val.parse::<f64>()?),
+                    "p" => Volume::from_pints(float_val.parse::<f64>()?),
+                    "ʒ" => Volume::from_pints(float_val.parse::<f64>()?),
+                    _ => Volume::from_litres(val.parse::<f64>()?),
                 },
             );
         }
 
-        Ok(measurements::Volume::from_litres(val.parse::<f64>()?))
+        Ok(Volume::from_litres(val.parse::<f64>()?))
     }
 }
 
@@ -95,31 +94,31 @@ impl MassParser {
     /// Tries to figure out the mass unit from the string. If the string value is plain
     /// number, it will be considered as grams. Also empty strings are considered as
     /// zero grams in Mass.
-    pub fn parse(val: &str) -> Result<measurements::Mass, ParseFloatError> {
+    pub fn parse(val: &str) -> Result<Mass, ParseFloatError> {
         if val.is_empty() {
-            return Ok(measurements::Mass::from_grams(0.0));
+            return Ok(Mass::from_grams(0.0));
         }
 
         let re = Regex::new(r"([0-9.]*)\s?([a-zA-Zμ]{1,3})$").unwrap();
         if let Some(caps) = re.captures(val) {
             let float_val = caps.get(1).unwrap().as_str();
             return Ok(match caps.get(2).unwrap().as_str() {
-                "ug" | "μg" => measurements::Mass::from_micrograms(float_val.parse::<f64>()?),
-                "mg" => measurements::Mass::from_milligrams(float_val.parse::<f64>()?),
-                "ct" => measurements::Mass::from_carats(float_val.parse::<f64>()?),
-                "g" => measurements::Mass::from_grams(float_val.parse::<f64>()?),
-                "kg" => measurements::Mass::from_kilograms(float_val.parse::<f64>()?),
-                "T" => measurements::Mass::from_metric_tons(float_val.parse::<f64>()?),
-                "gr" => measurements::Mass::from_grains(float_val.parse::<f64>()?),
-                "dwt" => measurements::Mass::from_pennyweights(float_val.parse::<f64>()?),
-                "oz" => measurements::Mass::from_ounces(float_val.parse::<f64>()?),
-                "st" => measurements::Mass::from_stones(float_val.parse::<f64>()?),
-                "lbs" => measurements::Mass::from_pounds(float_val.parse::<f64>()?),
-                _ => measurements::Mass::from_grams(float_val.parse::<f64>()?),
+                "ug" | "μg" => Mass::from_micrograms(float_val.parse::<f64>()?),
+                "mg" => Mass::from_milligrams(float_val.parse::<f64>()?),
+                "ct" => Mass::from_carats(float_val.parse::<f64>()?),
+                "g" => Mass::from_grams(float_val.parse::<f64>()?),
+                "kg" => Mass::from_kilograms(float_val.parse::<f64>()?),
+                "T" => Mass::from_metric_tons(float_val.parse::<f64>()?),
+                "gr" => Mass::from_grains(float_val.parse::<f64>()?),
+                "dwt" => Mass::from_pennyweights(float_val.parse::<f64>()?),
+                "oz" => Mass::from_ounces(float_val.parse::<f64>()?),
+                "st" => Mass::from_stones(float_val.parse::<f64>()?),
+                "lbs" => Mass::from_pounds(float_val.parse::<f64>()?),
+                _ => Mass::from_grams(float_val.parse::<f64>()?),
             });
         }
 
-        Ok(measurements::Mass::from_grams(val.parse::<f64>()?))
+        Ok(Mass::from_grams(val.parse::<f64>()?))
     }
 }
 
