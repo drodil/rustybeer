@@ -1,6 +1,6 @@
 // A function to store the different bottle types.
 // Can be extended as needed
-fn bottles() -> Vec<(String, f64)> {
+pub fn bottles() -> Vec<(String, f64)> {
     vec![
         ("330ml bottle".to_string(), 330.0),
         ("Twelve ounce bottle".to_string(), 355.0),
