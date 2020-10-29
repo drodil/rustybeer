@@ -67,6 +67,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Sampas",
+      "name": "Sampsa Sarjanoja",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1084004?v=4",
+      "profile": "https://github.com/Sampas",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
