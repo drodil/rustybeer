@@ -20,20 +20,45 @@ cargo build
 ```
 
 You can now run it with:
+
 ```shell
 cargo run <subcommand>
 ```
 
+## Testing
+
+Tests can be ran by calling:
+
+```shell
+cargo test
+```
+
+If you would like to run only one test, you can do this by specifying the test name:
+
+```shell
+cargo test -- --nocapture <test name>
+```
+
 ## Files and Folders
 
-- **src** - The folder containing all source code
-  - **calculators** - The folder containing calculators to be used in lib or CLI tool
-  - **commands** - The folder containing subcommands for CLI
-  - **main.rs** - The file containing the main function
-- **Cargo.toml** - The file containing build and dependency infomation
-- **LICENSE** - The file containing the terms that this code package is released under
-- **README.md** - The file you are currently reading
-- **CONTRIBUTING.md** - Contribution guidelines for this repository
+- [**rustybeer**](rustybeer) - The folder containing everything for the business logic
+  - [**src**](rustybeer/src) - The folder containing the business logic source code
+    - [**calculators**](rustybeer/src/calculators) - The folder containing calculators to be used in lib or CLI tool
+  - [**tests**](rustybeer/tests) - The folder containing test source code
+    - [**calculators.rs**](rustybeer/tests/calculators.rs) The file containing the test source code for the calculators
+  - [**Cargo.toml**](rustybeer/Cargo.toml) - The file containing build and dependency infomation
+- [**rustybeer-cli**](rustybeer-cli) - The folder containing everything for the CLI
+  - [**src**](rustybeer-cli/src) - The folder containing the CLI source code
+    - [**commands**](rustybeer-cli/src/commands) - The folder containing subcommands for CLI
+    - [**main.rs**](rustybeer-cli/src/main.rs) - The file containing the main function
+  - [**Cargo.toml**](rustybeer-cli/Cargo.toml)- The file containing build and dependency infomation
+- [**rustybeer-util**](rustybeer-util) - The folder containing extra utilities
+  - [**src**](rustybeer-util/src) - The folder containing the utilities source code
+  - [**Cargo.toml**](rustybeer-util/Cargo.toml) - The file containing build and dependency infomation
+- [**Cargo.toml**](Cargo.toml) - The file containing build and dependency infomation
+- [**CONTRIBUTING.md**](CONTRIBUTING.md) - Contribution guidelines for this repository
+- [**LICENSE**](LICENSE) - The file containing the terms that this code package is released under
+- [**README.md**](README.md) - The file you are currently reading
 
 ## Acronyms
 
@@ -43,6 +68,7 @@ out with figuring out what everything means:
 Acronum      | Description
 -------------|---------------------------------
 ABV          | Alcohol By Volume
+ABW          | Alcohol By Weight
 OG           | Original Gravity
 FG           | Final Gravity
 SG           | Specific Gravity
@@ -52,16 +78,17 @@ IBU          | International Bittering Units
 
 Below is a table of the features currently implemented.
 
-Implemented              | Function         | Description                                                        | Usage
--------------------------|------------------|--------------------------------------------------------------------|-------
-:white_check_mark:       | ABV              | Calculates ABV from OG and FG or FG from OG and ABV                | `abv --og <Original gravity> (--fg <Final gravity>) (--abv <Alcohol by volume>)`
-:hourglass_flowing_sand: | Boil-off Gravity | Calculates the volume needed to be boiled down to for a desired SG | `boil_off --current_gravity <current_gravity> --wort_volume <wort_volume> <--target_volume <target_volume>|--desired_gravity <desired_gravity>>`
-:white_check_mark:       | Dilution         | Calculates the SG after dilution                                   | `diluting --sg <Current specific gravity> --cv <Current volume> --tv <Target volume>`
-:white_check_mark:       | Num Of Bottles   | Calculates the number of bottles required for a given volume       | `num_of_bottles --volume <volume>`
-:white_check_mark:       | Priming          | Beer Priming Calculator                                            | `priming --temp <Beer temperature> --amount <Beer volume> --co2_volumes <co2_volumes>`
-:white_check_mark:       | SG Correction    | Corrects SG reading according to the difference between the measurement temperature and the calibration temperature | `sg_correction --sg <Specific gravity reading> --ct <Calibration temperature> --mt <Measurement temperature>`
-:white_check_mark:       | Beer style       | Finds beer styles matching given parameters                        | `beer_style (--og <Original gravity>) (--fg <Final gravity>) (--abv <Alcohol by volume>) (--ibu <International bittering units> (--color <SRM color>)`
-:white_check_mark:       | ABV <-> ABW      | Calculates alcohol by weight (ABW) from  alcohol by volume (ABV)   | `abv_abw --percent <alcohol percentage> (--total_volume <total beer volume>) (--total_density <density of beer in g/cm³) (--reverse)`
+Implemented              | Function                                                           | Description                                                        | Usage
+-------------------------|--------------------------------------------------------------------|--------------------------------------------------------------------|-------
+:white_check_mark:       | [ABV](rustybeer-cli/src/commands/abv.rs)                           | Calculates ABV from OG and FG or FG from OG and ABV                | `abv --og <Original gravity> (--fg <Final gravity>) (--abv <Alcohol by volume>)`
+:white_check_mark:       | [ABV <-> ABW](rustybeer-cli/src/commands/alcohol_volume_weight.rs) | Calculates alcohol by weight (ABW) from  alcohol by volume (ABV)   | `abv_abw --percent <alcohol percentage> (--total_volume <total beer volume>) (--total_density <density of beer in g/cm³) (--reverse)`
+:white_check_mark:       | [Beer style](rustybeer-cli/src/commands/beer_style.rs)             | Finds beer styles matching given parameters                        | `beer_style (--og <Original gravity>) (--fg <Final gravity>) (--abv <Alcohol by volume>) (--ibu <International bittering units> (--color <SRM color>)`
+:hourglass_flowing_sand: | [Boil-off Gravity](rustybeer-cli/src/commands/boil_off.rs)         | Calculates the volume needed to be boiled down to for a desired SG | `boil_off --current_gravity <current_gravity> --wort_volume <wort_volume> <--target_volume <target_volume>|--desired_gravity <desired_gravity>>`
+:white_check_mark:       | [Calories](rustybeer-cli/src/commands/calories.rs)                 | Calculates calories by volume from OG and FG or from ABV           | `calories (--og <Original gravity>) (--fg <Final gravity>) (--abv <Alcohol by volume>) (--volume <Beer volume>)`
+:white_check_mark:       | [Dilution](rustybeer-cli/src/commands/diluting.rs)                 | Calculates the SG after dilution                                   | `diluting --sg <Current specific gravity> --cv <Current volume> --tv <Target volume>`
+:white_check_mark:       | [Num Of Bottles](rustybeer-cli/src/commands/num_bottles.rs)        | Calculates the number of bottles required for a given volume       | `num_of_bottles --volume <volume>`
+:white_check_mark:       | [Priming](rustybeer-cli/src/commands/priming.rs)                   | Beer Priming Calculator                                            | `priming --temp <Beer temperature> --amount <Beer volume> --co2_volumes <co2_volumes>`
+:white_check_mark:       | [SG Correction](rustybeer-cli/src/commands/sg_correction.rs)       | Corrects SG reading for differences between measurement and calibration temperatures | `sg_correction --sg <Specific gravity reading> --ct <Calibration temperature> --mt <Measurement temperature>`
 
 This list will expand as ideas and suggestions come in.
 
