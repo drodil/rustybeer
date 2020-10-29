@@ -1,6 +1,83 @@
-use measurements::{Mass, Temperature, Volume};
+use measurements::{Energy, Mass, Temperature, Volume};
 use regex::Regex;
 use std::num::ParseFloatError;
+
+/// Used to build new measurements::Energy structs.
+///
+/// To be removed if the dependency some time allows creating measurement units from
+/// strings.
+pub struct EnergyParser;
+
+impl EnergyParser {
+    /// Creates measurements::Energy from string
+    ///
+    /// Tries to figure out the energy unit from the string. If the string value is plain
+    /// number, it will be considered as kilocalories. Also empty strings are considered as
+    /// zero kilocalories in Energy.
+    pub fn parse(val: &str) -> Result<Energy, ParseFloatError> {
+        if val.is_empty() {
+            return Ok(Energy::from_kcalories(0.0));
+        }
+
+        let re = Regex::new(r"([0-9.]*)\s?([a-zA-Zμ]{1,4})$").unwrap();
+        if let Some(caps) = re.captures(val) {
+            let float_val = caps.get(1).unwrap().as_str();
+            return Ok(
+                match caps.get(2).unwrap().as_str().to_uppercase().as_str() {
+                    "KCAL" => Energy::from_kcalories(float_val.parse::<f64>()?),
+                    "BTU" => Energy::from_btu(float_val.parse::<f64>()?),
+                    "EV" => Energy::from_e_v(float_val.parse::<f64>()?),
+                    "WH" => Energy::from_watt_hours(float_val.parse::<f64>()?),
+                    "KWH" => Energy::from_kilowatt_hours(float_val.parse::<f64>()?),
+                    "J" => Energy::from_joules(float_val.parse::<f64>()?),
+                    _ => Energy::from_kcalories(float_val.parse::<f64>()?),
+                },
+            );
+        }
+
+        Ok(Energy::from_kcalories(val.parse::<f64>()?))
+    }
+}
+
+/// Used to build new measurements::Mass structs.
+///
+/// To be removed if the dependency some time allows creating measurement units from
+/// strings.
+pub struct MassParser;
+
+impl MassParser {
+    /// Creates measurements::Mass from string
+    ///
+    /// Tries to figure out the mass unit from the string. If the string value is plain
+    /// number, it will be considered as grams. Also empty strings are considered as
+    /// zero grams in Mass.
+    pub fn parse(val: &str) -> Result<Mass, ParseFloatError> {
+        if val.is_empty() {
+            return Ok(Mass::from_grams(0.0));
+        }
+
+        let re = Regex::new(r"([0-9.]*)\s?([a-zA-Zμ]{1,3})$").unwrap();
+        if let Some(caps) = re.captures(val) {
+            let float_val = caps.get(1).unwrap().as_str();
+            return Ok(match caps.get(2).unwrap().as_str() {
+                "ug" | "μg" => Mass::from_micrograms(float_val.parse::<f64>()?),
+                "mg" => Mass::from_milligrams(float_val.parse::<f64>()?),
+                "ct" => Mass::from_carats(float_val.parse::<f64>()?),
+                "g" => Mass::from_grams(float_val.parse::<f64>()?),
+                "kg" => Mass::from_kilograms(float_val.parse::<f64>()?),
+                "T" => Mass::from_metric_tons(float_val.parse::<f64>()?),
+                "gr" => Mass::from_grains(float_val.parse::<f64>()?),
+                "dwt" => Mass::from_pennyweights(float_val.parse::<f64>()?),
+                "oz" => Mass::from_ounces(float_val.parse::<f64>()?),
+                "st" => Mass::from_stones(float_val.parse::<f64>()?),
+                "lbs" => Mass::from_pounds(float_val.parse::<f64>()?),
+                _ => Mass::from_grams(float_val.parse::<f64>()?),
+            });
+        }
+
+        Ok(Mass::from_grams(val.parse::<f64>()?))
+    }
+}
 
 /// Used to build new Temperature structs.
 ///
@@ -82,172 +159,122 @@ impl VolumeParser {
     }
 }
 
-/// Used to build new measurements::Mass structs.
-///
-/// To be removed if the dependency some time allows creating measurement units from
-/// strings.
-pub struct MassParser;
-
-impl MassParser {
-    /// Creates measurements::Mass from string
-    ///
-    /// Tries to figure out the mass unit from the string. If the string value is plain
-    /// number, it will be considered as grams. Also empty strings are considered as
-    /// zero grams in Mass.
-    pub fn parse(val: &str) -> Result<Mass, ParseFloatError> {
-        if val.is_empty() {
-            return Ok(Mass::from_grams(0.0));
-        }
-
-        let re = Regex::new(r"([0-9.]*)\s?([a-zA-Zμ]{1,3})$").unwrap();
-        if let Some(caps) = re.captures(val) {
-            let float_val = caps.get(1).unwrap().as_str();
-            return Ok(match caps.get(2).unwrap().as_str() {
-                "ug" | "μg" => Mass::from_micrograms(float_val.parse::<f64>()?),
-                "mg" => Mass::from_milligrams(float_val.parse::<f64>()?),
-                "ct" => Mass::from_carats(float_val.parse::<f64>()?),
-                "g" => Mass::from_grams(float_val.parse::<f64>()?),
-                "kg" => Mass::from_kilograms(float_val.parse::<f64>()?),
-                "T" => Mass::from_metric_tons(float_val.parse::<f64>()?),
-                "gr" => Mass::from_grains(float_val.parse::<f64>()?),
-                "dwt" => Mass::from_pennyweights(float_val.parse::<f64>()?),
-                "oz" => Mass::from_ounces(float_val.parse::<f64>()?),
-                "st" => Mass::from_stones(float_val.parse::<f64>()?),
-                "lbs" => Mass::from_pounds(float_val.parse::<f64>()?),
-                _ => Mass::from_grams(float_val.parse::<f64>()?),
-            });
-        }
-
-        Ok(Mass::from_grams(val.parse::<f64>()?))
-    }
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{MassParser, TemperatureParser, VolumeParser};
+    use super::{EnergyParser, MassParser, TemperatureParser, VolumeParser};
     use approx::assert_relative_eq;
 
     #[test]
-    fn fahrenheit_from_string() {
-        assert_relative_eq!(
-            123.0,
-            TemperatureParser::parse("123F").unwrap().as_fahrenheit(),
-        );
-        assert_relative_eq!(
-            123.0,
-            TemperatureParser::parse("123 F").unwrap().as_fahrenheit(),
-        );
-        assert_relative_eq!(
-            123.0,
-            TemperatureParser::parse("123 f").unwrap().as_fahrenheit(),
-        );
-    }
-
-    #[test]
-    fn celsius_from_string() {
-        assert_relative_eq!(
-            123.0,
-            TemperatureParser::parse("123C").unwrap().as_celsius(),
-        );
-        assert_relative_eq!(
-            123.0,
-            TemperatureParser::parse("123 C").unwrap().as_celsius(),
-        );
-        assert_relative_eq!(
-            123.0,
-            TemperatureParser::parse("123 c").unwrap().as_celsius(),
-        );
-    }
-
-    #[test]
-    fn kelvin_from_string() {
-        assert_relative_eq!(123.0, TemperatureParser::parse("123K").unwrap().as_kelvin(),);
-        assert_relative_eq!(
-            123.0,
-            TemperatureParser::parse("123 K").unwrap().as_kelvin(),
-        );
-        assert_relative_eq!(
-            123.0,
-            TemperatureParser::parse("123 k").unwrap().as_kelvin(),
-        );
-    }
-
-    #[test]
-    fn rankine_from_string() {
-        assert_relative_eq!(
-            123.0,
-            TemperatureParser::parse("123R").unwrap().as_rankine(),
-        );
-        assert_relative_eq!(
-            123.0,
-            TemperatureParser::parse("123 R").unwrap().as_rankine(),
-        );
-        assert_relative_eq!(
-            123.0,
-            TemperatureParser::parse("123 r").unwrap().as_rankine(),
-        );
-    }
-
-    #[test]
     fn default_from_string() {
-        assert_relative_eq!(123.0, TemperatureParser::parse("123").unwrap().as_celsius(),);
-
-        assert_relative_eq!(123.0, VolumeParser::parse("123").unwrap().as_litres(),);
+        assert_relative_eq!(123.0, EnergyParser::parse("123").unwrap().as_kcalories(),);
         assert_relative_eq!(123.0, MassParser::parse("123").unwrap().as_grams(),);
+        assert_relative_eq!(123.0, TemperatureParser::parse("123").unwrap().as_celsius(),);
+        assert_relative_eq!(123.0, VolumeParser::parse("123").unwrap().as_litres(),);
     }
 
     #[test]
     fn zero_from_string() {
+        assert_relative_eq!(0., EnergyParser::parse("").unwrap().as_kcalories());
+        assert_relative_eq!(0., MassParser::parse("").unwrap().as_grams());
         assert_relative_eq!(0., TemperatureParser::parse("").unwrap().as_celsius(),);
         assert_relative_eq!(0., VolumeParser::parse("").unwrap().as_litres());
-        assert_relative_eq!(0., MassParser::parse("").unwrap().as_grams());
     }
 
+    // Energy
     #[test]
-    fn cubic_centimeters_from_string() {
+    fn kcalories_from_string() {
         assert_relative_eq!(
             123.0,
-            VolumeParser::parse("123cm3")
-                .unwrap()
-                .as_cubic_centimeters(),
+            EnergyParser::parse("123kcal").unwrap().as_kcalories(),
         );
         assert_relative_eq!(
             123.0,
-            VolumeParser::parse("123 cm3")
-                .unwrap()
-                .as_cubic_centimeters(),
+            EnergyParser::parse("123 kcal").unwrap().as_kcalories(),
         );
         assert_relative_eq!(
             123.0,
-            VolumeParser::parse("123 CM3")
-                .unwrap()
-                .as_cubic_centimeters(),
+            EnergyParser::parse("123KCAL").unwrap().as_kcalories(),
+        );
+        assert_relative_eq!(
+            123.0,
+            EnergyParser::parse("123 KCAL").unwrap().as_kcalories(),
         );
     }
 
     #[test]
-    fn milliliters_from_string() {
+    fn btus_from_string() {
+        assert_relative_eq!(123.0, EnergyParser::parse("123btu").unwrap().as_btu(),);
+        assert_relative_eq!(123.0, EnergyParser::parse("123 btu").unwrap().as_btu(),);
+        assert_relative_eq!(123.0, EnergyParser::parse("123BTU").unwrap().as_btu(),);
+        assert_relative_eq!(123.0, EnergyParser::parse("123 BTU").unwrap().as_btu(),);
+    }
+
+    #[test]
+    fn electronvolts_from_string() {
+        assert_relative_eq!(123.0, EnergyParser::parse("123ev").unwrap().as_e_v(),);
+        assert_relative_eq!(123.0, EnergyParser::parse("123 ev").unwrap().as_e_v(),);
+        assert_relative_eq!(123.0, EnergyParser::parse("123EV").unwrap().as_e_v(),);
+        assert_relative_eq!(123.0, EnergyParser::parse("123 EV").unwrap().as_e_v(),);
+        assert_relative_eq!(123.0, EnergyParser::parse("123eV").unwrap().as_e_v(),);
+        assert_relative_eq!(123.0, EnergyParser::parse("123 eV").unwrap().as_e_v(),);
+    }
+
+    #[test]
+    fn watthours_from_string() {
+        assert_relative_eq!(123.0, EnergyParser::parse("123wh").unwrap().as_watt_hours(),);
         assert_relative_eq!(
             123.0,
-            VolumeParser::parse("123ml").unwrap().as_milliliters(),
+            EnergyParser::parse("123 wh").unwrap().as_watt_hours(),
         );
+        assert_relative_eq!(123.0, EnergyParser::parse("123WH").unwrap().as_watt_hours(),);
         assert_relative_eq!(
             123.0,
-            VolumeParser::parse("123 ml").unwrap().as_milliliters(),
+            EnergyParser::parse("123 WH").unwrap().as_watt_hours(),
         );
+        assert_relative_eq!(123.0, EnergyParser::parse("123Wh").unwrap().as_watt_hours(),);
         assert_relative_eq!(
             123.0,
-            VolumeParser::parse("123 ml").unwrap().as_milliliters(),
+            EnergyParser::parse("123 Wh").unwrap().as_watt_hours(),
         );
     }
 
     #[test]
-    fn pints_from_string() {
-        assert_relative_eq!(123.0, VolumeParser::parse("123p").unwrap().as_pints(),);
-        assert_relative_eq!(123.0, VolumeParser::parse("123 p").unwrap().as_pints(),);
-        assert_relative_eq!(123.0, VolumeParser::parse("123 P").unwrap().as_pints(),);
+    fn kilowatthours_from_string() {
+        assert_relative_eq!(
+            123.0,
+            EnergyParser::parse("123kwh").unwrap().as_kilowatt_hours(),
+        );
+        assert_relative_eq!(
+            123.0,
+            EnergyParser::parse("123 kwh").unwrap().as_kilowatt_hours(),
+        );
+        assert_relative_eq!(
+            123.0,
+            EnergyParser::parse("123KWH").unwrap().as_kilowatt_hours(),
+        );
+        assert_relative_eq!(
+            123.0,
+            EnergyParser::parse("123 KWH").unwrap().as_kilowatt_hours(),
+        );
+        assert_relative_eq!(
+            123.0,
+            EnergyParser::parse("123kWh").unwrap().as_kilowatt_hours(),
+        );
+        assert_relative_eq!(
+            123.0,
+            EnergyParser::parse("123 kWh").unwrap().as_kilowatt_hours(),
+        );
     }
 
+    #[test]
+    fn joules_from_string() {
+        assert_relative_eq!(123.0, EnergyParser::parse("123j").unwrap().as_joules(),);
+        assert_relative_eq!(123.0, EnergyParser::parse("123 j").unwrap().as_joules(),);
+        assert_relative_eq!(123.0, EnergyParser::parse("123J").unwrap().as_joules(),);
+        assert_relative_eq!(123.0, EnergyParser::parse("123 J").unwrap().as_joules(),);
+    }
+
+    // Mass
     #[test]
     fn micrograms_from_string() {
         assert_relative_eq!(123.0, MassParser::parse("123ug").unwrap().as_micrograms(),);
@@ -314,5 +341,113 @@ mod tests {
     fn pounds_from_string() {
         assert_relative_eq!(123.0, MassParser::parse("123lbs").unwrap().as_pounds(),);
         assert_relative_eq!(123.0, MassParser::parse("123 lbs").unwrap().as_pounds(),);
+    }
+
+    // Temperature
+    #[test]
+    fn fahrenheit_from_string() {
+        assert_relative_eq!(
+            123.0,
+            TemperatureParser::parse("123F").unwrap().as_fahrenheit(),
+        );
+        assert_relative_eq!(
+            123.0,
+            TemperatureParser::parse("123 F").unwrap().as_fahrenheit(),
+        );
+        assert_relative_eq!(
+            123.0,
+            TemperatureParser::parse("123 f").unwrap().as_fahrenheit(),
+        );
+    }
+
+    #[test]
+    fn celsius_from_string() {
+        assert_relative_eq!(
+            123.0,
+            TemperatureParser::parse("123C").unwrap().as_celsius(),
+        );
+        assert_relative_eq!(
+            123.0,
+            TemperatureParser::parse("123 C").unwrap().as_celsius(),
+        );
+        assert_relative_eq!(
+            123.0,
+            TemperatureParser::parse("123 c").unwrap().as_celsius(),
+        );
+    }
+
+    #[test]
+    fn kelvin_from_string() {
+        assert_relative_eq!(123.0, TemperatureParser::parse("123K").unwrap().as_kelvin(),);
+        assert_relative_eq!(
+            123.0,
+            TemperatureParser::parse("123 K").unwrap().as_kelvin(),
+        );
+        assert_relative_eq!(
+            123.0,
+            TemperatureParser::parse("123 k").unwrap().as_kelvin(),
+        );
+    }
+
+    #[test]
+    fn rankine_from_string() {
+        assert_relative_eq!(
+            123.0,
+            TemperatureParser::parse("123R").unwrap().as_rankine(),
+        );
+        assert_relative_eq!(
+            123.0,
+            TemperatureParser::parse("123 R").unwrap().as_rankine(),
+        );
+        assert_relative_eq!(
+            123.0,
+            TemperatureParser::parse("123 r").unwrap().as_rankine(),
+        );
+    }
+
+    // Volume
+    #[test]
+    fn cubic_centimeters_from_string() {
+        assert_relative_eq!(
+            123.0,
+            VolumeParser::parse("123cm3")
+                .unwrap()
+                .as_cubic_centimeters(),
+        );
+        assert_relative_eq!(
+            123.0,
+            VolumeParser::parse("123 cm3")
+                .unwrap()
+                .as_cubic_centimeters(),
+        );
+        assert_relative_eq!(
+            123.0,
+            VolumeParser::parse("123 CM3")
+                .unwrap()
+                .as_cubic_centimeters(),
+        );
+    }
+
+    #[test]
+    fn milliliters_from_string() {
+        assert_relative_eq!(
+            123.0,
+            VolumeParser::parse("123ml").unwrap().as_milliliters(),
+        );
+        assert_relative_eq!(
+            123.0,
+            VolumeParser::parse("123 ml").unwrap().as_milliliters(),
+        );
+        assert_relative_eq!(
+            123.0,
+            VolumeParser::parse("123 ml").unwrap().as_milliliters(),
+        );
+    }
+
+    #[test]
+    fn pints_from_string() {
+        assert_relative_eq!(123.0, VolumeParser::parse("123p").unwrap().as_pints(),);
+        assert_relative_eq!(123.0, VolumeParser::parse("123 p").unwrap().as_pints(),);
+        assert_relative_eq!(123.0, VolumeParser::parse("123 P").unwrap().as_pints(),);
     }
 }
