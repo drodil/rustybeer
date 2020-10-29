@@ -7,3 +7,4 @@ pub mod diluting;
 pub mod num_bottles;
 pub mod priming;
 pub mod sg_correction;
+pub mod yeast_viability;
