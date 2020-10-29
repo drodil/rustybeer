@@ -89,6 +89,7 @@ Implemented              | Function                                             
 :white_check_mark:       | [Num Of Bottles](rustybeer-cli/src/commands/num_bottles.rs)        | Calculates the number of bottles required for a given volume       | `num_of_bottles --volume <volume>`
 :white_check_mark:       | [Priming](rustybeer-cli/src/commands/priming.rs)                   | Beer Priming Calculator                                            | `priming --temp <Beer temperature> --amount <Beer volume> --co2_volumes <co2_volumes>`
 :white_check_mark:       | [SG Correction](rustybeer-cli/src/commands/sg_correction.rs)       | Corrects SG reading for differences between measurement and calibration temperatures | `sg_correction --sg <Specific gravity reading> --ct <Calibration temperature> --mt <Measurement temperature>`
+:white_check_mark:       | [Yeast Viability](rustybeer-cli/src/commands/yeast_viability.rs)   | Estimates yeast viability based off production date | `yeast-viability --pd <Production date> --cc <Cell count> --f <Date format>`
 
 This list will expand as ideas and suggestions come in.
 
