@@ -1,6 +1,6 @@
 # RustyBeer
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/drodil/rustybeer/blob/master/LICENSE)
@@ -116,6 +116,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/Sampas"><img src="https://avatars1.githubusercontent.com/u/1084004?v=4" width="100px;" alt=""/><br /><sub><b>Sampsa Sarjanoja</b></sub></a><br /><a href="https://github.com/drodil/rustybeer/commits?author=Sampas" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/1jz"><img src="https://avatars0.githubusercontent.com/u/1187260?v=4" width="100px;" alt=""/><br /><sub><b>Philip Golovin</b></sub></a><br /><a href="https://github.com/drodil/rustybeer/commits?author=1jz" title="Code">💻</a></td>
   </tr>
 </table>
 
