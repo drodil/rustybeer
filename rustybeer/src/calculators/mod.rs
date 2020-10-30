@@ -7,6 +7,7 @@ pub mod ibu;
 pub mod num_bottles;
 pub mod priming;
 pub mod sg_correction;
+pub mod yeast_viability;
 
 #[cfg(test)]
 mod test_vectors;

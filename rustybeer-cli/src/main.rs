@@ -16,6 +16,7 @@ pub enum RustyBeer {
     NumBottles(commands::num_bottles::NumBottlesOptions),
     Priming(commands::priming::PrimingOptions),
     SgCorrection(commands::sg_correction::SgCorrectionOptions),
+    YeastViability(commands::yeast_viability::YeastViabilityOptions),
 }
 
 fn main() -> Result<()> {
@@ -31,6 +32,7 @@ fn main() -> Result<()> {
         RustyBeer::NumBottles(opts) => commands::num_bottles::calculate_and_print(opts),
         RustyBeer::Priming(opts) => commands::priming::calculate_and_print(opts),
         RustyBeer::SgCorrection(opts) => commands::sg_correction::calculate_and_print(opts),
+        RustyBeer::YeastViability(opts) => commands::yeast_viability::calculate_and_print(opts),
     }
 
     Ok(())
