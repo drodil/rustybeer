@@ -8,4 +8,5 @@ pub mod fg;
 pub mod num_bottles;
 pub mod priming;
 pub mod sg_correction;
+pub mod yeast;
 pub mod yeast_viability;

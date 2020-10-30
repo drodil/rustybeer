@@ -1,0 +1,123 @@
+company	name	id	attenuation	flocculation	opt_temperature	alc_tolerance
+Wyeast	German Ale	1007	73-77%	Low	55-68 °F	11%
+Wyeast	American Wheat	1010	74-78%	Low	58-74 °F	10%
+Wyeast	London Ale	1028	73-77%	Med-Low	60-72 °F	10%
+Wyeast	American Ale	1056	73-77%	Med-Low	60-72 °F	10%
+Wyeast	Irish Ale	1084	71-75%	Medium	62-72 °F	10%
+Wyeast	British Ale	1098	73-75%	Med-High	64-72 °F	10%
+Wyeast	Whitbread Ale	1099	68-72%	High	64-75 °F	10%
+Wyeast	Ringwood Ale	1187	68-72%	High	64-74 °F	10%
+Wyeast	American Ale II	1272	72-76%	High	60-72 °F	10%
+Wyeast	Thames Valley Ale	1275	77%	Med-Low	62-72 °F	10%
+Wyeast	London Ale III	1318	71-75%	High	64-74 °F	10%
+Wyeast	Northwest Ale	1332	67-71%	High	65-75 °F	10%
+Wyeast	British Ale	1335	73-76%	High	63-75 °F	10%
+Wyeast	European Ale	1338	67-71%	High	62-72 °F	10%
+Wyeast	Scottish Ale	1728	69-73%	High	55-75 °F	12%
+Wyeast	London ESB Ale	1968	67-71%	Very High	64-72 °F	10%
+Wyeast	Kölsh	2565	73-77%	Low	56-70 °F	10%
+Wyeast	Budvar Lager	2000	71-75%	Med-High	48-56 °F	9%
+Wyeast	Urquell Lager	2001	72-76%	Med-High	48-58 °F	9%
+Wyeast	Pilsen Lager	2007	71-75%	Medium	48-56 °F	9%
+Wyeast	American Lager	2035	73-77%	Medium	48-58 °F	9%
+Wyeast	Danish Lager	2042	73-77%	Low	46-56 °F	9%
+Wyeast	California Lager	2112	67-71%	High	58-68 °F	9%
+Wyeast	Bohemian Lager	2124	73-77%	Medium	48-58 °F	9%
+Wyeast	Bavarian Lager	2206	73-77%	Med-High	46-58 °F	9%
+Wyeast	Czech Pils	2278	70-74%	Med-High	50-58 °F	9%
+Wyeast	Munich Lager	2308	70-74%	Medium	48-56 °F	9%
+Wyeast	Octoberfest Lager Blend	2633	73-77%	Med-Low	48-58 °F	9%
+Wyeast	Belgian Ale	1214	73-77%	Med-Low	68-78 °F	9%
+Wyeast	Belgian Strong Ale	1388	74-78%	Low	64-80 °F	12%
+Wyeast	Belgian Abby Ale II	1762	73-77%	Medium	65-75 °F	12%
+Wyeast	Bavarian Wheat	3056	73-77%	Medium	64-74 °F	10%
+Wyeast	Weihenstephan Weizen	3068	73-77%	Low	64-75 °F	10%
+Wyeast	Belgian Lambic Blend	3278	–	–	63-75 °F	12%
+Wyeast	German Wheat	3333	70-76%	High	63-75 °F	10%
+Wyeast	Forbidden Fruit	3463	72-76%	Low	63-76 °F	12%
+Wyeast	Belgian Ardennes	3522	72-76%	High	65-85 °F	12%
+Wyeast	Bavarian Wheat	3638	70-76%	Low	64-75 °F	10%
+Wyeast	Belgian Saison	3724	76-80%	Low	70-95 °F	12%
+Wyeast	Trappist High Gravity	3787	74-78%	Med-High	64-78 °F	12%
+Wyeast	Belgian Wheat	3942	72-76%	Medium	64-74 °F	12%
+Wyeast	Belgian Witbier	3944	72-76%	Med-Low	62-75 °F	12%
+Wyeast	Cider	4766	NA	Low	65-70 °F	12%
+Wyeast	Sweet Mead	4184	NA	Medium	65-75 °F	11%
+Wyeast	Dry Mead	4632	NA	Low-Med	55-75 °F	18%
+Wyeast	Brettanomyces bruxellensis	5112	Very High	Medium	60-75 °F	12%
+Wyeast	Lactobacillus	5335	–	–	60-95 °F	9%
+Wyeast	Brettanomyces lambicus	5526	Medium	Very High	60-75 °F	12%
+Wyeast	Pediococcus	5733	–	–	60-95 °F	9%
+White Labs	California Ale Yeast	WLP001	73-80%	Medium	68-73 °F	High
+White Labs	English Ale Yeast	WLP002	67-70%	Medium	65-68 °F	Medium
+White Labs	German Ale II	WLP003	73-80%	Medium	65-70 °F	Medium
+White Labs	Irish Ale Yeast	WLP004	69-74%	Med-High	65-68 °F	Med-High
+White Labs	British Ale Yeast	WLP005	67-74%	High	65-70 °F	Medium
+White Labs	Bedford British	WLP006	72-80%	High	65-70 °F	Medium
+White Labs	Dry English Ale Yeast	WLP007	70-80%	Med-High	65-70 °F	Med-High
+White Labs	East Coast Ale Yeast	WLP008	70-75%	Med-Low	68-73 °F	Medium
+White Labs	Australian Ale Yeast	WLP009	70-75%	High	65-70 °F	Medium
+White Labs	European Ale Yeast	WLP011	65-70%	Medium	65-70 °F	Medium
+White Labs	London Ale Yeast	WLP013	67-75%	Medium	66-71 °F	Medium
+White Labs	Essex Ale Yeast	WLP022	71-76%	Med-High	66-70 °F	Medium
+White Labs	Burton Ale Yeast	WLP023	69-75%	Medium	68-73 °F	Medium
+White Labs	Edinburgh Scottish Ale Yeast	WLP028	70-75%	Medium	65-70 °F	Med-High
+White Labs	German Ale/ Kölsch Yeast	WLP029	72-78%	Medium	65-69 °F	Medium
+White Labs	Dusseldorf Alt Yeast	WLP036	65-72%	Medium	65-72 °F	Medium
+White Labs	Nottingham Ale Yeast	WLP039	73-82%	Med-High	66-70 °F	Medium
+White Labs	Pacific Ale Yeast	WLP041	65-70%	High	65-68 °F	Medium
+White Labs	California Ale V Yeast	WLP051	70-75%	Med-High	66-70 °F	Med-High
+White Labs	American Ale Yeast Blend	WLP060	72-80%	Medium	68-72 °F	Med-High
+White Labs	French Ale	WLP072	68-75%	Med-High	63-67 °F	Medium
+White Labs	Cream Ale Yeast Blend	WLP080	75-80%	Medium	65-70 °F	Med-High
+White Labs	English Ale Blend	WLP085	69-76%	Med-High	68-72 °F	Medium
+White Labs	Super High Gravity Ale Yeast	WLP099	>80%	Medium	65-69 °F	Very High
+White Labs	Pilsner Lager Yeast	WLP800	72-77%	Med-High	50-55 °F	Medium
+White Labs	Czech Budejovice Lager Yeast	WLP802	75-80%	Medium	50-55 °F	Medium
+White Labs	San Francisco Lager Yeast	WLP810	65-70%	High	58-65 °F	Med-High
+White Labs	Oktoberfest/Märzen Lager Yeast	WLP820	65-73%	Medium	52-58 °F	Med-High
+White Labs	German Lager Yeast	WLP830	74-79%	Medium	50-55 °F	Medium
+White Labs	German Bock Lager Yeast	WLP833	70-76%	Medium	48-55 °F	Med-High
+White Labs	Southern German Lager Yeast	WLP838	68-76%	Med-High	50-55 °F	Medium
+White Labs	American Lager Yeast	WLP840	75-80%	Medium	50-55 °F	Medium
+White Labs	Cry Havoc	WLP862	66-70%	Med-Low	68-74 °F	Medium
+White Labs	Zurich Lager Yeast	WLP885	70-80%	Medium	50-55 °F	Medium
+White Labs	Mexican Lager Yeast	WLP940	70-78%	Medium	50-55 °F	Medium
+White Labs	Hefeweizen Ale Yeast	WLP300	72-76%	Low	68-72 °F	Medium
+White Labs	American Hefeweizen Ale Yeast	WLP320	70-75%	Low	65-69 °F	Medium
+White Labs	Bavarian Weizen Yeast	WLP351	73-77%	Low	66-70 °F	Medium
+White Labs	Hefeweizen IV Ale Yeast	WLP380	73-80%	Low	66-70 °F	Medium
+White Labs	Belgian Wit Ale Yeast	WLP400	74-78%	Low-Med	67-74 °F	Medium
+White Labs	Belgian Wit II Ale Yeast	WLP410	70-75%	Low-Med	67-74 °F	Medium
+White Labs	Trappist Ale Yeast	WLP500	75-80%	Med-Low	65-72 °F	High
+White Labs	Belgian Bastogne Ale Yeast	WLP510	74-80%	Medium	66-72 °F	High
+White Labs	Antwerp Ale Yeast	WLP515	73-80%	Medium	67-70 °F	Medium
+White Labs	Abbey Ale Yeast	WLP530	75-80%	Med-High	66-72 °F	High
+White Labs	Abbey IV Ale Yeast	WLP540	74-82%	Medium	66-72 °F	High
+White Labs	Belgian Ale Yeast	WLP550	78-85%	Medium	68-78 °F	Med-High
+White Labs	Belgian Saison I Yeast	WLP565	65-75%	Medium	68-75 °F	Medium
+White Labs	Belgian Saison II Yeast	WLP566	78-85%	Medium	68-78 °F	Medium
+White Labs	Belgian Style Saison Blend	WLP568	70-80%	Medium	70-80 °F	Medium
+White Labs	Belgian Golden Ale Yeast	WLP570	73-78%	Low	68-75 °F	High
+White Labs	Belgian Style Ale Yeast Blend	WLP575	74-80%	Medium	68-75 °F	Med-High
+White Labs	Champagne Yeast	WLP715	>75%	Low	70-75 °F	17%
+White Labs	Sweet Mead/Wine Yeast	WLP720	<75%	Low	70-75 °F	15%
+White Labs	English Cider Yeast	WLP775	>80%	Medium	68-75 °F	Med-High
+Fermentis	Safale - English Ale Yeast	S-04	Medium	Medium	59-75 °F	Medium
+Fermentis	Safale - American Ale Yeast	US-05	Medium	Medium	59-75 °F	Medium
+Fermentis	Safale - American Ale Yeast	US-56	Medium	Medium	59-75 °F	Medium
+Fermentis	Safale - German Ale Yeast	K-97	Medium	Medium	59-75 °F	Medium
+Fermentis	Safbrew - Specialty Ale Yeast	T-58	Medium	Medium	59-75 °F	12%
+Fermentis	Safbrew - General/Belgian Yeast	S-33	High	Medium	59-75 °F	12%
+Fermentis	Safbrew - Wheat Beer Yeast	WB-06	Medium	Low	59-75 °F	Medium
+Fermentis	Saflager - German Lager Yeast	S-23	Medium	High	48-59 °F	Medium
+Fermentis	Saflager - German Lager Yeast	W-34/70	Medium	High	48-59 °F	Medium
+Fermentis	Saflager - Swiss Lager Yeast	S-189	Medium	High	48-59 °F	Medium
+Lallemand	Nottingham Ale Yeast		High	High	57-70 °F	Med-High
+Lallemand	Windsor Ale Yeast		Medium	Medium	64-70 °F	Medium
+Lallemand	Diamond Lager		High	High	50-59 °F	Medium
+Lallemand	Munich Dry Wheat Yeast		Med-High	Medium	64-70 °F	Medium
+Coopers	Coopers Ale		Medium	Medium	65-75 °F	Medium
+Doric	Doric Ale		Medium-High	Medium	62-72 °F	Medium
+Edme	Edme Ale		Med-High	Medium	62-70 °F	Medium
+Munton and Fison	Munton and Fison		Medium	High	64-70 °F	Medium
