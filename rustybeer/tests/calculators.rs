@@ -121,3 +121,20 @@ fn sg_correction() {
 
     assert_approx!(7.4175, correct_sg(7.413, 28.1, 55.1212));
 }
+
+#[test]
+fn yeast_variability() {
+    use rustybeer::calculators::yeast_viability::{calculate_cc, calculate_yv};
+
+    assert_approx!(970.0, calculate_cc(1000.0, 0.0));
+
+    assert_approx!(115.048_26, calculate_cc(123.45, 5.0));
+
+    assert_approx!(0.0, calculate_cc(9001.0, 3650.0));
+
+    assert_approx!(97.0, calculate_yv(0.0));
+
+    assert_approx!(65.004_616, calculate_yv(50.0));
+
+    assert_approx!(0.0, calculate_yv(3650.0));
+}
