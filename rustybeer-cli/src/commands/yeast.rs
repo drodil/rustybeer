@@ -1,5 +1,3 @@
-use rustybeer::yeast::yeast::read_yeasts;
-use std::path::Path;
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
@@ -8,19 +6,20 @@ use structopt::StructOpt;
 pub struct YeastOptions {
     #[structopt(short, long)]
     /// Search by yeast name
-    name: String,
+    name: Option<String>,
 }
 
-pub fn search_and_print(_opt: YeastOptions) {
-    let yeast_file = Path::new("rustybeer/src/yeast/res/yeast.txt");
-    let yeasts = read_yeasts(yeast_file);
-    match yeasts {
-        Ok(yeasts) => {
-            // TODO filter yeast by options
-            for y in yeasts.iter() {
-                println!("{:?}", y);
+pub fn search_and_print(opt: YeastOptions) {
+    if let Some(name) = opt.name {
+        let criteria = name.to_lowercase();
+        for yeast in rustybeer_util::yeasts::YEASTS.iter() {
+            if yeast.name.to_lowercase().contains(&criteria) {
+                println!("{:?}", yeast);
             }
         }
-        Err(error) => println!("Problem with yeasts: {:?}", error),
+    } else {
+        for yeast in rustybeer_util::yeasts::YEASTS.iter() {
+            println!("{:?}", yeast);
+        }
     }
 }
