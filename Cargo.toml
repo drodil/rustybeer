@@ -1,7 +1,7 @@
 [workspace]
-
 members = [
     "rustybeer",
     "rustybeer-cli",
     "rustybeer-util",
+    "rustybeer-server"
 ]

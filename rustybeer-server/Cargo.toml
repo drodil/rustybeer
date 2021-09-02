@@ -1,0 +1,11 @@
+[package]
+name = "rustybeer-server"
+version = "0.1.0"
+authors = ["Heikki Hellgren <heiccih@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+rustybeer = { path = "../rustybeer" }
+rustc-serialize = "0.3"
+iron = "0.4.0"
+router = "0.4.0"
