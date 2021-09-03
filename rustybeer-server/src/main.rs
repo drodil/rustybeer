@@ -1,12 +1,20 @@
 mod handlers;
 
 use rweb::*;
+use std::env;
 
 /// Renders the homepage. TODO: Change this to return HTML
 /// and link to /docs
 #[get("/")]
 fn default() -> String {
     return "Check the /docs".to_string();
+}
+
+fn get_port() -> u16 {
+    match env::var("PORT") {
+        Ok(val) => val.parse::<u16>().unwrap(),
+        _ => 3000,
+    }
 }
 
 #[tokio::main]
@@ -16,6 +24,6 @@ async fn main() {
     });
 
     serve(filter.or(default()).or(openapi_docs(spec)))
-        .run(([0, 0, 0, 0], 3000))
+        .run(([0, 0, 0, 0], get_port()))
         .await;
 }

@@ -35,7 +35,8 @@ To start the server:
 cargo run --bin rustybeer-server
 ```
 
-You can access the OpenAPI UI from http://localhost:3000/docs
+You can access the OpenAPI UI from http://localhost:3000/docs. To change the
+port number, you can define environment variable PORT.
 
 ## Testing
 
