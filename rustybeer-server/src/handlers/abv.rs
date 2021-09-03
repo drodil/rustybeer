@@ -1,36 +1,31 @@
-extern crate iron;
-extern crate rustc_serialize;
-
-use iron::mime::Mime;
-use iron::prelude::*;
-use iron::status;
-use rustc_serialize::json;
 use rustybeer::calculators::abv::calculate_abv;
-use std::io::Read;
+use rweb::*;
+use serde::{Deserialize, Serialize};
 
-#[derive(RustcEncodable)]
-struct AbvResponse {
+#[derive(Debug, Default, Serialize, Schema)]
+pub struct AbvResponse {
+    /// Alcohol by volume
     abv: f32,
 }
 
-#[derive(RustcDecodable)]
+#[derive(Debug, Default, Deserialize, Schema)]
 struct AbvRequest {
+    /// Original gravity
     og: f32,
+    /// Final gravity
     fg: f32,
 }
 
-pub fn handler(req: &mut Request) -> IronResult<Response> {
-    let mut payload = String::new();
-    req.body
-        .read_to_string(&mut payload)
-        .expect("Failed to read request body");
-    let incoming: AbvRequest = json::decode(&payload).unwrap();
-
-    let response = AbvResponse {
-        abv: calculate_abv(incoming.og, incoming.fg),
-    };
-    let out = json::encode(&response).unwrap();
-
-    let content_type = "application/json".parse::<Mime>().unwrap();
-    Ok(Response::with((content_type, status::Ok, out)))
+#[post("/abv")]
+#[openapi(
+    id = "abv",
+    description = "Calculates alcohol by volume (abv) in percentage from final and original gravity",
+    summary = "Calculate alcohol by volume",
+    tags("calculator")
+)]
+pub fn handler(req: Json<AbvRequest>) -> Json<AbvResponse> {
+    let value = req.into_inner();
+    return Json::from(AbvResponse {
+        abv: calculate_abv(value.og, value.fg),
+    });
 }

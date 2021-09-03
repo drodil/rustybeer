@@ -6,6 +6,6 @@ edition = "2018"
 
 [dependencies]
 rustybeer = { path = "../rustybeer" }
-rustc-serialize = "0.3"
-iron = "0.4.0"
-router = "0.4.0"
+rweb = { version = "0.6", features = ["openapi"] }
+serde = "1"
+tokio = "1"
