@@ -34,13 +34,11 @@ pub fn calculate_and_print(beer_style_options: BeerStyleOptions) {
         ibu: beer_style_options.ibu,
         srm: beer_style_options.color,
     };
-    let mut resp: Vec<&BeerStyle> = Vec::new();
 
-    for style in BEER_STYLES.iter() {
-        if criteria.matches(style) {
-            resp.push(style)
-        }
-    }
+    let resp: Vec<&BeerStyle> = BEER_STYLES
+        .iter()
+        .filter(|style| criteria.matches(style))
+        .collect();
 
     if resp.is_empty() {
         println!("Could not find any beer styles matching criteria");

@@ -72,12 +72,12 @@ pub fn search(q: Query<HopQuery>) -> Json<Vec<HopResponse>> {
         purpose: query.purpose,
         substituted: query.substituted,
     };
-    let mut resp: Vec<HopResponse> = Vec::new();
 
-    for hop in HOPS.iter() {
-        if criteria.matches(hop) {
-            resp.push(HopResponse::from_hop(hop))
-        }
-    }
+    let resp: Vec<HopResponse> = HOPS
+        .iter()
+        .filter(|hop| criteria.matches(hop))
+        .map(|hop| HopResponse::from_hop(&hop))
+        .collect();
+
     Json::from(resp)
 }
