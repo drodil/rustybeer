@@ -10,6 +10,8 @@
 
 RustyBeer is a CLI tool / web server written in Rust, to calculate values used in the process of brewing beer.
 
+Live server running at [https://rustybeer.herokuapp.com/](https://rustybeer.herokuapp.com/)
+
 ## Installation
 
 If you don't already have the toolset installed, you will first need to install [Rust](https://doc.rust-lang.org/book/ch01-01-installation.html).
