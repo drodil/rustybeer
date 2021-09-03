@@ -11,8 +11,9 @@ fn default() -> String {
 
 #[tokio::main]
 async fn main() {
-    let (spec, filter) =
-        openapi::spec().build(move || handlers::abv::abv().or(handlers::abv::fg()));
+    let (spec, filter) = openapi::spec().build(move || {
+        handlers::abv::abv().or(handlers::abv::fg().or(handlers::beer_style::search()))
+    });
 
     serve(filter.or(default()).or(openapi_docs(spec)))
         .run(([0, 0, 0, 0], 3000))
