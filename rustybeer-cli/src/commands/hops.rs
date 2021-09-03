@@ -29,13 +29,8 @@ pub fn calculate_and_print(hop_options: HopOptions) {
         purpose: hop_options.purpose,
         substituted: hop_options.substituted,
     };
-    let mut resp: Vec<&Hop> = Vec::new();
 
-    for hop in HOPS.iter() {
-        if criteria.matches(hop) {
-            resp.push(hop)
-        }
-    }
+    let resp: Vec<&Hop> = HOPS.iter().filter(|hop| criteria.matches(hop)).collect();
 
     if resp.is_empty() {
         println!("Could not find any hops matching criteria");

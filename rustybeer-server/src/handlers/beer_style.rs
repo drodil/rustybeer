@@ -85,12 +85,12 @@ pub fn search(q: Query<BeerQuery>) -> Json<Vec<BeerStyleResponse>> {
         ibu: query.ibu,
         srm: query.color,
     };
-    let mut resp: Vec<BeerStyleResponse> = Vec::new();
 
-    for style in BEER_STYLES.iter() {
-        if criteria.matches(style) {
-            resp.push(BeerStyleResponse::from_beerstyle(style))
-        }
-    }
+    let resp: Vec<BeerStyleResponse> = BEER_STYLES
+        .iter()
+        .filter(|style| criteria.matches(style))
+        .map(|style| BeerStyleResponse::from_beerstyle(&style))
+        .collect();
+
     Json::from(resp)
 }
