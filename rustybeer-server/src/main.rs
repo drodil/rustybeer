@@ -20,7 +20,10 @@ fn get_port() -> u16 {
 #[tokio::main]
 async fn main() {
     let (spec, filter) = openapi::spec().build(move || {
-        handlers::abv::abv().or(handlers::abv::fg().or(handlers::beer_style::search()))
+        handlers::abv::abv()
+            .or(handlers::abv::fg())
+            .or(handlers::beer_style::search())
+            .or(handlers::num_bottles::bottles())
     });
 
     serve(filter.or(default()).or(openapi_docs(spec)))
