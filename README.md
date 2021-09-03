@@ -8,7 +8,7 @@
 [![Issues](https://img.shields.io/github/issues-raw/drodil/rustybeer.svg?maxAge=25000)](https://github.com/drodil/rustybeer/issues)
 [![PRs](https://img.shields.io/github/issues-pr/drodil/rustybeer.svg?style=flat)](https://github.com/drodil/rustybeer/pulls)
 
-RustyBeer is a CLI tool written in Rust, to calculate values used in the process of brewing beer.
+RustyBeer is a CLI tool / web server written in Rust, to calculate values used in the process of brewing beer.
 
 ## Installation
 
@@ -19,11 +19,23 @@ From the root of the repository, run the following command:
 cargo build
 ```
 
-You can now run it with:
+### Running CLI
+
+You can now run the CLI tool with:
 
 ```shell
-cargo run <subcommand>
+cargo run --bin rustybeer <subcommand>
 ```
+
+### Running HTTP server
+
+To start the server:
+
+```shell
+cargo run --bin rustybeer-server
+```
+
+You can access the OpenAPI UI from http://localhost:3000/docs
 
 ## Testing
 
@@ -55,6 +67,10 @@ cargo test -- --nocapture <test name>
 - [**rustybeer-util**](rustybeer-util) - The folder containing extra utilities
   - [**src**](rustybeer-util/src) - The folder containing the utilities source code
   - [**Cargo.toml**](rustybeer-util/Cargo.toml) - The file containing build and dependency infomation
+- [**rustybeer-server**](rustybeer-server) - The folder containing the HTTP server implementation
+  - [**src**](rustybeer-server/src) - The folder containing server source code
+    - [**handlers**](rustybeer-server/handlers) - HTTP request handlers
+  - [**Cargo.toml**](rustybeer-server/Cargo.toml) - The file containing server build and dependency information
 - [**Cargo.toml**](Cargo.toml) - The file containing build and dependency infomation
 - [**CONTRIBUTING.md**](CONTRIBUTING.md) - Contribution guidelines for this repository
 - [**LICENSE**](LICENSE) - The file containing the terms that this code package is released under
@@ -74,7 +90,7 @@ FG           | Final Gravity
 SG           | Specific Gravity
 IBU          | International Bittering Units
 
-## Functionality
+## CLI Functionality
 
 Below is a table of the features currently implemented.
 
