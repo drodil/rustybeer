@@ -5,6 +5,7 @@ pub mod boil_off;
 pub mod calories;
 pub mod diluting;
 pub mod fg;
+pub mod hops;
 pub mod num_bottles;
 pub mod priming;
 pub mod sg_correction;

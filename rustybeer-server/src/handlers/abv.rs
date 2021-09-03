@@ -25,9 +25,9 @@ struct AbvRequest {
 )]
 pub fn abv(req: Json<AbvRequest>) -> Json<AbvResponse> {
     let value = req.into_inner();
-    return Json::from(AbvResponse {
+    Json::from(AbvResponse {
         abv: calculate_abv(value.og, value.fg),
-    });
+    })
 }
 
 #[derive(Debug, Default, Serialize, Schema)]
@@ -53,7 +53,7 @@ struct FgRequest {
 )]
 pub fn fg(req: Json<FgRequest>) -> Json<FgResponse> {
     let value = req.into_inner();
-    return Json::from(FgResponse {
+    Json::from(FgResponse {
         fg: calculate_fg(value.og, value.abv),
-    });
+    })
 }

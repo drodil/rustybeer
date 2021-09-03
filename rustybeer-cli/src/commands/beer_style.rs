@@ -7,32 +7,32 @@ use structopt::StructOpt;
 pub struct BeerStyleOptions {
     #[structopt(short, long)]
     /// Original gravity
-    og: f32,
+    og: Option<f32>,
 
     #[structopt(short, long)]
     /// Final gravity
-    fg: f32,
+    fg: Option<f32>,
 
     #[structopt(short, long)]
     /// Alcohol by volume
-    abv: f32,
+    abv: Option<f32>,
 
     #[structopt(short, long)]
     /// International Bittering Units
-    ibu: u8,
+    ibu: Option<u8>,
 
     #[structopt(short, long)]
     /// Standard Reference Model Color
-    color: f32,
+    color: Option<f32>,
 }
 
 pub fn calculate_and_print(beer_style_options: BeerStyleOptions) {
     let criteria = Criteria {
-        og: Some(beer_style_options.og),
-        fg: Some(beer_style_options.fg),
-        abv: Some(beer_style_options.abv),
-        ibu: Some(beer_style_options.ibu),
-        srm: Some(beer_style_options.color),
+        og: beer_style_options.og,
+        fg: beer_style_options.fg,
+        abv: beer_style_options.abv,
+        ibu: beer_style_options.ibu,
+        srm: beer_style_options.color,
     };
     let mut resp: Vec<&BeerStyle> = Vec::new();
 

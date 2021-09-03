@@ -23,6 +23,7 @@ async fn main() {
         handlers::abv::abv()
             .or(handlers::abv::fg())
             .or(handlers::beer_style::search())
+            .or(handlers::hops::search())
             .or(handlers::num_bottles::bottles())
     });
 
