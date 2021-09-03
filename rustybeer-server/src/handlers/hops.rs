@@ -1,4 +1,4 @@
-pub use rustybeer_util::hops::{Hop, Criteria, HOPS};
+pub use rustybeer_util::hops::{Criteria, Hop, HOPS};
 use rweb::*;
 use serde::{Deserialize, Serialize};
 
@@ -42,7 +42,6 @@ pub struct HopResponse {
     pub substitutions: Vec<String>,
 }
 
-
 impl HopResponse {
     fn from_hop(hop: &Hop) -> HopResponse {
         HopResponse {
@@ -55,7 +54,7 @@ impl HopResponse {
             country: hop.country.clone(),
             description: hop.description.clone(),
             substitutions: hop.substitutions.clone(),
-       }
+        }
     }
 }
 

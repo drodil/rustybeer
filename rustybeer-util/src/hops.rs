@@ -37,7 +37,6 @@ impl Hop {
 
 pub static HOPS: Lazy<Vec<Hop>> = Lazy::new(|| serde_json::from_str(HOPS_JSON).unwrap());
 
-
 /// Criteria for selecting a hop.
 ///
 /// If an attribute is `None`, it is ignored.
@@ -76,7 +75,6 @@ impl Criteria {
     }
 }
 
-
 #[cfg(test)]
 pub mod tests {
     use super::*;
@@ -92,7 +90,6 @@ pub mod tests {
                 .alpha_acid_min
         );
     }
-
 
     static TEST_HOP: Lazy<Hop> = Lazy::new(|| Hop {
         name: "test hop".to_owned(),
@@ -132,6 +129,4 @@ pub mod tests {
         criteria.substituted = Some("Cascade".to_string());
         assert!(criteria.matches(&TEST_HOP));
     }
-
-
 }
