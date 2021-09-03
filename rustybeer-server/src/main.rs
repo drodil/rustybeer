@@ -3,11 +3,11 @@ mod handlers;
 use rweb::*;
 use std::env;
 
-/// Renders the homepage. TODO: Change this to return HTML
-/// and link to /docs
+static INDEX: &str = include_str!("static/index.html");
+
 #[get("/")]
-fn default() -> String {
-    return "Check the /docs".to_string();
+fn default() -> impl Reply {
+    rweb::reply::html(INDEX)
 }
 
 fn get_port() -> u16 {
