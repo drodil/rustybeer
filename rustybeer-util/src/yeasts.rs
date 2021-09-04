@@ -101,14 +101,16 @@ impl Criteria {
         }
 
         if let Some(attenuation) = self.attenuation {
-            if attenuation < yeast.min_attenuation.unwrap() || attenuation > yeast.max_attenuation.unwrap() {
+            if attenuation < yeast.min_attenuation.unwrap_or(attenuation) ||
+                attenuation > yeast.max_attenuation.unwrap_or(attenuation) {
                 return false;
             }
         }
 
         if let Some(temperature) = &self.temperature {
             if let Ok(temp) = TemperatureParser::parse(temperature) {
-                if temp < yeast.min_temp.unwrap() || temp > yeast.max_temp.unwrap() {
+                if temp < yeast.min_temp.unwrap_or(temp) ||
+                    temp > yeast.max_temp.unwrap_or(temp) {
                     return false;
                 }
             }
