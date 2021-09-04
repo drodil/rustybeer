@@ -2,6 +2,8 @@
 use measurements::temperature::Temperature;
 use once_cell::sync::Lazy;
 use serde::{Deserialize, Deserializer};
+use crate::conversions::TemperatureParser;
+use crate::strings::contains_case_insensitive;
 
 #[derive(Debug)]
 pub enum Level {
@@ -70,3 +72,97 @@ static YEASTS_JSON: &str = include_str!("json/yeasts.json");
 /// Data will be loaded from JSON on the first use.
 pub static YEASTS: Lazy<Vec<Yeast>> =
     Lazy::new(|| serde_json::from_str(YEASTS_JSON).expect("yeasts data could not be deserialised"));
+
+
+/// Criteria for selecting a yeast.
+///
+/// If an attribute is `None`, it is ignored.
+#[derive(Debug, Clone, Default)]
+pub struct Criteria {
+    pub company: Option<String>,
+    pub name: Option<String>,
+    pub attenuation: Option<u8>,
+    pub temperature: Option<String>,
+}
+
+impl Criteria {
+    /// Whether the given yeast matches **all** criteria that are `Some`.
+    pub fn matches(&self, yeast: &Yeast) -> bool {
+        if let Some(company) = &self.company {
+            if !contains_case_insensitive(&yeast.company, &company) {
+                return false;
+            }
+        }
+
+        if let Some(name) = &self.name {
+            if !contains_case_insensitive(&yeast.name, &name) {
+                return false;
+            }
+        }
+
+        if let Some(attenuation) = self.attenuation {
+            if attenuation < yeast.min_attenuation.unwrap() || attenuation > yeast.max_attenuation.unwrap() {
+                return false;
+            }
+        }
+
+        if let Some(temperature) = &self.temperature {
+            if let Ok(temp) = TemperatureParser::parse(temperature) {
+                if temp < yeast.min_temp.unwrap() || temp > yeast.max_temp.unwrap() {
+                    return false;
+                }
+            }
+        }
+
+        true
+    }
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    static TEST_YEAST: Lazy<Yeast> = Lazy::new(|| Yeast {
+        name: "I am yeast 66".to_owned(),
+        company: "Yeast Corp.".to_owned(),
+        min_attenuation: Some(6),
+        max_attenuation: Some(14),
+        min_temp: Some(Temperature::from_celsius(14.0)),
+        max_temp: Some(Temperature::from_celsius(25.0)),
+        alc_tolerance: None,
+        alc_tolerance_level: None,
+        attenuation_level: None,
+        id: None,
+        flocculation: None,
+    });
+
+    #[test]
+    fn no_criteria_matches() {
+        let criteria = Criteria::default();
+        assert!(criteria.matches(&TEST_YEAST));
+    }
+
+    #[test]
+    fn criteria_matches_inclusive() {
+        let mut criteria = Criteria::default();
+        assert!(criteria.matches(&TEST_YEAST));
+
+        // Out of range values fails
+        criteria.attenuation = Some(1);
+        assert!(!criteria.matches(&TEST_YEAST));
+        criteria.attenuation = Some(20);
+        assert!(!criteria.matches(&TEST_YEAST));
+
+        // Inclusive values match
+        criteria.attenuation = Some(7);
+        assert!(criteria.matches(&TEST_YEAST));
+        criteria.temperature = Some("20C".to_owned());
+        assert!(criteria.matches(&TEST_YEAST));
+        criteria.company = Some("yeast".to_owned());
+        assert!(criteria.matches(&TEST_YEAST));
+        criteria.name = Some("66".to_owned());
+        assert!(criteria.matches(&TEST_YEAST));
+    }
+
+}
