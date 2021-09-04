@@ -1,3 +1,4 @@
+use crate::strings::contains_case_insensitive;
 /// Hops list curated from https://www.brewersfriend.com/2010/02/27/hops-alpha-acid-table-2009/
 use once_cell::sync::Lazy;
 use serde::{Deserialize, Deserializer};
@@ -42,6 +43,8 @@ pub static HOPS: Lazy<Vec<Hop>> = Lazy::new(|| serde_json::from_str(HOPS_JSON).u
 /// If an attribute is `None`, it is ignored.
 #[derive(Debug, Clone, Default)]
 pub struct Criteria {
+    pub name: Option<String>,
+    pub country: Option<String>,
     pub alpha_acid: Option<f64>,
     pub beta_acid: Option<f64>,
     pub purpose: Option<String>,
@@ -51,6 +54,16 @@ pub struct Criteria {
 impl Criteria {
     /// Whether the given hop matches **all** criteria that are `Some`.
     pub fn matches(&self, hop: &Hop) -> bool {
+        if let Some(name) = &self.name {
+            if !contains_case_insensitive(&hop.name, &name) {
+                return false;
+            }
+        }
+        if let Some(country) = &self.country {
+            if !contains_case_insensitive(&hop.country, &country) {
+                return false;
+            }
+        }
         if let Some(alpha_acid) = self.alpha_acid {
             if alpha_acid < hop.alpha_acid_min || alpha_acid > hop.alpha_acid_max {
                 return false;
@@ -127,6 +140,10 @@ pub mod tests {
         criteria.purpose = Some("Aroma".to_string());
         assert!(criteria.matches(&TEST_HOP));
         criteria.substituted = Some("Cascade".to_string());
+        assert!(criteria.matches(&TEST_HOP));
+        criteria.name = Some("hop".to_owned());
+        assert!(criteria.matches(&TEST_HOP));
+        criteria.country = Some("us".to_owned());
         assert!(criteria.matches(&TEST_HOP));
     }
 }

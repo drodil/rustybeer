@@ -6,6 +6,10 @@ use structopt::StructOpt;
 /// Finds matches of beer style based on parameters
 pub struct BeerStyleOptions {
     #[structopt(short, long)]
+    /// Beer style name
+    name: Option<String>,
+
+    #[structopt(short, long)]
     /// Original gravity
     og: Option<f32>,
 
@@ -28,6 +32,7 @@ pub struct BeerStyleOptions {
 
 pub fn calculate_and_print(beer_style_options: BeerStyleOptions) {
     let criteria = Criteria {
+        name: beer_style_options.name,
         og: beer_style_options.og,
         fg: beer_style_options.fg,
         abv: beer_style_options.abv,

@@ -4,6 +4,12 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Schema)]
 pub struct HopQuery {
+    /// Filter for hop name, case insensitive
+    name: Option<String>,
+
+    /// Filter for hop origin country, case insensitive
+    country: Option<String>,
+
     /// Filter for alpha acid
     alpha_acid: Option<f64>,
 
@@ -67,6 +73,8 @@ impl HopResponse {
 pub fn search(q: Query<HopQuery>) -> Json<Vec<HopResponse>> {
     let query = q.into_inner();
     let criteria = Criteria {
+        name: query.name,
+        country: query.country,
         alpha_acid: query.alpha_acid,
         beta_acid: query.beta_acid,
         purpose: query.purpose,

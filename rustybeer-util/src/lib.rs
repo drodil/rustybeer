@@ -13,3 +13,4 @@ pub mod yeasts;
 pub use measurements;
 
 mod macros;
+mod strings;

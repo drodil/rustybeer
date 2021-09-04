@@ -1,5 +1,6 @@
 use measurements::{Energy, Mass, Temperature, Volume};
 use regex::Regex;
+use std::collections::HashMap;
 use std::num::ParseFloatError;
 
 /// Used to build new measurements::Energy structs.
@@ -37,6 +38,18 @@ impl EnergyParser {
 
         Ok(Energy::from_kcalories(val.parse::<f64>()?))
     }
+}
+
+/// Convertes energy to map for displaying
+pub fn energy_to_map(e: Energy) -> HashMap<String, f64> {
+    let mut map = HashMap::new();
+    map.insert("J".to_owned(), e.as_joules());
+    map.insert("Kcal".to_owned(), e.as_kcalories());
+    map.insert("Btu".to_owned(), e.as_btu());
+    map.insert("eV".to_owned(), e.as_e_v());
+    map.insert("Wh".to_owned(), e.as_watt_hours());
+    map.insert("KWh".to_owned(), e.as_kilowatt_hours());
+    map
 }
 
 /// Used to build new measurements::Mass structs.
@@ -112,6 +125,16 @@ impl TemperatureParser {
 
         Ok(Temperature::from_celsius(val.parse::<f64>()?))
     }
+}
+
+/// Converts temperature unit to map for displaying
+pub fn temp_to_map(t: Temperature) -> HashMap<String, f64> {
+    let mut map = HashMap::new();
+    map.insert("celsius".to_owned(), t.as_celsius());
+    map.insert("fahrenheit".to_owned(), t.as_fahrenheit());
+    map.insert("kelvin".to_owned(), t.as_kelvin());
+    map.insert("rankine".to_owned(), t.as_rankine());
+    map
 }
 
 /// Used to build new measurements::Volume structs.

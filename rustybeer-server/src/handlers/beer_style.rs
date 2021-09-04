@@ -4,6 +4,9 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Schema)]
 pub struct BeerQuery {
+    /// Filter for beer style name, case insensitive
+    name: Option<String>,
+
     /// Filter for original gravity
     og: Option<f32>,
 
@@ -79,6 +82,7 @@ impl BeerStyleResponse {
 pub fn search(q: Query<BeerQuery>) -> Json<Vec<BeerStyleResponse>> {
     let query = q.into_inner();
     let criteria = Criteria {
+        name: query.name,
         og: query.og,
         fg: query.fg,
         abv: query.abv,

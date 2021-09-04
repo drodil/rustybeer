@@ -25,6 +25,7 @@ async fn main() {
             .or(handlers::beer_style::search())
             .or(handlers::hops::search())
             .or(handlers::num_bottles::bottles())
+            .or(handlers::yeasts::search())
     });
 
     serve(filter.or(default()).or(openapi_docs(spec)))

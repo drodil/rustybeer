@@ -6,6 +6,14 @@ use structopt::StructOpt;
 /// Finds matches of hops based on parameters
 pub struct HopOptions {
     #[structopt(short, long)]
+    /// Hop name
+    name: Option<String>,
+
+    #[structopt(short, long)]
+    /// Hop origin country
+    country: Option<String>,
+
+    #[structopt(short, long)]
     /// Alpha acid
     alpha_acid: Option<f64>,
 
@@ -24,6 +32,8 @@ pub struct HopOptions {
 
 pub fn calculate_and_print(hop_options: HopOptions) {
     let criteria = Criteria {
+        name: hop_options.name,
+        country: hop_options.country,
         alpha_acid: hop_options.alpha_acid,
         beta_acid: hop_options.beta_acid,
         purpose: hop_options.purpose,
