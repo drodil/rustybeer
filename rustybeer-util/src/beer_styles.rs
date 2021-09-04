@@ -1,5 +1,6 @@
 use once_cell::sync::Lazy;
 use serde::Deserialize;
+use crate::strings::contains_case_insensitive;
 
 /// Data about a particular style of beer.
 #[derive(Debug, Clone, Deserialize)]
@@ -33,6 +34,7 @@ pub static BEER_STYLES: Lazy<Vec<BeerStyle>> = Lazy::new(|| {
 /// If an attribute is `None`, it is ignored.
 #[derive(Debug, Clone, Default)]
 pub struct Criteria {
+    pub name: Option<String>,
     pub og: Option<f32>,
     pub fg: Option<f32>,
     pub abv: Option<f32>,
@@ -43,6 +45,11 @@ pub struct Criteria {
 impl Criteria {
     /// Whether the given beer style matches **all** criteria that are `Some`.
     pub fn matches(&self, style: &BeerStyle) -> bool {
+        if let Some(name) = &self.name {
+            if !contains_case_insensitive(&style.name, &name) {
+                return false;
+            }
+        }
         if let Some(og) = self.og {
             if og < style.original_gravity_min || og > style.original_gravity_max {
                 return false;
@@ -115,6 +122,8 @@ mod tests {
         criteria.og = Some(0.5);
         assert!(criteria.matches(&TEST_BEER_STYLE));
         criteria.og = Some(1.0);
+        assert!(criteria.matches(&TEST_BEER_STYLE));
+        criteria.name = Some("beer".to_owned());
         assert!(criteria.matches(&TEST_BEER_STYLE));
     }
 
