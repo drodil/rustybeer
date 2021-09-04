@@ -1,11 +1,12 @@
+use crate::conversions::TemperatureParser;
+use crate::strings::contains_case_insensitive;
 /// Yeast list curated from https://www.brewersfriend.com/yeast/
 use measurements::temperature::Temperature;
 use once_cell::sync::Lazy;
 use serde::{Deserialize, Deserializer};
-use crate::conversions::TemperatureParser;
-use crate::strings::contains_case_insensitive;
+use std::fmt;
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum Level {
     Low,
     MedLow,
@@ -13,6 +14,12 @@ pub enum Level {
     MedHigh,
     High,
     VeryHigh,
+}
+
+impl fmt::Display for Level {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 
 #[derive(Debug, Default, Deserialize)]
@@ -73,7 +80,6 @@ static YEASTS_JSON: &str = include_str!("json/yeasts.json");
 pub static YEASTS: Lazy<Vec<Yeast>> =
     Lazy::new(|| serde_json::from_str(YEASTS_JSON).expect("yeasts data could not be deserialised"));
 
-
 /// Criteria for selecting a yeast.
 ///
 /// If an attribute is `None`, it is ignored.
@@ -101,16 +107,16 @@ impl Criteria {
         }
 
         if let Some(attenuation) = self.attenuation {
-            if attenuation < yeast.min_attenuation.unwrap_or(attenuation) ||
-                attenuation > yeast.max_attenuation.unwrap_or(attenuation) {
+            if attenuation < yeast.min_attenuation.unwrap_or(attenuation)
+                || attenuation > yeast.max_attenuation.unwrap_or(attenuation)
+            {
                 return false;
             }
         }
 
         if let Some(temperature) = &self.temperature {
             if let Ok(temp) = TemperatureParser::parse(temperature) {
-                if temp < yeast.min_temp.unwrap_or(temp) ||
-                    temp > yeast.max_temp.unwrap_or(temp) {
+                if temp < yeast.min_temp.unwrap_or(temp) || temp > yeast.max_temp.unwrap_or(temp) {
                     return false;
                 }
             }
@@ -119,7 +125,6 @@ impl Criteria {
         true
     }
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -166,5 +171,4 @@ mod tests {
         criteria.name = Some("66".to_owned());
         assert!(criteria.matches(&TEST_YEAST));
     }
-
 }

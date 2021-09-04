@@ -1,7 +1,7 @@
+use crate::strings::contains_case_insensitive;
 /// Hops list curated from https://www.brewersfriend.com/2010/02/27/hops-alpha-acid-table-2009/
 use once_cell::sync::Lazy;
 use serde::{Deserialize, Deserializer};
-use crate::strings::contains_case_insensitive;
 
 #[derive(Debug, Clone, PartialEq, Deserialize)]
 pub struct Hop {

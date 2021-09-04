@@ -1,6 +1,6 @@
+use crate::strings::contains_case_insensitive;
 use once_cell::sync::Lazy;
 use serde::Deserialize;
-use crate::strings::contains_case_insensitive;
 
 /// Data about a particular style of beer.
 #[derive(Debug, Clone, Deserialize)]

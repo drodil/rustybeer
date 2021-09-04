@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Default, Deserialize, Schema)]
 struct NumBottlesRequest {
     /// Volume to bottle as string (for example "25l")
-    #[schema(example = "25l")]
+    #[schema(example = "\"25l\"")]
     volume: String,
 }
 
