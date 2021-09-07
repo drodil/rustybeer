@@ -127,7 +127,7 @@ pub struct NegativeIbuError;
 ///
 /// ```
 /// use rustybeer::calculators::ibu::{HopAddition, calculate_ibu};
-/// use rustybeer_util::assert_approx;
+/// use rustybeer::assert_approx;
 /// assert_approx!(18.9723, calculate_ibu(vec![HopAddition::new(28.0, 0.064, 45, Default::default())], 20.0, 1.050));
 /// ```
 ///
@@ -175,7 +175,7 @@ pub fn calculate_ibu(
 /// * No other hops additions
 /// ```
 /// use rustybeer::calculators::ibu::calculate_bittering_weight;
-/// use rustybeer_util::assert_approx;
+/// use rustybeer::assert_approx;
 ///
 /// let bittering = calculate_bittering_weight(None, 0.085, None, 22., 1.058, 17.);
 /// assert_approx!( 20.4973, bittering.unwrap());
@@ -233,7 +233,7 @@ pub mod tests {
         calculate_bittering_weight, calculate_ibu, HopAddition, HopAdditionType, NegativeIbuError,
         _calculate_ibu_single_hop, _calculate_utilization,
     };
-    use rustybeer_util::assert_approx;
+    use crate::assert_approx;
 
     #[test]
     fn utilization() {

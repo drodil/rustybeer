@@ -1,14 +1,17 @@
-//! A library for calculating values used in the
-//! process of brewing beer.
-//!
-//! Functions included:
-//! - Calculating ABV (Alcohol By Volume)
-//! - The specific gravity after dilution
-//! - Beer priming calculator
-//! - Specific gravity correction
-//! - IBU calculator
-//!
-//! There's also a list of beer styles that can
-//! be indexed and requested
+//! Utilities for working with `rustybeer`:
+//! * List of beer styles that can be indexed and requested
+//! * List of hops and their AA%
+//! * List of yeasts and their properties
+//! * Units conversions from strings
 
+pub mod abv_calories;
+pub mod beer_styles;
 pub mod calculators;
+pub mod conversions;
+pub mod hops;
+pub mod yeasts;
+
+pub use measurements;
+
+mod macros;
+mod strings;

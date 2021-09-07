@@ -1,5 +1,5 @@
 use rustybeer::calculators::sg_correction::correct_sg;
-use rustybeer_util::{conversions::TemperatureParser, measurements::Temperature};
+use rustybeer::{conversions::TemperatureParser, measurements::Temperature};
 
 use structopt::StructOpt;
 

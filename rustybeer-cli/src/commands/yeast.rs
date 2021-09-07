@@ -1,3 +1,4 @@
+use rustybeer::yeasts::YEASTS;
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
@@ -12,13 +13,13 @@ pub struct YeastOptions {
 pub fn search_and_print(opt: YeastOptions) {
     if let Some(name) = opt.name {
         let criteria = name.to_lowercase();
-        for yeast in rustybeer_util::yeasts::YEASTS.iter() {
+        for yeast in YEASTS.iter() {
             if yeast.name.to_lowercase().contains(&criteria) {
                 println!("{:?}", yeast);
             }
         }
     } else {
-        for yeast in rustybeer_util::yeasts::YEASTS.iter() {
+        for yeast in YEASTS.iter() {
             println!("{:?}", yeast);
         }
     }

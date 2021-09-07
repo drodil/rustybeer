@@ -78,3 +78,39 @@ impl Sugar {
         Self { name, ratio }
     }
 }
+
+#[cfg(test)]
+pub mod tests {
+    use super::*;
+    use crate::assert_approx;
+
+    #[test]
+    fn priming() {
+        assert_approx!(2.3466, calculate_co2(15.));
+        assert_approx!(2.4556, calculate_co2(12.45));
+
+        let stream = calculate_sugars(77., 5., 2.);
+
+        let expected = vec![
+            Sugar::new(String::from("Table Sugar (sucrose)"), 24.850561000000013),
+            Sugar::new(String::from("Corn Sugar (dextrose)"), 27.308308791208802),
+            Sugar::new(String::from("DME - All Varieties"), 36.54494264705884),
+            Sugar::new(String::from("DME - Laaglander"), 49.701122000000026),
+            Sugar::new(String::from("Turbinado"), 24.850561000000013),
+            Sugar::new(String::from("Demarara"), 24.850561000000013),
+            Sugar::new(String::from("Corn Syrup"), 36.015305797101476),
+            Sugar::new(String::from("Brown Sugar"), 27.92197865168541),
+            Sugar::new(String::from("Molasses"), 35.00079014084509),
+            Sugar::new(String::from("Maple Syrup"), 32.27345584415586),
+            Sugar::new(String::from("Sorghum Syrup"), 36.015305797101476),
+            Sugar::new(String::from("Honey"), 33.5818391891892),
+            Sugar::new(String::from("Belgian Candy Syrup"), 39.44533492063494),
+            Sugar::new(String::from("Belgian Candy Sugar"), 33.13408133333335),
+            Sugar::new(String::from("Invert Sugar Syrup"), 27.308308791208802),
+            Sugar::new(String::from("Black Treacle"), 28.563863218390818),
+            Sugar::new(String::from("Rice Solids"), 31.45640632911394),
+        ];
+
+        assert_eq!(expected, stream);
+    }
+}

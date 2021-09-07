@@ -1,5 +1,5 @@
-use rustybeer_util::conversions::temp_to_map;
-pub use rustybeer_util::yeasts::{Criteria, Yeast, YEASTS};
+use rustybeer::conversions::temp_to_map;
+pub use rustybeer::yeasts::{Criteria, Yeast, YEASTS};
 use rweb::*;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;

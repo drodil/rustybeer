@@ -19,3 +19,25 @@ pub fn calculate_new_gravity(current_gravity: f32, current_volume: f32, target_v
 pub fn calculate_new_volume(current_gravity: f32, current_volume: f32, target_gravity: f32) -> f32 {
     current_volume * (current_gravity - 1.) / (target_gravity - 1.)
 }
+
+#[cfg(test)]
+pub mod tests {
+    use super::*;
+    use crate::assert_approx;
+
+    #[test]
+    fn boil_off() {
+        assert_approx!(2., calculate_new_volume(2., 2., 2.));
+        assert_approx!(15., calculate_new_volume(7., 5., 3.));
+        assert_approx!(11., calculate_new_gravity(7., 5., 3.));
+        assert_approx!(69.5714, calculate_new_gravity(4., 3.2, 0.14));
+    }
+
+    #[test]
+    fn diluting() {
+        assert_approx!(14.1625, calculate_new_gravity(9.1, 5.2, 3.2));
+        assert_approx!(4.5305, calculate_new_gravity(9.1, 3.16, 7.25));
+        assert_approx!(2.0, calculate_new_volume(2., 2., 2.));
+        assert_approx!(15., calculate_new_volume(7., 5., 3.));
+    }
+}

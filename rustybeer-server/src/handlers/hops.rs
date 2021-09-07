@@ -1,4 +1,4 @@
-pub use rustybeer_util::hops::{Criteria, Hop, HOPS};
+pub use rustybeer::hops::{Criteria, Hop, HOPS};
 use rweb::*;
 use serde::{Deserialize, Serialize};
 

@@ -1,5 +1,5 @@
 use rustybeer::calculators::num_bottles::calculate_num_bottles;
-use rustybeer_util::{conversions::VolumeParser, measurements::Volume};
+use rustybeer::{conversions::VolumeParser, measurements::Volume};
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]

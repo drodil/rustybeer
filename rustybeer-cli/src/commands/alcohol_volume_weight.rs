@@ -2,7 +2,7 @@ pub use rustybeer::calculators::alcohol_volume_weight::{
     calculate_abv_abw, calculate_abv_abw_density, calculate_abw_abv, calculate_abw_abv_density,
     calculate_alc_vol, calculate_alc_weight,
 };
-use rustybeer_util::{conversions::VolumeParser, measurements::Volume};
+use rustybeer::{conversions::VolumeParser, measurements::Volume};
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
