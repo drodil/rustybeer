@@ -1,4 +1,4 @@
-pub use rustybeer_util::hops::{Criteria, Hop, HOPS};
+pub use rustybeer::hops::{Criteria, Hop, HOPS};
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]

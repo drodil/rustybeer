@@ -1,5 +1,5 @@
 use rustybeer::calculators::priming::{calculate_co2, calculate_sugars};
-use rustybeer_util::{
+use rustybeer::{
     conversions::{TemperatureParser, VolumeParser},
     measurements::{Temperature, Volume},
 };

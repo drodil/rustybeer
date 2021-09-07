@@ -1,5 +1,5 @@
 use rustybeer::calculators::num_bottles::calculate_num_bottles;
-use rustybeer_util::conversions::VolumeParser;
+use rustybeer::conversions::VolumeParser;
 use rweb::*;
 use serde::{Deserialize, Serialize};
 

@@ -2,7 +2,7 @@ use rustybeer::calculators::calorie_counter::{
     calculate_alcohol_calories, calculate_carbs_calories, calculate_total_calories,
 };
 use rustybeer::calculators::num_bottles::bottles;
-use rustybeer_util::{
+use rustybeer::{
     abv_calories::{Criteria, ABV_CALORIES},
     conversions::{MassParser, VolumeParser},
     measurements::Volume,

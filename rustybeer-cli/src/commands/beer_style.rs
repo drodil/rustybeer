@@ -1,4 +1,4 @@
-pub use rustybeer_util::beer_styles::{BeerStyle, Criteria, BEER_STYLES};
+pub use rustybeer::beer_styles::{BeerStyle, Criteria, BEER_STYLES};
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
