@@ -1,5 +1,6 @@
 use measurements::{Energy, Mass, Temperature, Volume};
 use regex::Regex;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::num::ParseFloatError;
 
@@ -182,9 +183,80 @@ impl VolumeParser {
     }
 }
 
+/// Relative density struct.
+///
+/// Also known as specific gravity which can be presented in different units
+/// like plato and brix.
+#[derive(Serialize, Deserialize, Copy, Clone, Debug)]
+pub struct RelativeDensity {
+    sg: f64,
+}
+
+impl RelativeDensity {
+    pub fn from_specific_gravity(sg: f64) -> RelativeDensity {
+        RelativeDensity { sg }
+    }
+
+    pub fn from_plato(plato: f64) -> RelativeDensity {
+        RelativeDensity::from_specific_gravity(1.0 + (plato / (258.6 - ((plato / 258.2) * 227.1))))
+    }
+
+    pub fn from_brix(brix: f64) -> RelativeDensity {
+        RelativeDensity::from_specific_gravity((brix / (258.6 - ((brix / 258.2) * 227.1))) + 1.0)
+    }
+
+    pub fn as_specific_gravity(&self) -> f64 {
+        self.sg
+    }
+
+    pub fn as_plato(&self) -> f64 {
+        (-1.0 * 616.868) + (1111.14 * self.sg) - (630.272 * self.sg.powi(2))
+            + (135.997 * self.sg.powi(3))
+    }
+
+    pub fn as_brix(&self) -> f64 {
+        ((182.4601 * self.sg - 775.6821) * self.sg + 1262.7794) * self.sg - 669.5622
+    }
+}
+
+/// Used to build new conversions::RelativeDensity structs.
+pub struct RelativeDensityParser;
+
+impl RelativeDensityParser {
+    /// Creates conversions::RelativeDensity from string
+    ///
+    /// Tries to figure out the volume unit from the string. If the string value is plain
+    /// number, it will be considered as specific gravity. Also empty strings are considered as
+    /// zero sg.
+    pub fn parse(val: &str) -> Result<RelativeDensity, ParseFloatError> {
+        if val.is_empty() {
+            return Ok(RelativeDensity::from_specific_gravity(0.0));
+        }
+
+        let re = Regex::new(r"([0-9.]*)\s?([°PpBbxX]{1,3})$").unwrap();
+        if let Some(caps) = re.captures(val) {
+            let float_val = caps.get(1).unwrap().as_str();
+            return Ok(
+                match caps.get(2).unwrap().as_str().to_lowercase().as_str() {
+                    "p" => RelativeDensity::from_plato(float_val.parse::<f64>()?),
+                    "bx" => RelativeDensity::from_brix(float_val.parse::<f64>()?),
+                    "°p" => RelativeDensity::from_plato(float_val.parse::<f64>()?),
+                    "°bx" => RelativeDensity::from_brix(float_val.parse::<f64>()?),
+                    _ => RelativeDensity::from_specific_gravity(val.parse::<f64>()?),
+                },
+            );
+        }
+
+        Ok(RelativeDensity::from_specific_gravity(val.parse::<f64>()?))
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use super::{EnergyParser, MassParser, TemperatureParser, VolumeParser};
+    use super::{
+        EnergyParser, MassParser, RelativeDensity, RelativeDensityParser, TemperatureParser,
+        VolumeParser,
+    };
     use approx::assert_relative_eq;
 
     #[test]
@@ -472,5 +544,39 @@ mod tests {
         assert_relative_eq!(123.0, VolumeParser::parse("123p").unwrap().as_pints(),);
         assert_relative_eq!(123.0, VolumeParser::parse("123 p").unwrap().as_pints(),);
         assert_relative_eq!(123.0, VolumeParser::parse("123 P").unwrap().as_pints(),);
+    }
+
+    #[test]
+    fn relative_density_conversions() {
+        let rd = RelativeDensity::from_specific_gravity(1.092);
+        assert_relative_eq!(1.092, rd.as_specific_gravity());
+        assert_relative_eq!(22.01, f64::trunc(rd.as_plato() * 100.0) / 100.0);
+        assert_relative_eq!(22.01, f64::trunc(rd.as_brix() * 100.0) / 100.0);
+    }
+
+    #[test]
+    fn relative_density_from_string() {
+        assert_eq!(
+            22,
+            RelativeDensityParser::parse("22°P").unwrap().as_plato() as i32
+        );
+        assert_eq!(
+            22,
+            RelativeDensityParser::parse("22 P").unwrap().as_plato() as i32
+        );
+        assert_eq!(
+            22,
+            RelativeDensityParser::parse("22 °bX").unwrap().as_brix() as i32
+        );
+        assert_eq!(
+            22,
+            RelativeDensityParser::parse("22bx").unwrap().as_brix() as i32
+        );
+        assert_relative_eq!(
+            1.092,
+            RelativeDensityParser::parse("1.092")
+                .unwrap()
+                .as_specific_gravity()
+        );
     }
 }
