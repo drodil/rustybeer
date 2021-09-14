@@ -1,4 +1,4 @@
-use rustybeer::conversions::temp_to_map;
+use rustybeer::conversions::ToMap;
 pub use rustybeer::yeasts::{Criteria, Yeast, YEASTS};
 use rweb::*;
 use serde::{Deserialize, Serialize};
@@ -57,8 +57,8 @@ impl YeastResponse {
                 .attenuation_level
                 .map_or(None, |a| Some(a.to_string())),
             flocculation: yeast.flocculation.map_or(None, |f| Some(f.to_string())),
-            min_temp: yeast.min_temp.map_or(None, |t| Some(temp_to_map(t))),
-            max_temp: yeast.max_temp.map_or(None, |t| Some(temp_to_map(t))),
+            min_temp: yeast.min_temp.map_or(None, |t| Some(t.to_map())),
+            max_temp: yeast.max_temp.map_or(None, |t| Some(t.to_map())),
             alc_tolerance: yeast.alc_tolerance,
             alc_tolerance_level: yeast
                 .alc_tolerance_level

@@ -9,6 +9,8 @@
 /// https://straighttothepint.com/ibu-calculator/
 /// https://www.brewersfriend.com/2010/02/27/hops-alpha-acid-table-2009/
 ///
+use crate::conversions::RelativeDensity;
+use measurements::{Mass, Volume};
 
 /// Internal function to calculate Aplha Acid Utilization (Tinseth formula)
 /// given Boil Time and Wort Original Gravity
@@ -17,8 +19,8 @@
 /// * `wort_gravity`: wort Original Gravity
 /// * `time_mins`: boil time (min)
 ///
-fn _calculate_utilization(wort_gravity: f64, time_mins: u32) -> f64 {
-    let bigness_factor = 1.65 * f64::powf(0.000125, wort_gravity - 1.0);
+fn _calculate_utilization(wort_gravity: &RelativeDensity, time_mins: u32) -> f64 {
+    let bigness_factor = 1.65 * f64::powf(0.000125, wort_gravity.as_specific_gravity() - 1.0);
     let boil_time_factor = (1.0 - f64::exp(-0.04 * (time_mins as f64))) / 4.15;
     bigness_factor * boil_time_factor
 }
@@ -27,22 +29,22 @@ fn _calculate_utilization(wort_gravity: f64, time_mins: u32) -> f64 {
 ///
 /// # Arguments
 ///
-/// * `weight_grams`: weight of the hop addition (gm)
+/// * `weight`: weight of the hop addition
 /// * `alpha_acid_percentage`: AA% of the hop variety
 /// * `time_mins`: boil time (min)
 /// * `finished_volume_liters`: volume of the final wort (liters)
 /// * `gravity_boil`: the wort original gravity
 ///
 fn _calculate_ibu_single_hop(
-    weight_grams: f64,
+    weight: &Mass,
     alpha_acid_percentage: f64,
     time_mins: u32,
-    finished_volume_liters: f64,
-    gravity_boil: f64,
+    finished_volume: &Volume,
+    gravity_boil: &RelativeDensity,
     utilization_multiplier: f64,
 ) -> f64 {
     let mg_per_liter_added_aa =
-        (alpha_acid_percentage * weight_grams * 1000.0) / finished_volume_liters;
+        (alpha_acid_percentage * weight.as_grams() * 1000.0) / finished_volume.as_liters();
     let decimal_alpha_acid_utilization =
         _calculate_utilization(gravity_boil, time_mins) * utilization_multiplier;
     mg_per_liter_added_aa * decimal_alpha_acid_utilization
@@ -70,9 +72,10 @@ impl Default for HopAdditionType {
 /// Example:
 /// ```
 /// use rustybeer::calculators::ibu::{HopAddition, HopAdditionType};
+/// use rustybeer::measurements::Mass;
 /// // Centennial (8.5% AA) Pellets: 7g - 60 min
 /// HopAddition {
-///     weight_grams: 7.,
+///     weight: Mass::from_grams(7.),
 ///     alpha_acid_percentage: 0.085,
 ///     time_mins: 60,
 ///     hop_type: HopAdditionType::Pellet
@@ -82,8 +85,8 @@ impl Default for HopAdditionType {
 #[derive(Debug, Copy, Clone)]
 // TODO: YAML/JSON serialization
 pub struct HopAddition {
-    /// the weight of the hop addition (gm)
-    pub weight_grams: f64,
+    /// the weight of the hop addition
+    pub weight: Mass,
     /// AA% of the hop variety
     pub alpha_acid_percentage: f64,
     /// boil time (min)
@@ -94,13 +97,13 @@ pub struct HopAddition {
 
 impl HopAddition {
     pub fn new(
-        weight_grams: f64,
+        weight: Mass,
         alpha_acid_percentage: f64,
         time_mins: u32,
         hop_type: HopAdditionType,
     ) -> Self {
         Self {
-            weight_grams,
+            weight,
             alpha_acid_percentage,
             time_mins,
             hop_type,
@@ -128,22 +131,32 @@ pub struct NegativeIbuError;
 /// ```
 /// use rustybeer::calculators::ibu::{HopAddition, calculate_ibu};
 /// use rustybeer::assert_approx;
-/// assert_approx!(18.9723, calculate_ibu(vec![HopAddition::new(28.0, 0.064, 45, Default::default())], 20.0, 1.050));
+/// use rustybeer::measurements::{Mass, Volume};
+/// use rustybeer::conversions::RelativeDensity;
+///
+/// assert_approx!(
+///     18.9723,
+///     calculate_ibu(
+///         vec![HopAddition::new(Mass::from_grams(28.0), 0.064, 45, Default::default())],
+///         &Volume::from_liters(20.0),
+///         &RelativeDensity::from_specific_gravity(1.050)
+///     )
+/// );
 /// ```
 ///
 pub fn calculate_ibu(
     hop_additions: Vec<HopAddition>,
-    finished_volume_liters: f64,
-    gravity_boil: f64,
+    finished_volume: &Volume,
+    gravity_boil: &RelativeDensity,
 ) -> f64 {
     hop_additions
         .into_iter()
         .map(|h| {
             _calculate_ibu_single_hop(
-                h.weight_grams,
+                &h.weight,
                 h.alpha_acid_percentage,
                 h.time_mins,
-                finished_volume_liters,
+                finished_volume,
                 gravity_boil,
                 match h.hop_type {
                     HopAdditionType::Whole | HopAdditionType::Plug => 1.,
@@ -176,8 +189,17 @@ pub fn calculate_ibu(
 /// ```
 /// use rustybeer::calculators::ibu::calculate_bittering_weight;
 /// use rustybeer::assert_approx;
+/// use rustybeer::measurements::Volume;
+/// use rustybeer::conversions::RelativeDensity;
 ///
-/// let bittering = calculate_bittering_weight(None, 0.085, None, 22., 1.058, 17.);
+/// let bittering = calculate_bittering_weight(
+///     None,
+///     0.085,
+///     None,
+///     &Volume::from_liters(22.),
+///     &RelativeDensity::from_specific_gravity(1.058),
+///     17.
+/// );
 /// assert_approx!( 20.4973, bittering.unwrap());
 /// ```
 ///
@@ -187,13 +209,22 @@ pub fn calculate_ibu(
 /// ```{.should_panic}
 /// use rustybeer::calculators::ibu::calculate_bittering_weight;
 /// use rustybeer::calculators::ibu::HopAddition;
+/// use rustybeer::measurements::{Mass, Volume};
+/// use rustybeer::conversions::RelativeDensity;
+///
 /// let bittering = calculate_bittering_weight(Some(vec![
 ///     HopAddition {
-///         weight_grams: 20.,
+///         weight: Mass::from_grams(20.),
 ///         alpha_acid_percentage: 0.085,
 ///         time_mins: 60,
-///         hop_type: Default::default()}]),
-///     0.085, None, 22., 1.058, 10.);
+///         hop_type: Default::default()
+///     }]),
+///     0.085,
+///     None,
+///     &Volume::from_liters(22.),
+///     &RelativeDensity::from_specific_gravity(1.058),
+///     10.
+/// );
 ///
 /// bittering.expect("Too low IBU target");
 /// ```
@@ -202,12 +233,12 @@ pub fn calculate_bittering_weight(
     hop_additions: Option<Vec<HopAddition>>,
     bittering_alpha_acid_percentage: f64,
     bittering_time_mins: Option<u32>,
-    finished_volume_liters: f64,
-    gravity_boil: f64,
+    finished_volume: &Volume,
+    gravity_boil: &RelativeDensity,
     target_ibu: f64,
 ) -> Result<f64, NegativeIbuError> {
     let bittering_ibu = match hop_additions {
-        Some(h) => target_ibu - calculate_ibu(h, finished_volume_liters, gravity_boil),
+        Some(h) => target_ibu - calculate_ibu(h, finished_volume, gravity_boil),
         None => target_ibu,
     };
 
@@ -217,7 +248,7 @@ pub fn calculate_bittering_weight(
             let bittering_alpha_acid_utilization =
                 _calculate_utilization(gravity_boil, bittering_time);
 
-            let bittering_weight = (bittering_ibu * finished_volume_liters)
+            let bittering_weight = (bittering_ibu * finished_volume.as_liters())
                 / (bittering_alpha_acid_utilization * bittering_alpha_acid_percentage)
                 / 1000.0;
 
@@ -234,13 +265,18 @@ pub mod tests {
         _calculate_ibu_single_hop, _calculate_utilization,
     };
     use crate::assert_approx;
+    use crate::conversions::RelativeDensity;
+    use measurements::{Mass, Volume};
 
     #[test]
     fn utilization() {
         let test_vector = crate::calculators::test_vectors::utilization_test_vector::get_vector();
         for (og_idx, og) in test_vector.og.iter().enumerate() {
             for (boiling_time_idx, boiling_time) in test_vector.boiling_time.iter().enumerate() {
-                let ut = _calculate_utilization(*og, *boiling_time);
+                let ut = _calculate_utilization(
+                    &RelativeDensity::from_specific_gravity(*og),
+                    *boiling_time,
+                );
                 // Only three decimals provided in test vector
                 approx::assert_relative_eq!(
                     test_vector.utilization[boiling_time_idx][og_idx],
@@ -255,7 +291,14 @@ pub mod tests {
     fn single_hop_ibu() {
         assert_approx!(
             2.8808,
-            _calculate_ibu_single_hop(7.0, 0.085, 15, 22.0, 1.058, 1.)
+            _calculate_ibu_single_hop(
+                &Mass::from_grams(7.0),
+                0.085,
+                15,
+                &Volume::from_liters(22.0),
+                &RelativeDensity::from_specific_gravity(1.058),
+                1.
+            )
         );
     }
 
@@ -265,11 +308,11 @@ pub mod tests {
             5.7615,
             calculate_ibu(
                 vec![
-                    HopAddition::new(7.0, 0.085, 15, HopAdditionType::Whole),
-                    HopAddition::new(7.0, 0.085, 15, HopAdditionType::Whole)
+                    HopAddition::new(Mass::from_grams(7.0), 0.085, 15, HopAdditionType::Whole),
+                    HopAddition::new(Mass::from_grams(7.0), 0.085, 15, HopAdditionType::Whole)
                 ],
-                22.0,
-                1.058
+                &Volume::from_liters(22.0),
+                &RelativeDensity::from_specific_gravity(1.058)
             ),
         );
     }
@@ -281,11 +324,11 @@ pub mod tests {
             6.3376,
             calculate_ibu(
                 vec![
-                    HopAddition::new(7.0, 0.085, 15, HopAdditionType::Pellet),
-                    HopAddition::new(7.0, 0.085, 15, HopAdditionType::Pellet)
+                    HopAddition::new(Mass::from_grams(7.0), 0.085, 15, HopAdditionType::Pellet),
+                    HopAddition::new(Mass::from_grams(7.0), 0.085, 15, HopAdditionType::Pellet)
                 ],
-                22.0,
-                1.058
+                &Volume::from_liters(22.0),
+                &RelativeDensity::from_specific_gravity(1.058)
             ),
         );
     }
@@ -295,15 +338,15 @@ pub mod tests {
     fn negative_ibu() {
         calculate_bittering_weight(
             Some(vec![HopAddition::new(
-                20.0,
+                Mass::from_grams(20.0),
                 0.085,
                 60,
                 HopAdditionType::Whole,
             )]),
             0.085,
             None,
-            22.0,
-            1.058,
+            &Volume::from_liters(22.0),
+            &RelativeDensity::from_specific_gravity(1.058),
             10.,
         )
         .expect("too low IBU");
@@ -315,13 +358,13 @@ pub mod tests {
             13.2611,
             calculate_bittering_weight(
                 Some(vec![
-                    HopAddition::new(7.0, 0.085, 15, HopAdditionType::Whole),
-                    HopAddition::new(7.0, 0.085, 15, HopAdditionType::Plug)
+                    HopAddition::new(Mass::from_grams(7.0), 0.085, 15, HopAdditionType::Whole),
+                    HopAddition::new(Mass::from_grams(7.0), 0.085, 15, HopAdditionType::Plug)
                 ]),
                 0.085,
                 Some(60),
-                22.0,
-                1.058,
+                &Volume::from_liters(22.0),
+                &RelativeDensity::from_specific_gravity(1.058),
                 16.76,
             )?,
         );
@@ -330,6 +373,13 @@ pub mod tests {
 
     #[test]
     fn zero_hops_ibu() {
-        assert_approx!(0., calculate_ibu(vec![], 22.0, 1.058));
+        assert_approx!(
+            0.,
+            calculate_ibu(
+                vec![],
+                &Volume::from_liters(22.0),
+                &RelativeDensity::from_specific_gravity(1.058)
+            )
+        );
     }
 }

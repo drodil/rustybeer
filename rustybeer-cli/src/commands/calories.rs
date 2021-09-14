@@ -4,7 +4,7 @@ use rustybeer::calculators::calorie_counter::{
 use rustybeer::calculators::num_bottles::bottles;
 use rustybeer::{
     abv_calories::{Criteria, ABV_CALORIES},
-    conversions::{MassParser, VolumeParser},
+    conversions::{MassParser, RelativeDensity, RelativeDensityParser, VolumeParser},
     measurements::Volume,
 };
 
@@ -14,17 +14,17 @@ use structopt::StructOpt;
 #[structopt(name = "calories", author = "Roger Yu (roger.yu27 [at] gmail.com)")]
 /// Calculates calories by volume from original and final gravity or from alcohol by volume
 pub struct CaloriesOptions {
-    #[structopt(short, long)]
+    #[structopt(short, long, parse(try_from_str = RelativeDensityParser::parse))]
     /// Original gravity
-    og: Option<f32>,
+    og: Option<RelativeDensity>,
 
-    #[structopt(short, long, requires("og"), required_unless("abv"))]
+    #[structopt(short, long, requires("og"), required_unless("abv"), parse(try_from_str = RelativeDensityParser::parse))]
     /// Final gravity
-    fg: Option<f32>,
+    fg: Option<RelativeDensity>,
 
     #[structopt(short, long, required_unless("fg"))]
     /// Alcohol by volume
-    abv: Option<f32>,
+    abv: Option<f64>,
 
     #[structopt(short, long, parse(try_from_str = VolumeParser::parse))]
     /// Volume
@@ -32,15 +32,15 @@ pub struct CaloriesOptions {
 }
 
 pub fn calculate_and_print(calories: CaloriesOptions) {
-    let conversion = MassParser::parse("12oz").unwrap().as_grams() as f32;
+    let conversion = MassParser::parse("12oz").unwrap().as_grams();
     if calories.og.is_some() && calories.fg.is_some() {
         let fg = calories.fg.unwrap();
         let og = calories.og.unwrap();
         if let Some(volume) = calories.volume {
             let volume = volume.as_milliliters();
-            let ac = calculate_alcohol_calories(og, fg) / conversion * volume as f32;
-            let cc = calculate_carbs_calories(og, fg) / conversion * volume as f32;
-            let tc = calculate_total_calories(og, fg) / conversion * volume as f32;
+            let ac = calculate_alcohol_calories(&og, &fg) / conversion * volume;
+            let cc = calculate_carbs_calories(&og, &fg) / conversion * volume;
+            let tc = calculate_total_calories(&og, &fg) / conversion * volume;
             println!("Estimated calories for: {} ml", volume);
             println!("==============================");
             println!("| {:<8} | {:<6} | {:<6} |", "", "kcal:", "kJ:");
@@ -51,7 +51,7 @@ pub fn calculate_and_print(calories: CaloriesOptions) {
         } else {
             println!("Total estimated calories for:");
             println!("==========================================================");
-            let bottles = calculate_calories_per_bottle(conversion, og, fg);
+            let bottles = calculate_calories_per_bottle(conversion, &og, &fg);
             for bottle in bottles {
                 let output = format!(
                     "| Type: {: <20} | kcal: {: >6} | kJ: {: >6.0} |",
@@ -65,7 +65,7 @@ pub fn calculate_and_print(calories: CaloriesOptions) {
         }
     } else if calories.abv.is_some() {
         if let Some(volume) = calories.volume {
-            let volume = volume.as_milliliters() as f32;
+            let volume = volume.as_milliliters();
             let criteria = Criteria { abv: calories.abv };
             for abv in ABV_CALORIES.iter() {
                 if criteria.matches(abv) {
@@ -105,24 +105,27 @@ pub fn calculate_and_print(calories: CaloriesOptions) {
     }
 }
 
-pub fn calculate_calories_per_bottle(conversion: f32, og: f32, fg: f32) -> Vec<(String, f32)> {
+pub fn calculate_calories_per_bottle(
+    conversion: f64,
+    og: &RelativeDensity,
+    fg: &RelativeDensity,
+) -> Vec<(String, f64)> {
     let bottle_types = bottles();
-    let mut bottle_counter: Vec<(String, f32)> = Vec::with_capacity(bottle_types.len());
+    let mut bottle_counter: Vec<(String, f64)> = Vec::with_capacity(bottle_types.len());
 
     for bottle in bottle_types {
-        let total_calories: f32 =
-            (calculate_total_calories(og, fg) / conversion * bottle.1 as f32).ceil();
+        let total_calories: f64 = (calculate_total_calories(og, fg) / conversion * bottle.1).ceil();
         bottle_counter.push((bottle.0, total_calories));
     }
     bottle_counter
 }
 
-pub fn get_list_of_volumes_from_bottles() -> Vec<(String, f32)> {
+pub fn get_list_of_volumes_from_bottles() -> Vec<(String, f64)> {
     let bottle_types = bottles();
-    let mut bottle_counter: Vec<(String, f32)> = Vec::with_capacity(bottle_types.len());
+    let mut bottle_counter: Vec<(String, f64)> = Vec::with_capacity(bottle_types.len());
 
     for bottle in bottle_types {
-        bottle_counter.push((bottle.0, bottle.1 as f32));
+        bottle_counter.push((bottle.0, bottle.1));
     }
     bottle_counter
 }

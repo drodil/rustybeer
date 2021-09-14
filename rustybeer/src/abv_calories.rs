@@ -4,9 +4,9 @@ use serde::Deserialize;
 /// Data for 12 oz ABV% to approx. calories
 #[derive(Debug, Clone, Deserialize)]
 pub struct ABVCalories {
-    pub abv: f32,
-    pub calories_low: f32,
-    pub calories_high: f32,
+    pub abv: f64,
+    pub calories_low: f64,
+    pub calories_high: f64,
 }
 
 // Raw inlined style data
@@ -24,7 +24,7 @@ pub static ABV_CALORIES: Lazy<Vec<ABVCalories>> = Lazy::new(|| {
 /// If an attribute is `None`, it is ignored.
 #[derive(Debug, Clone, Default)]
 pub struct Criteria {
-    pub abv: Option<f32>,
+    pub abv: Option<f64>,
 }
 
 impl Criteria {

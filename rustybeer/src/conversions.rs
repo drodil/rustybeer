@@ -1,7 +1,14 @@
 use measurements::{Energy, Mass, Temperature, Volume};
 use regex::Regex;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::num::ParseFloatError;
+
+/// Used to describe units as maps. Different units
+/// work as keys.
+pub trait ToMap {
+    fn to_map(&self) -> HashMap<String, f64>;
+}
 
 /// Used to build new measurements::Energy structs.
 ///
@@ -40,16 +47,17 @@ impl EnergyParser {
     }
 }
 
-/// Convertes energy to map for displaying
-pub fn energy_to_map(e: Energy) -> HashMap<String, f64> {
-    let mut map = HashMap::new();
-    map.insert("J".to_owned(), e.as_joules());
-    map.insert("Kcal".to_owned(), e.as_kcalories());
-    map.insert("Btu".to_owned(), e.as_btu());
-    map.insert("eV".to_owned(), e.as_e_v());
-    map.insert("Wh".to_owned(), e.as_watt_hours());
-    map.insert("KWh".to_owned(), e.as_kilowatt_hours());
-    map
+impl ToMap for Energy {
+    fn to_map(&self) -> HashMap<String, f64> {
+        let mut map = HashMap::new();
+        map.insert("J".to_owned(), self.as_joules());
+        map.insert("Kcal".to_owned(), self.as_kcalories());
+        map.insert("Btu".to_owned(), self.as_btu());
+        map.insert("eV".to_owned(), self.as_e_v());
+        map.insert("Wh".to_owned(), self.as_watt_hours());
+        map.insert("KWh".to_owned(), self.as_kilowatt_hours());
+        map
+    }
 }
 
 /// Used to build new measurements::Mass structs.
@@ -92,6 +100,17 @@ impl MassParser {
     }
 }
 
+impl ToMap for Mass {
+    fn to_map(&self) -> HashMap<String, f64> {
+        let mut map = HashMap::new();
+        map.insert("g".to_owned(), self.as_grams());
+        map.insert("kg".to_owned(), self.as_kilograms());
+        map.insert("oz".to_owned(), self.as_ounces());
+        map.insert("lbs".to_owned(), self.as_pounds());
+        map
+    }
+}
+
 /// Used to build new Temperature structs.
 ///
 /// To be removed if the dependency some time allows creating measurement units from
@@ -127,14 +146,15 @@ impl TemperatureParser {
     }
 }
 
-/// Converts temperature unit to map for displaying
-pub fn temp_to_map(t: Temperature) -> HashMap<String, f64> {
-    let mut map = HashMap::new();
-    map.insert("celsius".to_owned(), t.as_celsius());
-    map.insert("fahrenheit".to_owned(), t.as_fahrenheit());
-    map.insert("kelvin".to_owned(), t.as_kelvin());
-    map.insert("rankine".to_owned(), t.as_rankine());
-    map
+impl ToMap for Temperature {
+    fn to_map(&self) -> HashMap<String, f64> {
+        let mut map = HashMap::new();
+        map.insert("celsius".to_owned(), self.as_celsius());
+        map.insert("fahrenheit".to_owned(), self.as_fahrenheit());
+        map.insert("kelvin".to_owned(), self.as_kelvin());
+        map.insert("rankine".to_owned(), self.as_rankine());
+        map
+    }
 }
 
 /// Used to build new measurements::Volume structs.
@@ -182,9 +202,134 @@ impl VolumeParser {
     }
 }
 
+impl ToMap for Volume {
+    fn to_map(&self) -> HashMap<String, f64> {
+        let mut map = HashMap::new();
+        map.insert("ml".to_owned(), self.as_milliliters());
+        map.insert("l".to_owned(), self.as_litres());
+        map.insert("gal".to_owned(), self.as_gallons());
+        map.insert("pints".to_owned(), self.as_pints());
+        map
+    }
+}
+
+/// Relative density struct.
+///
+/// Also known as specific gravity which can be presented in different units
+/// like plato and brix.
+#[derive(Serialize, Deserialize, Copy, Clone, Debug)]
+pub struct RelativeDensity {
+    sg: f64,
+}
+
+impl RelativeDensity {
+    pub fn from_specific_gravity(sg: f64) -> RelativeDensity {
+        RelativeDensity { sg }
+    }
+
+    pub fn from_plato(plato: f64) -> RelativeDensity {
+        RelativeDensity::from_specific_gravity(1.0 + (plato / (258.6 - ((plato / 258.2) * 227.1))))
+    }
+
+    pub fn from_brix(brix: f64) -> RelativeDensity {
+        RelativeDensity::from_specific_gravity((brix / (258.6 - ((brix / 258.2) * 227.1))) + 1.0)
+    }
+
+    pub fn as_specific_gravity(&self) -> f64 {
+        self.sg
+    }
+
+    pub fn as_plato(&self) -> f64 {
+        (-1.0 * 616.868) + (1111.14 * self.sg) - (630.272 * self.sg.powi(2))
+            + (135.997 * self.sg.powi(3))
+    }
+
+    pub fn as_brix(&self) -> f64 {
+        ((182.4601 * self.sg - 775.6821) * self.sg + 1262.7794) * self.sg - 669.5622
+    }
+}
+
+/// Used to build new conversions::RelativeDensity structs.
+pub struct RelativeDensityParser;
+
+impl RelativeDensityParser {
+    /// Creates conversions::RelativeDensity from string
+    ///
+    /// Tries to figure out the volume unit from the string. If the string value is plain
+    /// number, it will be considered as specific gravity. Also empty strings are considered as
+    /// zero sg.
+    pub fn parse(val: &str) -> Result<RelativeDensity, ParseFloatError> {
+        if val.is_empty() {
+            return Ok(RelativeDensity::from_specific_gravity(0.0));
+        }
+
+        let re = Regex::new(r"([0-9.]*)\s?([°PpBbxX]{1,3})$").unwrap();
+        if let Some(caps) = re.captures(val) {
+            let float_val = caps.get(1).unwrap().as_str();
+            return Ok(
+                match caps.get(2).unwrap().as_str().to_lowercase().as_str() {
+                    "p" => RelativeDensity::from_plato(float_val.parse::<f64>()?),
+                    "bx" => RelativeDensity::from_brix(float_val.parse::<f64>()?),
+                    "°p" => RelativeDensity::from_plato(float_val.parse::<f64>()?),
+                    "°bx" => RelativeDensity::from_brix(float_val.parse::<f64>()?),
+                    _ => RelativeDensity::from_specific_gravity(val.parse::<f64>()?),
+                },
+            );
+        }
+
+        Ok(RelativeDensity::from_specific_gravity(val.parse::<f64>()?))
+    }
+}
+
+impl ToMap for RelativeDensity {
+    fn to_map(&self) -> HashMap<String, f64> {
+        let mut map = HashMap::new();
+        map.insert("sg".to_owned(), self.as_specific_gravity());
+        map.insert("°P".to_owned(), self.as_plato());
+        map.insert("°Bx".to_owned(), self.as_brix());
+        map
+    }
+}
+
+// This would have been cool but doesn't work at the moment
+// See: https://github.com/rust-lang/rust/issues/48869
+// impl<T: ToMap + ?Sized> ::std::fmt::Display for T
+// {
+//    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+//        for (k, v) in &self.to_map() {
+//            write!(f, "{} {}", k, v)
+//        }
+//    }
+//}
+
+impl ::std::ops::Add<RelativeDensity> for RelativeDensity {
+    type Output = RelativeDensity;
+    fn add(self, other: RelativeDensity) -> RelativeDensity {
+        RelativeDensity::from_specific_gravity(self.sg + other.sg)
+    }
+}
+
+impl ::std::ops::Sub<RelativeDensity> for RelativeDensity {
+    type Output = RelativeDensity;
+    fn sub(self, other: RelativeDensity) -> RelativeDensity {
+        RelativeDensity::from_specific_gravity(self.sg - other.sg)
+    }
+}
+
+impl ::std::cmp::Eq for RelativeDensity {}
+
+impl ::std::cmp::PartialEq for RelativeDensity {
+    fn eq(&self, other: &Self) -> bool {
+        self.as_specific_gravity() == other.as_specific_gravity()
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use super::{EnergyParser, MassParser, TemperatureParser, VolumeParser};
+    use super::{
+        EnergyParser, MassParser, RelativeDensity, RelativeDensityParser, TemperatureParser,
+        VolumeParser,
+    };
     use approx::assert_relative_eq;
 
     #[test]
@@ -472,5 +617,39 @@ mod tests {
         assert_relative_eq!(123.0, VolumeParser::parse("123p").unwrap().as_pints(),);
         assert_relative_eq!(123.0, VolumeParser::parse("123 p").unwrap().as_pints(),);
         assert_relative_eq!(123.0, VolumeParser::parse("123 P").unwrap().as_pints(),);
+    }
+
+    #[test]
+    fn relative_density_conversions() {
+        let rd = RelativeDensity::from_specific_gravity(1.092);
+        assert_relative_eq!(1.092, rd.as_specific_gravity());
+        assert_relative_eq!(22.01, f64::trunc(rd.as_plato() * 100.0) / 100.0);
+        assert_relative_eq!(22.01, f64::trunc(rd.as_brix() * 100.0) / 100.0);
+    }
+
+    #[test]
+    fn relative_density_from_string() {
+        assert_eq!(
+            22,
+            RelativeDensityParser::parse("22°P").unwrap().as_plato() as i32
+        );
+        assert_eq!(
+            22,
+            RelativeDensityParser::parse("22 P").unwrap().as_plato() as i32
+        );
+        assert_eq!(
+            22,
+            RelativeDensityParser::parse("22 °bX").unwrap().as_brix() as i32
+        );
+        assert_eq!(
+            22,
+            RelativeDensityParser::parse("22bx").unwrap().as_brix() as i32
+        );
+        assert_relative_eq!(
+            1.092,
+            RelativeDensityParser::parse("1.092")
+                .unwrap()
+                .as_specific_gravity()
+        );
     }
 }
