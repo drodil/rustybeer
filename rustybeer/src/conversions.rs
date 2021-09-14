@@ -291,6 +291,31 @@ impl ToMap for RelativeDensity {
     }
 }
 
+// This would have been cool but doesn't work at the moment
+// See: https://github.com/rust-lang/rust/issues/48869
+// impl<T: ToMap + ?Sized> ::std::fmt::Display for T
+// {
+//    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+//        for (k, v) in &self.to_map() {
+//            write!(f, "{} {}", k, v)
+//        }
+//    }
+//}
+
+impl ::std::ops::Add<RelativeDensity> for RelativeDensity {
+    type Output = RelativeDensity;
+    fn add(self, other: RelativeDensity) -> RelativeDensity {
+        RelativeDensity::from_specific_gravity(self.sg + other.sg)
+    }
+}
+
+impl ::std::ops::Sub<RelativeDensity> for RelativeDensity {
+    type Output = RelativeDensity;
+    fn sub(self, other: RelativeDensity) -> RelativeDensity {
+        RelativeDensity::from_specific_gravity(self.sg - other.sg)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::{

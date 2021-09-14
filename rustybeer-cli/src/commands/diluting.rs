@@ -1,4 +1,6 @@
 use rustybeer::calculators::diluting::calculate_new_gravity;
+use rustybeer::conversions::{RelativeDensity, RelativeDensityParser, ToMap, VolumeParser};
+use rustybeer::measurements::Volume;
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
@@ -8,26 +10,27 @@ use structopt::StructOpt;
 )]
 /// Calculates the SG after dilution
 pub struct DilutingOptions {
-    #[structopt(short, long)]
+    #[structopt(short, long, parse(try_from_str = RelativeDensityParser::parse))]
     /// Current specific gravity
-    sg: f32,
+    sg: RelativeDensity,
 
-    #[structopt(short, long)]
+    #[structopt(short, long, parse(try_from_str = VolumeParser::parse))]
     /// Current Volume
-    cv: f32,
+    cv: Volume,
 
-    #[structopt(short, long)]
+    #[structopt(short, long, parse(try_from_str = VolumeParser::parse))]
     /// Target Volume
-    tv: f32,
+    tv: Volume,
 }
 
 pub fn calculate_and_print(diluting_options: DilutingOptions) {
     println!(
-        "New SG: {:.3}",
+        "New SG: {:#?}",
         calculate_new_gravity(
-            diluting_options.sg,
-            diluting_options.cv,
-            diluting_options.tv
+            &diluting_options.sg,
+            &diluting_options.cv,
+            &diluting_options.tv
         )
+        .to_map()
     );
 }
