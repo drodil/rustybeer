@@ -316,6 +316,14 @@ impl ::std::ops::Sub<RelativeDensity> for RelativeDensity {
     }
 }
 
+impl ::std::cmp::Eq for RelativeDensity {}
+
+impl ::std::cmp::PartialEq for RelativeDensity {
+    fn eq(&self, other: &Self) -> bool {
+        self.as_specific_gravity() == other.as_specific_gravity()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::{
