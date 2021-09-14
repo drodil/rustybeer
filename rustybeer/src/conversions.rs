@@ -4,6 +4,12 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::num::ParseFloatError;
 
+/// Used to describe units as maps. Different units
+/// work as keys.
+pub trait ToMap {
+    fn to_map(&self) -> HashMap<String, f64>;
+}
+
 /// Used to build new measurements::Energy structs.
 ///
 /// To be removed if the dependency some time allows creating measurement units from
@@ -41,16 +47,17 @@ impl EnergyParser {
     }
 }
 
-/// Convertes energy to map for displaying
-pub fn energy_to_map(e: Energy) -> HashMap<String, f64> {
-    let mut map = HashMap::new();
-    map.insert("J".to_owned(), e.as_joules());
-    map.insert("Kcal".to_owned(), e.as_kcalories());
-    map.insert("Btu".to_owned(), e.as_btu());
-    map.insert("eV".to_owned(), e.as_e_v());
-    map.insert("Wh".to_owned(), e.as_watt_hours());
-    map.insert("KWh".to_owned(), e.as_kilowatt_hours());
-    map
+impl ToMap for Energy {
+    fn to_map(&self) -> HashMap<String, f64> {
+        let mut map = HashMap::new();
+        map.insert("J".to_owned(), self.as_joules());
+        map.insert("Kcal".to_owned(), self.as_kcalories());
+        map.insert("Btu".to_owned(), self.as_btu());
+        map.insert("eV".to_owned(), self.as_e_v());
+        map.insert("Wh".to_owned(), self.as_watt_hours());
+        map.insert("KWh".to_owned(), self.as_kilowatt_hours());
+        map
+    }
 }
 
 /// Used to build new measurements::Mass structs.
@@ -93,6 +100,17 @@ impl MassParser {
     }
 }
 
+impl ToMap for Mass {
+    fn to_map(&self) -> HashMap<String, f64> {
+        let mut map = HashMap::new();
+        map.insert("g".to_owned(), self.as_grams());
+        map.insert("kg".to_owned(), self.as_kilograms());
+        map.insert("oz".to_owned(), self.as_ounces());
+        map.insert("lbs".to_owned(), self.as_pounds());
+        map
+    }
+}
+
 /// Used to build new Temperature structs.
 ///
 /// To be removed if the dependency some time allows creating measurement units from
@@ -128,14 +146,15 @@ impl TemperatureParser {
     }
 }
 
-/// Converts temperature unit to map for displaying
-pub fn temp_to_map(t: Temperature) -> HashMap<String, f64> {
-    let mut map = HashMap::new();
-    map.insert("celsius".to_owned(), t.as_celsius());
-    map.insert("fahrenheit".to_owned(), t.as_fahrenheit());
-    map.insert("kelvin".to_owned(), t.as_kelvin());
-    map.insert("rankine".to_owned(), t.as_rankine());
-    map
+impl ToMap for Temperature {
+    fn to_map(&self) -> HashMap<String, f64> {
+        let mut map = HashMap::new();
+        map.insert("celsius".to_owned(), self.as_celsius());
+        map.insert("fahrenheit".to_owned(), self.as_fahrenheit());
+        map.insert("kelvin".to_owned(), self.as_kelvin());
+        map.insert("rankine".to_owned(), self.as_rankine());
+        map
+    }
 }
 
 /// Used to build new measurements::Volume structs.
@@ -180,6 +199,17 @@ impl VolumeParser {
         }
 
         Ok(Volume::from_litres(val.parse::<f64>()?))
+    }
+}
+
+impl ToMap for Volume {
+    fn to_map(&self) -> HashMap<String, f64> {
+        let mut map = HashMap::new();
+        map.insert("ml".to_owned(), self.as_milliliters());
+        map.insert("l".to_owned(), self.as_litres());
+        map.insert("gal".to_owned(), self.as_gallons());
+        map.insert("pints".to_owned(), self.as_pints());
+        map
     }
 }
 
@@ -248,6 +278,16 @@ impl RelativeDensityParser {
         }
 
         Ok(RelativeDensity::from_specific_gravity(val.parse::<f64>()?))
+    }
+}
+
+impl ToMap for RelativeDensity {
+    fn to_map(&self) -> HashMap<String, f64> {
+        let mut map = HashMap::new();
+        map.insert("sg".to_owned(), self.as_specific_gravity());
+        map.insert("°P".to_owned(), self.as_plato());
+        map.insert("°Bx".to_owned(), self.as_brix());
+        map
     }
 }
 
