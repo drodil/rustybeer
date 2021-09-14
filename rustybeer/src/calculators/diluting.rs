@@ -7,7 +7,14 @@
 //!
 //! // This displays how a target volume based off the
 //! // current volume, current gravity, and target gravity
-//! assert_eq!(Volume::from_liters(6.357142857142855), calculate_new_volume(&RelativeDensity::from_specific_gravity(1.089), &Volume::from_liters(50.), &RelativeDensity::from_specific_gravity(1.70)));
+//! assert_eq!(
+//!     Volume::from_liters(6.357142857142855),
+//!     calculate_new_volume(
+//!         &RelativeDensity::from_specific_gravity(1.089),
+//!         &Volume::from_liters(50.),
+//!         &RelativeDensity::from_specific_gravity(1.70)
+//!     )
+//! );
 //! ```
 
 use crate::conversions::RelativeDensity;

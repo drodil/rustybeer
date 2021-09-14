@@ -6,8 +6,13 @@
 //!
 //! // Takes the arguments original gravity
 //! // and final gravity
-//! assert_eq!(4.987500000000004, calculate_abv(&RelativeDensity::from_specific_gravity(1.050),
-//! &RelativeDensity::from_specific_gravity(1.012)));
+//! assert_eq!(
+//!     4.987500000000004,
+//!     calculate_abv(
+//!         &RelativeDensity::from_specific_gravity(1.050),
+//!         &RelativeDensity::from_specific_gravity(1.012)
+//!     )
+//! );
 //! ```
 
 use crate::conversions::RelativeDensity;

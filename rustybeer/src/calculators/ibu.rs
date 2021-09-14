@@ -133,7 +133,15 @@ pub struct NegativeIbuError;
 /// use rustybeer::assert_approx;
 /// use rustybeer::measurements::{Mass, Volume};
 /// use rustybeer::conversions::RelativeDensity;
-/// assert_approx!(18.9723, calculate_ibu(vec![HopAddition::new(Mass::from_grams(28.0), 0.064, 45, Default::default())], &Volume::from_liters(20.0), &RelativeDensity::from_specific_gravity(1.050)));
+///
+/// assert_approx!(
+///     18.9723,
+///     calculate_ibu(
+///         vec![HopAddition::new(Mass::from_grams(28.0), 0.064, 45, Default::default())],
+///         &Volume::from_liters(20.0),
+///         &RelativeDensity::from_specific_gravity(1.050)
+///     )
+/// );
 /// ```
 ///
 pub fn calculate_ibu(
@@ -184,7 +192,14 @@ pub fn calculate_ibu(
 /// use rustybeer::measurements::Volume;
 /// use rustybeer::conversions::RelativeDensity;
 ///
-/// let bittering = calculate_bittering_weight(None, 0.085, None, &Volume::from_liters(22.), &RelativeDensity::from_specific_gravity(1.058), 17.);
+/// let bittering = calculate_bittering_weight(
+///     None,
+///     0.085,
+///     None,
+///     &Volume::from_liters(22.),
+///     &RelativeDensity::from_specific_gravity(1.058),
+///     17.
+/// );
 /// assert_approx!( 20.4973, bittering.unwrap());
 /// ```
 ///
@@ -202,8 +217,14 @@ pub fn calculate_ibu(
 ///         weight: Mass::from_grams(20.),
 ///         alpha_acid_percentage: 0.085,
 ///         time_mins: 60,
-///         hop_type: Default::default()}]),
-///     0.085, None, &Volume::from_liters(22.), &RelativeDensity::from_specific_gravity(1.058), 10.);
+///         hop_type: Default::default()
+///     }]),
+///     0.085,
+///     None,
+///     &Volume::from_liters(22.),
+///     &RelativeDensity::from_specific_gravity(1.058),
+///     10.
+/// );
 ///
 /// bittering.expect("Too low IBU target");
 /// ```

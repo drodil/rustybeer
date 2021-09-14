@@ -6,7 +6,13 @@
 //!
 //! // Takes the arguments original gravity
 //! // and final gravity
-//! assert_eq!(178.8962039966718, calculate_total_calories(&RelativeDensity::from_specific_gravity(1.054), &RelativeDensity::from_specific_gravity(1.010)));
+//! assert_eq!(
+//!     178.8962039966718,
+//!     calculate_total_calories(
+//!         &RelativeDensity::from_specific_gravity(1.054),
+//!         &RelativeDensity::from_specific_gravity(1.010)
+//!     )
+//! );
 //!
 //! ```
 

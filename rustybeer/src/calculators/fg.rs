@@ -4,7 +4,13 @@
 //! use rustybeer::calculators::fg::calculate_fg;
 //!
 //! // Takes the arguments original gravity and yeast attenuation
-//! assert_eq!(RelativeDensity::from_specific_gravity(1.0125), calculate_fg(&RelativeDensity::from_specific_gravity(1.050), 75));
+//! assert_eq!(
+//!     RelativeDensity::from_specific_gravity(1.0125),
+//!     calculate_fg(
+//!         &RelativeDensity::from_specific_gravity(1.050),
+//!         75
+//!     )
+//! );
 //! ```
 
 use crate::conversions::RelativeDensity;
