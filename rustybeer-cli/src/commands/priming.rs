@@ -1,6 +1,6 @@
 use rustybeer::calculators::priming::{calculate_co2, calculate_sugars};
 use rustybeer::{
-    conversions::{TemperatureParser, VolumeParser},
+    conversions::{TemperatureParser, ToMap, VolumeParser},
     measurements::{Temperature, Volume},
 };
 use structopt::StructOpt;
@@ -23,17 +23,15 @@ pub struct PrimingOptions {
 }
 
 pub fn calculate_and_print(priming: PrimingOptions) {
-    let fahrenheit = priming.temp.as_fahrenheit();
-    let amount = priming.amount.as_litres();
-    let co2_beer = calculate_co2(fahrenheit);
-    let sugars = calculate_sugars(fahrenheit, amount, priming.co2_volumes);
+    let co2_beer = calculate_co2(&priming.temp);
+    let sugars = calculate_sugars(&priming.temp, &priming.amount, priming.co2_volumes);
 
-    println!("Amount: {}l", amount);
+    println!("Amount: {:#?}", priming.amount.to_map());
     println!("Volumes of CO2: {}", priming.co2_volumes);
-    println!("Temperature: {}C", fahrenheit);
+    println!("Temperature: {:#?}", priming.temp.to_map());
     println!("CO2 in Beer: {:.2} volumes", co2_beer);
     println!("Priming Sugar Options:");
     for sugar in sugars.iter() {
-        println!("{:>23}: {:.2} g", sugar.name, sugar.ratio);
+        println!("{:>23}: {:#?}", sugar.name, sugar.ratio.to_map());
     }
 }
