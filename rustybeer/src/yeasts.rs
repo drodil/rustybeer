@@ -1,4 +1,3 @@
-use crate::conversions::TemperatureParser;
 use crate::strings::contains_case_insensitive;
 /// Yeast list curated from https://www.brewersfriend.com/yeast/
 use measurements::temperature::Temperature;
@@ -73,12 +72,16 @@ where
 }
 
 static YEASTS_JSON: &str = include_str!("json/yeasts.json");
-
 /// All available yeasts.
 ///
 /// Data will be loaded from JSON on the first use.
-pub static YEASTS: Lazy<Vec<Yeast>> =
+static YEASTS: Lazy<Vec<Yeast>> =
     Lazy::new(|| serde_json::from_str(YEASTS_JSON).expect("yeasts data could not be deserialised"));
+
+pub fn get_yeasts(criteria: Option<Criteria>) -> Vec<&'static Yeast> {
+    let crit = criteria.unwrap_or_default();
+    YEASTS.iter().filter(|yeast| crit.matches(yeast)).collect()
+}
 
 /// Criteria for selecting a yeast.
 ///
@@ -88,7 +91,7 @@ pub struct Criteria {
     pub company: Option<String>,
     pub name: Option<String>,
     pub attenuation: Option<u8>,
-    pub temperature: Option<String>,
+    pub temperature: Option<Temperature>,
 }
 
 impl Criteria {
@@ -114,11 +117,11 @@ impl Criteria {
             }
         }
 
-        if let Some(temperature) = &self.temperature {
-            if let Ok(temp) = TemperatureParser::parse(temperature) {
-                if temp < yeast.min_temp.unwrap_or(temp) || temp > yeast.max_temp.unwrap_or(temp) {
-                    return false;
-                }
+        if let Some(temperature) = self.temperature {
+            if temperature < yeast.min_temp.unwrap_or(temperature)
+                || temperature > yeast.max_temp.unwrap_or(temperature)
+            {
+                return false;
             }
         }
 
@@ -164,7 +167,7 @@ mod tests {
         // Inclusive values match
         criteria.attenuation = Some(7);
         assert!(criteria.matches(&TEST_YEAST));
-        criteria.temperature = Some("20C".to_owned());
+        criteria.temperature = Some(Temperature::from_celsius(20.0).to_owned());
         assert!(criteria.matches(&TEST_YEAST));
         criteria.company = Some("yeast".to_owned());
         assert!(criteria.matches(&TEST_YEAST));

@@ -1,5 +1,6 @@
+use rustybeer::conversions::TemperatureParser;
 use rustybeer::conversions::ToMap;
-pub use rustybeer::yeasts::{Criteria, Yeast, YEASTS};
+pub use rustybeer::yeasts::{get_yeasts, Criteria, Yeast};
 use rweb::*;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -75,16 +76,23 @@ impl YeastResponse {
 )]
 pub fn search(q: Query<YeastQuery>) -> Json<Vec<YeastResponse>> {
     let query = q.into_inner();
+    let mut temp = None;
+    if query.temperature.is_some() {
+        temp = match TemperatureParser::parse(&query.temperature.unwrap()) {
+            Ok(temperature) => Some(temperature),
+            Err(_) => None,
+        };
+    }
+
     let criteria = Criteria {
         name: query.name,
         company: query.company,
         attenuation: query.attenuation,
-        temperature: query.temperature,
+        temperature: temp,
     };
 
-    let resp: Vec<YeastResponse> = YEASTS
+    let resp: Vec<YeastResponse> = get_yeasts(Some(criteria))
         .iter()
-        .filter(|yeast| criteria.matches(yeast))
         .map(|yeast| YeastResponse::from_yeast(&yeast))
         .collect();
 
