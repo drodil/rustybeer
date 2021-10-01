@@ -1,4 +1,4 @@
-pub use rustybeer::hops::{Criteria, Hop, HOPS};
+pub use rustybeer::hops::{get_hops, Criteria, Hop};
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
@@ -40,7 +40,7 @@ pub fn calculate_and_print(hop_options: HopOptions) {
         substituted: hop_options.substituted,
     };
 
-    let resp: Vec<&Hop> = HOPS.iter().filter(|hop| criteria.matches(hop)).collect();
+    let resp = get_hops(Some(criteria));
 
     if resp.is_empty() {
         println!("Could not find any hops matching criteria");

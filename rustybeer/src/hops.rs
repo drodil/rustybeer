@@ -21,6 +21,7 @@ pub struct Hop {
 }
 
 const HOPS_JSON: &str = include_str!("json/hops.json");
+static HOPS: Lazy<Vec<Hop>> = Lazy::new(|| serde_json::from_str(HOPS_JSON).unwrap());
 
 fn percentage_to_float<'de, D>(deserializer: D) -> Result<f64, D::Error>
 where
@@ -36,7 +37,10 @@ impl Hop {
     }
 }
 
-pub static HOPS: Lazy<Vec<Hop>> = Lazy::new(|| serde_json::from_str(HOPS_JSON).unwrap());
+pub fn get_hops(criteria: Option<Criteria>) -> Vec<&'static Hop> {
+    let crit = criteria.unwrap_or_default();
+    HOPS.iter().filter(|hop| crit.matches(hop)).collect()
+}
 
 /// Criteria for selecting a hop.
 ///

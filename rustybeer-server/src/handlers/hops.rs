@@ -1,4 +1,4 @@
-pub use rustybeer::hops::{Criteria, Hop, HOPS};
+pub use rustybeer::hops::{get_hops, Criteria, Hop};
 use rweb::*;
 use serde::{Deserialize, Serialize};
 
@@ -81,9 +81,8 @@ pub fn search(q: Query<HopQuery>) -> Json<Vec<HopResponse>> {
         substituted: query.substituted,
     };
 
-    let resp: Vec<HopResponse> = HOPS
+    let resp: Vec<HopResponse> = get_hops(Some(criteria))
         .iter()
-        .filter(|hop| criteria.matches(hop))
         .map(|hop| HopResponse::from_hop(&hop))
         .collect();
 
