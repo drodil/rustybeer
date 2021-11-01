@@ -6,6 +6,6 @@ edition = "2018"
 
 [dependencies]
 rustybeer = { path = "../rustybeer" }
-rweb = { version = "0.14.0", features = ["openapi"] }
+rweb = { version = "0.15.0", features = ["openapi"] }
 serde = "1"
 tokio = "1"
